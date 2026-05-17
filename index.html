@@ -3,212 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Reading Test Portal</title>
-    <!-- Use Inter font from Google Fonts -->
+    <title>IELTS Listening Tests</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary-color: #000000;
-            --hover-color: #333333;
-            --bg-color: #f4f4f5;
-            --card-bg: #ffffff;
-            --text-main: #000000;
-            --text-muted: #555555;
-            --border-color: #e5e5e5;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        .header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 60px 40px 80px 40px; 
-            text-align: center;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 36px; 
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-
-        .header p {
-            margin: 12px 0 0 0;
-            font-size: 18px;
-            opacity: 0.8;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .container {
-            max-width: 1000px; 
-            margin: -40px auto 60px auto;
-            padding: 0 40px;
-        }
-
-        .test-card {
-            background-color: var(--card-bg);
-            border-radius: 8px; 
-            padding: 30px 40px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .test-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-color);
-        }
-
-        .card-content {
-            flex: 1;
-            padding-right: 50px;
-        }
-
-        .card-header {
-            display: block;
-            margin-bottom: 12px;
-        }
-
-        .test-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin: 0;
-            text-transform: uppercase;
-        }
-
-        .test-desc {
-            color: var(--text-muted);
-            font-size: 15px;
-            margin: 0;
-            line-height: 1.8;
-        }
-
-        .test-desc strong {
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        .btn-start {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: transparent;
-            color: var(--primary-color);
-            padding: 14px 32px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            border: 2px solid var(--primary-color);
-            transition: all 0.2s ease;
-            min-width: 180px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-        }
-
-        .btn-start:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
+        /* Elegant Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         
-        .btn-start span {
-            margin-left: 8px;
-            font-size: 20px;
-            transition: transform 0.2s;
+        .test-card {
+            transition: all 0.2s ease-in-out;
         }
-
-        .btn-start:hover span {
-            transform: translateX(5px);
-        }
-
-        .footer {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 14px;
-            padding: 40px;
-            border-top: 1px solid var(--border-color);
-            max-width: 1000px;
-            margin: 0 auto;
+        .test-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col justify-between">
 
-    <header class="header">
-        <h1>IELTS READING TEST</h1>
+    <!-- HEADER: IELTS LISTENING TESTS -->
+    <header class="bg-black text-white py-8 shadow-sm">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-widest uppercase">IELTS LISTENING TESTS</h1>
+            <p class="text-[11px] text-slate-400 mt-2 tracking-wider uppercase">Cambridge IELTS 20 Practice Suite</p>
+        </div>
     </header>
 
-    <main class="container">
-        
-        <!-- FULL TEST 1 -->
-        <article class="test-card">
-            <div class="card-content">
-                <div class="card-header">
-                    <h2 class="test-title">CAMBRIDGE 20 TEST 1</h2>
+    <!-- MAIN CONTENT: THE PRACTICE TESTS -->
+    <main class="max-w-4xl mx-auto px-6 py-12 flex-1 w-full">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            
+            <!-- TEST 1 -->
+            <div class="test-card bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Cambridge 20</span>
+                    </div>
+                    <h2 class="text-lg font-bold text-slate-900 mb-1">Practice Test 1</h2>
+                    <p class="text-xs text-slate-500 mb-6">4 Parts • 40 Questions</p>
                 </div>
+                <a href="CAM20TEST1.HTML" class="block w-full bg-black hover:bg-zinc-800 text-white text-center py-3 text-xs font-bold uppercase tracking-wider rounded transition-colors">
+                    Start Test <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i>
+                </a>
             </div>
-            <!-- Gắn link vào file test-1.html -->
-            <a href="test-1.html" class="btn-start">Start Test <span>&rarr;</span></a>
-        </article>
 
-        <!-- FULL TEST 2 -->
-        <article class="test-card">
-            <div class="card-content">
-                <div class="card-header">
-                    <h2 class="test-title">CAMBRIDGE 20 TEST 2</h2>
+            <!-- TEST 2 -->
+            <div class="test-card bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Cambridge 20</span>
+                    </div>
+                    <h2 class="text-lg font-bold text-slate-900 mb-1">Practice Test 2</h2>
+                    <p class="text-xs text-slate-500 mb-6">4 Parts • 40 Questions</p>
                 </div>
+                <a href="CAM20TEST2.HTML" class="block w-full bg-black hover:bg-zinc-800 text-white text-center py-3 text-xs font-bold uppercase tracking-wider rounded transition-colors">
+                    Start Test <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i>
+                </a>
             </div>
-            <!-- Gắn link vào file test-2.html -->
-            <a href="test-2.html" class="btn-start">Start Test <span>&rarr;</span></a>
-        </article>
 
-        <!-- FULL TEST 3 -->
-        <article class="test-card">
-            <div class="card-content">
-                <div class="card-header">
-                    <h2 class="test-title">CAMBRIDGE 20 TEST 3</h2>
+            <!-- TEST 3 -->
+            <div class="test-card bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Cambridge 20</span>
+                    </div>
+                    <h2 class="text-lg font-bold text-slate-900 mb-1">Practice Test 3</h2>
+                    <p class="text-xs text-slate-500 mb-6">Includes Interactive Map • 40 Questions</p>
                 </div>
+                <a href="CAM20TEST3.HTML" class="block w-full bg-black hover:bg-zinc-800 text-white text-center py-3 text-xs font-bold uppercase tracking-wider rounded transition-colors">
+                    Start Test <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i>
+                </a>
             </div>
-            <!-- Gắn link vào file test-3.html -->
-            <a href="test-3.html" class="btn-start">Start Test <span>&rarr;</span></a>
-        </article>
 
-        <!-- FULL TEST 4 -->
-        <article class="test-card">
-            <div class="card-content">
-                <div class="card-header">
-                    <h2 class="test-title">CAMBRIDGE 20 TEST 4</h2>
+            <!-- TEST 4 -->
+            <div class="test-card bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Cambridge 20</span>
+                    </div>
+                    <h2 class="text-lg font-bold text-slate-900 mb-1">Practice Test 4</h2>
+                    <p class="text-xs text-slate-500 mb-6">Multi-select Questions • 40 Questions</p>
                 </div>
+                <a href="CAM20TEST4.HTML" class="block w-full bg-black hover:bg-zinc-800 text-white text-center py-3 text-xs font-bold uppercase tracking-wider rounded transition-colors">
+                    Start Test <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i>
+                </a>
             </div>
-            <!-- Gắn link vào file test-4.html -->
-            <a href="test-4.html" class="btn-start">Start Test <span>&rarr;</span></a>
-        </article>
 
+        </div>
     </main>
 
-    <footer class="footer">
-        &copy; 2026 Developed for IELTS Tutor Phat. All rights reserved.
+    <!-- FOOTER: CREDITED TO IELTWFELIX -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-slate-400 text-xs select-none">
+        <p>© 2026 IELTS Listening Portal. Developed and Maintained by IELTWFELIX.</p>
     </footer>
 
 </body>
