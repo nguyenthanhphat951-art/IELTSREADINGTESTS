@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Reading Full Mock Test (40 Questions)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f4f4f5; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+
+        /* Clean Minimalist Highlights */
+        mark.ielts-highlight {
+            border-radius: 2px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        mark.ielts-highlight:hover {
+            opacity: 0.8;
+        }
+        
+        .question-target {
+            transition: background-color 0.5s ease;
+            scroll-margin-top: 130px; 
+        }
+        .question-target.highlight-scroll { background-color: #e4e4e7; }
+
+        /* Drag and Drop */
+        .draggable-card { touch-action: none; }
+        .draggable-card.dragging { opacity: 0.4; }
+        .drop-zone.dragover { border-color: #000 !important; background-color: #f4f4f5; }
+
+        /* Radio Buttons */
+        .mc-opt-btn.active { border-color: #000000 !important; background-color: #f4f4f5 !important; }
+        .mc-opt-btn.active .radio-circle { border-color: #000000 !important; }
+        .mc-opt-btn.active .radio-dot { transform: scale(1) !important; opacity: 1 !important; }
+
+        /* GRADING CSS CLASSES */
+        .graded-correct {
+            background-color: #f0fdf4 !important; /* green-50 */
+            border-color: #22c55e !important; /* green-500 */
+            color: #15803d !important; /* green-700 */
+        }
+        .graded-correct .radio-circle { border-color: #22c55e !important; }
+        .graded-correct .radio-dot { background-color: #22c55e !important; transform: scale(1) !important; opacity: 1 !important; }
+
+        .graded-wrong {
+            background-color: #fef2f2 !important; /* red-50 */
+            border-color: #ef4444 !important; /* red-500 */
+            color: #b91c1c !important; /* red-700 */
+        }
+        .graded-wrong .radio-circle { border-color: #ef4444 !important; }
+        .graded-wrong .radio-dot { background-color: #ef4444 !important; transform: scale(1) !important; opacity: 1 !important; }
+
+        .input-correct {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+            color: #15803d !important;
+        }
+        .input-wrong {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+            color: #ef4444 !important;
+            text-decoration: line-through;
+        }
+        
+        .nav-correct {
+            background-color: #22c55e !important;
+            color: white !important;
+            border-color: #16a34a !important;
+        }
+        .nav-wrong {
+            background-color: #ef4444 !important;
+            color: white !important;
+            border-color: #dc2626 !important;
+        }
+    </style>
+</head>
+<body class="bg-white text-zinc-900 overflow-hidden h-screen flex flex-col font-sans">
+
+    <!-- HEADER -->
+    <header class="bg-black text-white px-6 py-4 flex justify-between items-center border-b-2 border-black z-30 select-none">
+        <div class="logo-area">
+            <h1 class="text-lg font-bold tracking-widest uppercase">Reading Test</h1>
+        </div>
+        
+        <div class="flex items-center gap-3 bg-zinc-900 px-4 py-2 rounded border border-zinc-800 font-mono text-base font-bold" id="countdown-timer">
+            <i class="fa-regular fa-clock text-sm"></i>
+            <span id="timer-display">60:00</span>
+            <button class="text-white hover:opacity-75 transition-opacity ml-2" id="btn-pause-timer" title="Pause / Resume Timer">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- TABS -->
+    <div class="flex bg-zinc-100 border-b border-zinc-200 px-6 gap-1 select-none z-20">
+        <button class="tab-btn active px-6 py-3 text-xs font-bold text-zinc-500 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all" data-target="0">Passage 1</button>
+        <button class="tab-btn px-6 py-3 text-xs font-bold text-zinc-500 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all" data-target="1">Passage 2</button>
+        <button class="tab-btn px-6 py-3 text-xs font-bold text-zinc-500 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all" data-target="2">Passage 3</button>
+    </div>
+
+    <!-- WORKSPACE -->
+    <div class="flex flex-1 overflow-hidden h-[calc(100vh-116px)]" id="workspace-container">
+        
+        <!-- LEFT PANEL -->
+        <div class="w-1/2 min-w-[25%] max-w-[75%] h-full overflow-y-auto p-10 bg-white border-r border-zinc-200 relative select-text" id="passage-container">
+            
+            <div class="bg-zinc-100 border border-zinc-200 p-3 rounded text-xs text-zinc-700 mb-6 flex items-center gap-2 select-none">
+                <i class="fa-solid fa-circle-info text-black"></i>
+                <span><strong>Highlight Tool:</strong> Select any text to highlight it. Click a highlighted block to remove the highlight.</span>
+            </div>
+
+            <!-- PASSAGE 1 -->
+            <div id="passage-content-0" class="passage-content block">
+                <div class="text-xs uppercase font-bold text-zinc-500 mb-2 tracking-wider">Reading Passage 1</div>
+                <h1 class="font-serif text-3xl font-bold mb-5 pb-3 border-b-2 border-black">The kākāpō</h1>
+                <div class="italic text-zinc-700 border-l-2 border-black pl-4 mb-6 leading-relaxed">
+                    You should spend about 20 minutes on Questions 1-13.
+                </div>
+                <div class="font-serif text-base leading-relaxed text-justify space-y-5 text-black">
+                    <p>The kākāpō, also known as the owl parrot, is a large, forest-dwelling bird, with a pale owl-like face. Up to 64 cm in length, it has predominantly yellow-green feathers, forward-facing eyes, a large grey beak, large blue feet, and relatively short wings and tail. It is the world’s only flightless parrot, and is also possibly one of the world’s longest-living birds, with a reported lifespan of up to 100 years.</p>
+                    <p>Kākāpō are solitary birds and tend to occupy the same home range for many years. They forage on the ground and climb high into trees. They often leap from trees and flap their wings, but at best manage a controlled descent to the ground. They are entirely vegetarian, with their diet including the leaves, roots and bark of trees as well as bulbs, and fern fronds.</p>
+                    <p>Kākāpō breed in summer and autumn, but only in years when food is plentiful. Males play no part in incubation or chick-rearing – females alone incubate eggs and feed the chicks. The 1-4 eggs are laid in soil, which is repeatedly turned over before and during incubation. The female kākāpō has to spend long periods away from the nest searching for food, which leaves the unattended eggs and chicks particularly vulnerable to predators.</p>
+                    <p>Before humans arrived, kākāpō were common throughout New Zealand’s forests. However, this all changed with the arrival of the first Polynesian settlers about 700 years ago. For the early settlers, the flightless kākāpō was easy prey. They ate its meat and used its feathers to make soft cloaks. With them came the Polynesian dog and rat, which also preyed on kākāpō. By the time European colonisers arrived in the early 1800s, kākāpō had become confined to the central North Island and forested parts of the South Island. The fall in kākāpō numbers was accelerated by European colonisation. A great deal of habitat was lost through forest clearance, and introduced species such as deer depleted the remaining forests of food. Other predators such as cats, stoats and two more species of rat were also introduced. The kākāpō were in serious trouble.</p>
+                    <p>In 1894, the New Zealand government launched its first attempt to save the kākāpō. Conservationist Richard Henry led an effort to relocate several hundred of the birds to predator-free Resolution Island in Fiordland. Unfortunately, the island didn’t remain predator free – stoats arrived within six years, eventually destroying the kākāpō population. By the mid-1900s, the kākāpō was practically a lost species. Only a few clung to life in the most isolated parts of New Zealand.</p>
+                    <p>From 1949 to 1973, the newly formed New Zealand Wildlife Service made over 60 expeditions to find kākāpō, focusing mainly on Fiordland. Six were caught, but there were no females amongst them and all but one died within a few months of captivity. In 1974, a new initiative was launched, and by 1977, 18 more kākāpō were found in Fiordland. However, there were still no females. In 1977, a large population of males was spotted in Rakiura – a large island free from stoats, ferrets and weasels. There were about 200 individuals, and in 1980 it was confirmed females were also present. These birds have been the foundation of all subsequent work in managing the species.</p>
+                    <p>Unfortunately, predation by feral cats on Rakiura Island led to a rapid decline in kākāpō numbers. As a result, during 1980-97, the surviving population was evacuated to three island sanctuaries: Codfish Island, Maud Island and Little Barrier Island. However, breeding success was hard to achieve. Rats were found to be a major predator of kākāpō chicks and an insufficient number of chicks survived to offset adult mortality. By 1995, although at least 12 chicks had been produced on the islands, only three had survived. The kākāpō population had dropped to 51 birds. The critical situation prompted an urgent review of kākāpō management in New Zealand.</p>
+                    <p>In 1996, a new Recovery Plan was launched, together with a specialist advisory group called the Kākāpō Scientific and Technical Advisory Committee and a higher amount of funding. Renewed steps were taken to control predators on the three islands. Cats were eradicated from Little Barrier Island in 1980, and possums were eradicated from Codfish Island by 1986. However, the population did not start to increase until rats were removed from all three islands, and the birds were more intensively managed. This involved moving the birds between islands, supplementary feeding of adults and rescuing and hand-raising any failing chicks.</p>
+                    <p>After the first five years of the Recovery Plan, the population was on target. By 2000, five new females had been produced, and the total population had grown to 62 birds. For the first time, there was cautious optimism for the future of kākāpō and by June 2020, a total of 210 birds was recorded.</p>
+                    <p>Today, kākāpō management continues to be guided by the kākāpō Recovery Plan. Its key goals are: minimise the loss of genetic diversity in the kākāpō population, restore or maintain sufficient habitat to accommodate the expected increase in the kākāpō population, and ensure stakeholders continue to be fully engaged in the preservation of the species.</p>
+                </div>
+            </div>
+
+            <!-- PASSAGE 2 -->
+            <div id="passage-content-1" class="passage-content hidden">
+                <div class="text-xs uppercase font-bold text-zinc-500 mb-2 tracking-wider">Reading Passage 2</div>
+                <h1 class="font-serif text-3xl font-bold mb-5 pb-3 border-b-2 border-black">To Britain</h1>
+                <div class="italic text-zinc-700 border-l-2 border-black pl-4 mb-6 leading-relaxed">
+                    You should spend about 20 minutes on Questions 14–26.
+                </div>
+                <div class="font-serif text-base leading-relaxed text-justify space-y-6 text-black">
+                    <p><strong>A</strong> Around 25 million elms, accounting for 90% of all elm trees in the UK, died during the 1960s and ’70s of Dutch elm disease. In the aftermath, the elm, once so dominant in the British landscape, was largely forgotten. However, there’s now hope the elm may be reintroduced to the countryside of central and southern England. Any reintroduction will start from a very low base. ‘The impact of the disease is difficult to picture if you hadn’t seen what was there before,’ says Matt Elliot of the Woodland Trust. ‘You look at old photographs from the 1960s and it’s only then that you realise the impact [elms had] … They were significant, large trees… then they were gone.’</p>
+                    <p><strong>B</strong> The disease is caused by a fungus that blocks the elms’ vascular (water, nutrient and food transport) system, causing branches to wilt and die. A first epidemic, which occurred in the 1920s, gradually died down, but in the ’70s a second epidemic was triggered by shipments of elm from Canada. The wood came in the form of logs destined for boat building and its intact bark was perfect for the elm bark beetles that spread the deadly fungus. This time, the beetles carried a much more virulent strain that destroyed the vast majority of British elms.</p>
+                    <p><strong>C</strong> Today, elms still exist in the southern English countryside but mostly only in low hedgerows between fields. ‘We have millions of small elms in hedgerows but they get targeted by the beetle as soon as they reach a certain size,’ says Karen Russell, co-author of the report ‘Where we are with elm’. Once the trunk of the elm reaches 10-15 centimetres or so in diameter, it becomes a perfect size for beetles to lay eggs and for the fungus to take hold. Yet mature specimens have been identified, in counties such as Cambridgeshire, that are hundreds of years old, and have mysteriously escaped the epidemic. The key, Russell says, is to identify and study those trees that have survived and work out why they stood tall when millions of others succumbed. Nevertheless, opportunities are limited as the number of these mature survivors is relatively small. ‘What are the reasons for their survival?’ asks Russell. ‘Avoidance, tolerance, resistance? We don’t know where the balance lies between the three. I don’t see how it can be entirely down to luck.’</p>
+                    <p><strong>D</strong> For centuries, elm ran a close second to oak as the hardwood tree of choice in Britain and was in many instances the most prominent tree in the landscape. Not only was elm common in European forests, it became a key component of birch, ash and hazel woodlands. The use of elm is thought to go back to the Bronze Age, when it was widely used for tools. Elm was also the preferred material for shields and early swords. In the 18th century, it was planted more widely and its wood was used for items such as storage crates and flooring. It was also suitable for items that experienced high levels of impact and was used to build the keel of the 19th-century sailing ship Cutty Sark as well as mining equipment.</p>
+                    <p><strong>E</strong> Given how ingrained elm is in British culture, it’s unsurprising the tree has many advocates. Amongst them is Peter Bourne of the National Elm Collection in Brighton. ‘I saw Dutch elm disease unfold as a small boy,’ he says. ‘The elm seemed to be part of rural England, but I remember watching trees just lose their leaves and that really stayed with me.’ Today, the city of Brighton’s elms total about 17,000. Local factors appear to have contributed to their survival. Strong winds from the sea make it difficult for the determined elm bark beetle to attack this coastal city’s elm population. However, the situation is precarious. ‘The beetles can just march in if we’re not careful, as the threat is right on our doorstep,’ says Bourne.</p>
+                    <p><strong>F</strong> Any prospect of the elm returning relies heavily on trees being either resistant to, or tolerant of, the disease. This means a widespread reintroduction would involve existing or new hybrid strains derived from resistant, generally non-native elm species. A new generation of seedlings have been bred and tested to see if they can withstand the fungus by cutting a small slit on the bark and injecting a tiny amount of the pathogen. ‘The effects are very quick,’ says Russell. ‘You return in four to six weeks and trees that are resistant show no symptoms, whereas those that are susceptible show leaf loss and may even have died completely.’</p>
+                    <p><strong>G</strong> All of this raises questions of social acceptance, acknowledges Russell. ‘If we’re putting elm back into the landscape, a small element of it is not native – are we bothered about that?’ For her, the environmental case for reintroducing elm is strong. ‘They will host wildlife, which is a good thing. Others are more wary. ‘On the face of it, it seems like a good idea,’ says Elliot. The problem, he suggests, is that, ‘You’re replacing a native species with a horticultural analogue*. You’re effectively cloning.’ There’s also the risk of introducing new diseases. Rather than plant new elms, the Woodland Trust emphasises providing space to those elms that have survived independently. ‘Sometimes the best thing you can do is just give nature time to recover over time, you might get resistance,’ says Elliot.</p>
+                    <p class="text-xs border-t border-zinc-200 pt-3 text-zinc-500 italic">* horticultural analogue: a cultivated plant species that is genetically similar to an existing species</p>
+                </div>
+            </div>
+
+            <!-- PASSAGE 3 -->
+            <div id="passage-content-2" class="passage-content hidden">
+                <div class="text-xs uppercase font-bold text-zinc-500 mb-2 tracking-wider">Reading Passage 3</div>
+                <h1 class="font-serif text-3xl font-bold mb-5 pb-3 border-b-2 border-black">How Stress Affects Our Judgement</h1>
+                <div class="italic text-zinc-700 border-l-2 border-black pl-4 mb-6 leading-relaxed">
+                    You should spend about 20 minutes on Questions 27–40.
+                </div>
+                <div class="font-serif text-base leading-relaxed text-justify space-y-5 text-black">
+                    <p>Some of the most important decisions of our lives occur while we’re feeling stressed and anxious. From medical decisions to financial and professional ones, we are all sometimes required to weigh up information under stressful conditions. But do we become better or worse at processing and using information under such circumstances?</p>
+                    <p>My colleague and I, both neuroscientists, wanted to investigate how the mind operates under stress, so we visited some local fire stations. Firefighters’ workdays vary quite a bit. Some are pretty relaxed; they'll spend their time washing the truck, cleaning equipment, cooking meals and reading. Other days can be hectic, with numerous life-threatening incidents to attend to; they’ll enter burning homes to rescue trapped residents, and assist with medical emergencies. These ups and downs presented the perfect setting for an experiment on how people’s ability to use information changes when they feel under pressure.</p>
+                    <p>We found that perceived threat acted as a trigger for a stress reaction that made the task of processing information easier for the firefighters – but only as long as it conveyed bad news.</p>
+                    <p>This is how we arrived at these results. We asked the firefighters to estimate their likelihood of experiencing 40 different adverse events in their life, such as being involved in an accident or becoming a victim of card fraud. We then gave them either good news (that their likelihood of experiencing these events was lower than they’d thought) or bad news (that it was higher) and asked them to provide new estimates.</p>
+                    <p>People are normally quite optimistic – they will ignore bad news and embrace the good. This is what happened when the firefighters were relaxed; but when they were under stress, a different pattern emerged. Under these conditions, they became hyper-vigilant to bad news, even when it had nothing to do with their job (such as learning that the likelihood of card fraud was higher than they’d thought), and altered their beliefs in response. In contrast, stress didn’t change how they responded to good news (such as learning that the likelihood of card fraud was lower than they’d thought).</p>
+                    <p>Back in our lab, we observed the same pattern in students who were told they had to give a surprise public speech, which would be judged by a panel, recorded and posted online. Sure enough, their cortisol levels spiked, their heart rates went up and they suddenly became better at processing unrelated, yet alarming, information about rates of disease and violence.</p>
+                    <p>When we experience stressful events, a physiological change is triggered that causes us to take in warnings and focus on what might go wrong. Brain imaging reveals that this ‘switch’ is related to a sudden boost in a neural signal important for learning, specifically in response to unexpected warning signs, such as faces expressing fear.</p>
+                    <p>Such neural engineering could have helped prehistoric humans to survive. When our ancestors found themselves surrounded by hungry animals, they would have benefited from an increased ability to learn about hazards. In a safe environment, however, it would have been wasteful to be on high alert constantly. So, a neural switch that automatically increases or decreases our ability to process warnings in response to changes in our environment could have been useful. In fact, people with clinical depression and anxiety seem unable to switch away from a state in which they absorb all the negative messages around them.</p>
+                    <p>It is also important to realise that stress travels rapidly from one person to the next. If a co-worker is stressed, we are more likely to tense up and feel stressed ourselves. We don’t even need to be in the same room with someone for their emotions to influence our behaviour. Studies show that if we observe positive feeds on social media, such as images of a pink sunset, we are more likely to post uplifting messages ourselves. If we observe negative posts, such as complaints about a long queue at the coffee shop, we will in turn create more negative posts.</p>
+                    <p>In some ways, many of us now live as if we are in danger, constantly ready to tackle demanding emails and text messages, and respond to news alerts and comments on social media. Repeatedly checking your phone, according to a survey conducted by the American Psychological Association, is related to stress. In other words, a pre-programmed physiological reaction, which evolution has equipped us with to help us avoid famished predators, is now being triggered by an online post. Social media posting, according to one study, raises your pulse, makes you sweat, and enlarges your pupils more than most daily activities.</p>
+                    <p>The fact that stress increases the likelihood that we will focus more on alarming messages, together with the fact that it spreads extremely rapidly, can create collective fear that is not always justified. After a stressful public event, such as a natural disaster or major financial crash, there is often a wave of alarming information in traditional and social media, which individuals become very aware of. But that has the effect of exaggerating existing danger. And so, a reliable pattern emerges – stress is triggered, spreading from one person to the next, which temporarily enhances the likelihood that people will take in negative reports, which increases stress further. As a result, trips are cancelled, even if the disaster took place across the globe; stocks are sold, even when holding on is the best thing to do. The good news, however, is that positive emotions, such as hope, are contagious too, and are powerful in inducing people to act to find solutions. Being aware of the close relationship between people’s emotional state and how they process information can help us frame our messages more effectively and become conscientious agents of change.</p>
+                </div>
+            </div>
+            
+            <!-- FLOATING HIGHLIGHT SELECTION TOOL -->
+            <div id="highlight-menu" class="absolute hidden bg-black rounded py-1.5 px-3 shadow-lg z-50 items-center gap-2.5 border border-zinc-800 select-none">
+                <button class="hl-color-btn w-6 h-6 rounded-full border border-zinc-400 bg-yellow-200 cursor-pointer hover:scale-110 transition-transform" data-color="#fef08a" title="Highlight Yellow"></button>
+                <button class="hl-color-btn w-6 h-6 rounded-full border border-zinc-400 bg-green-200 cursor-pointer hover:scale-110 transition-transform" data-color="#bbf7d0" title="Highlight Mint"></button>
+                <button class="hl-color-btn w-6 h-6 rounded-full border border-zinc-400 bg-pink-200 cursor-pointer hover:scale-110 transition-transform" data-color="#fbcfe8" title="Highlight Pink"></button>
+                <div class="w-[1px] h-5 bg-zinc-600"></div>
+                <button class="text-white text-[11px] font-bold tracking-wider uppercase flex items-center gap-1.5 hover:opacity-80 transition-opacity" id="btn-clear-selection">
+                    <i class="fa-solid fa-eraser"></i> Clear
+                </button>
+            </div>
+
+        </div>
+
+        <!-- RESIZABLE DRAGGABLE SPLITTER BAR -->
+        <div class="w-2 bg-zinc-200 cursor-col-resize flex items-center justify-center hover:bg-black active:bg-black transition-colors z-40 relative select-none" id="resize-handle" title="Drag to adjust width">
+            <div class="w-[2px] h-6 bg-zinc-400 rounded-full"></div>
+        </div>
+
+        <!-- RIGHT PANEL: QUESTIONS PANEL -->
+        <div class="flex-1 h-full overflow-y-auto px-10 pb-10 bg-white select-none" id="questions-panel">
+            
+            <!-- STICKY QUESTIONS MAP (1-40) -->
+            <div class="sticky top-0 bg-white py-4 border-b border-zinc-200 z-10 mb-8 select-none">
+                <div class="text-[10px] uppercase font-bold text-zinc-500 mb-2.5 tracking-wider">Question Map</div>
+                <div class="grid grid-cols-10 gap-1.5" id="nav-grid">
+                    <!-- Javascript generates buttons 1 to 40 -->
+                </div>
+            </div>
+
+            <!-- QUESTIONS FOR PASSAGE 1 -->
+            <div id="questions-content-0" class="questions-group-section block">
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 1–6</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Do the following statements agree with the information given in Reading Passage 1?</p>
+                </div>
+
+                <!-- Q1-6 Block -->
+                <div class="space-y-6 mb-10">
+                    <!-- Q1 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-1" data-qnum="1">
+                        <div class="text-sm font-bold mb-3 select-text">1. There are other parrots that share the kakapo’s inability to fly.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q1">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-2" data-qnum="2">
+                        <div class="text-sm font-bold mb-3 select-text">2. Adult kakapo produce chicks every year.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q2">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-3" data-qnum="3">
+                        <div class="text-sm font-bold mb-3 select-text">3. Adult male kakapo bring food back to nesting females.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q3">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-4" data-qnum="4">
+                        <div class="text-sm font-bold mb-3 select-text">4. The Polynesian rat was a greater threat to the kakapo than Polynesian settlers.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q4">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-5" data-qnum="5">
+                        <div class="text-sm font-bold mb-3 select-text">5. Kakapo were transferred from Rakiura Island to other locations because they were at risk from feral cats.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q5">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-6" data-qnum="6">
+                        <div class="text-sm font-bold mb-3 select-text">6. One Recovery Plan initiative that helped increase the kakapo population size was caring for struggling young birds.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q6">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 7–13</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Complete the notes below. Choose ONE WORD AND/OR A NUMBER.</p>
+                </div>
+
+                <div class="question-target border border-zinc-200 rounded p-6 mb-10 select-text" id="q-target-notes-p1">
+                    <h4 class="text-sm font-bold uppercase mb-4 tracking-wide pb-1.5 border-b border-zinc-200 text-black">New Zealand’s kākāpō</h4>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">A type of parrot</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-7">
+                                    Diet consists of fern fronds, various parts of a tree and 
+                                    <input type="text" id="blank-q7" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[7]" data-qnum="7">.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                                <li class="p-2 rounded" id="q-target-8">
+                                    Nests are created in 
+                                    <input type="text" id="blank-q8" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[8]" data-qnum="8"> 
+                                    where eggs are laid.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">Arrival of Polynesian settlers</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-9">
+                                    The 
+                                    <input type="text" id="blank-q9" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[9]" data-qnum="9"> 
+                                    of the kākāpō were used to make clothes.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">Arrival of European colonisers</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-10">
+                                    <input type="text" id="blank-q10" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[10]" data-qnum="10"> 
+                                    were an animal which they introduced that ate the kākāpō’s food sources.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">Protecting kākāpō</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li>Richard Henry, a conservationist, tried to protect the kākāpō.</li>
+                                <li class="p-2 rounded" id="q-target-11">
+                                    A definite sighting of female kākāpō on Rakiura Island was reported in the year 
+                                    <input type="text" id="blank-q11" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[11]" data-qnum="11">.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                                <li class="p-2 rounded" id="q-target-12">
+                                    The Recovery Plan included an increase in 
+                                    <input type="text" id="blank-q12" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[12]" data-qnum="12">.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                                <li class="p-2 rounded" id="q-target-13">
+                                    A current goal of the Recovery Plan is to maintain the involvement of 
+                                    <input type="text" id="blank-q13" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[13]" data-qnum="13"> 
+                                    in kākāpō protection.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONS FOR PASSAGE 2 -->
+            <div id="questions-content-1" class="questions-group-section hidden">
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 14–18</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Reading Passage 2 has seven sections, A–G.</p>
+                </div>
+
+                <!-- TABLE/GRID STYLE FOR MATCHING INFORMATION -->
+                <div class="overflow-x-auto border border-zinc-200 rounded mb-10">
+                    <table class="w-full text-left border-collapse text-xs select-none">
+                        <thead>
+                            <tr class="bg-zinc-50 border-b border-zinc-200">
+                                <th class="p-4 font-bold text-zinc-700 w-2/5 min-w-[200px]">Statement</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">A</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">B</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">C</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">D</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">E</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">F</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">G</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-200">
+                            <!-- Q14 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-14" data-qnum="14">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>14.</strong> Reference to the research problems that arise from there being only a few surviving large elms.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="C">C</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="D">D</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="E">E</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="F">F</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="G">G</button></td>
+                            </tr>
+                            <!-- Q15 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-15" data-qnum="15">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>15.</strong> Details of a difference of opinion about the value of reintroducing elms to Britain.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="C">C</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="D">D</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="E">E</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="F">F</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="G">G</button></td>
+                            </tr>
+                            <!-- Q16 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-16" data-qnum="16">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>16.</strong> Reference to how Dutch elm disease was brought into Britain.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="C">C</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="D">D</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="E">E</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="F">F</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="G">G</button></td>
+                            </tr>
+                            <!-- Q17 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-17" data-qnum="17">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>17.</strong> A description of the conditions that have enabled a location in Britain to escape Dutch elm disease.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q17" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q17" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q17" data-val="C">C</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q17" data-val="D">D</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q17" data-val="E">E</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q17" data-val="F">F</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q17" data-val="G">G</button></td>
+                            </tr>
+                            <!-- Q18 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-18" data-qnum="18">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>18.</strong> Reference to the stage at which young elms become vulnerable to Dutch elm disease.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q18" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q18" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q18" data-val="C">C</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q18" data-val="D">D</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q18" data-val="E">E</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q18" data-val="F">F</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q18" data-val="G">G</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 19–23</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Match each statement with the correct person, A, B, or C.</p>
+                </div>
+
+                <div class="space-y-6 mb-10">
+                    <!-- Q19 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-19" data-qnum="19">
+                        <div class="text-sm font-bold mb-3 select-text">19. If a tree gets infected with Dutch elm disease, the damage rapidly becomes visible.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q19">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="A">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. Matt Elliot</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="B">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. Karen Russell</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="C">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. Peter Bourne</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q20 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-20" data-qnum="20">
+                        <div class="text-sm font-bold mb-3 select-text">20. It may be better to wait and see if the mature elms that have survived continue to flourish.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q20">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="A">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. Matt Elliot</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="B">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. Karen Russell</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="C">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. Peter Bourne</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q21 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-21" data-qnum="21">
+                        <div class="text-sm font-bold mb-3 select-text">21. There must be an explanation for the survival of some mature elms.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q21">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="A">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. Matt Elliot</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="B">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. Karen Russell</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="C">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. Peter Bourne</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q22 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-22" data-qnum="22">
+                        <div class="text-sm font-bold mb-3 select-text">22. We need to be aware that insects carrying Dutch elm disease are not very far away.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q22">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="A">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. Matt Elliot</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="B">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. Karen Russell</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="C">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. Peter Bourne</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q23 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-23" data-qnum="23">
+                        <div class="text-sm font-bold mb-3 select-text">23. You understand the effect Dutch elm disease has had when you see evidence of how prominent the tree once was.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q23">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="A">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. Matt Elliot</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="B">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. Karen Russell</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="C">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0">
+                                    <span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. Peter Bourne</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 24–26</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Complete the summary below. Choose ONE WORD ONLY.</p>
+                </div>
+
+                <div class="question-target border border-zinc-200 rounded p-6 mb-10 select-text" id="q-target-summary-p2">
+                    <h4 class="text-sm font-bold uppercase mb-4 tracking-wide pb-1.5 border-b border-zinc-200 text-black">Uses of a popular tree</h4>
+                    <p class="text-sm leading-relaxed text-black space-y-4">
+                        For hundreds of years, the only tree that was more popular in Britain than elm was 
+                        <span class="p-1 rounded inline-block" id="q-target-24">
+                            <input type="text" id="blank-q24" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[24]" data-qnum="24">
+                        </span>. 
+                        Starting in the Bronze Age, many tools were made from elm and people also used it to make weapons. In the 18th century, it was grown to provide wood for boxes and 
+                        <span class="p-1 rounded inline-block" id="q-target-25">
+                            <input type="text" id="blank-q25" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[25]" data-qnum="25">
+                        </span>. 
+                        Due to its strength, elm was often used for mining equipment and the Cutty Sark’s 
+                        <span class="p-1 rounded inline-block" id="q-target-26">
+                            <input type="text" id="blank-q26" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[26]" data-qnum="26">
+                        </span> 
+                        was also constructed from elm.
+                    </p>
+                    <div class="feedback-container space-y-2 mt-4 text-xs">
+                        <div id="explanation-q24" class="explanation hidden p-3 bg-zinc-50 border border-zinc-200 rounded text-zinc-600"></div>
+                        <div id="explanation-q25" class="explanation hidden p-3 bg-zinc-50 border border-zinc-200 rounded text-zinc-600"></div>
+                        <div id="explanation-q26" class="explanation hidden p-3 bg-zinc-50 border border-zinc-200 rounded text-zinc-600"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASSAGE 3 -->
+            <div id="questions-content-2" class="questions-group-section hidden">
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 27–30</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Choose the correct letter, A, B, C or D.</p>
+                </div>
+
+                <div class="space-y-6 mb-10">
+                    <!-- Q27 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-27" data-qnum="27">
+                        <div class="text-sm font-bold mb-3 select-text">27. In the first paragraph, the writer introduces the topic of the text by:</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q27">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. defining some commonly used terms.</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. questioning a widely held assumption.</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. mentioning a challenge faced by everyone.</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. specifying a situation which makes us most anxious.</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q28 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-28" data-qnum="28">
+                        <div class="text-sm font-bold mb-3 select-text">28. What point does the writer make about firefighters in the second paragraph?</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q28">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. The regular changes of stress levels in their working lives make them ideal study subjects.</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. The strategies they use to handle stress are of particular interest to researchers.</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. The stressful nature of their job is typical of many public service professions.</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. Their personalities make them especially well-suited to working under stress.</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q29 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-29" data-qnum="29">
+                        <div class="text-sm font-bold mb-3 select-text">29. What is the writer doing in the fourth paragraph?</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q29">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. explaining their findings</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. justifying their approach</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. setting out their objectives</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. describing their methodology</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q30 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-30" data-qnum="30">
+                        <div class="text-sm font-bold mb-3 select-text">30. In the seventh paragraph, the writer describes a mechanism in the brain which:</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q30">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. enables people to respond more quickly to stressful situations.</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. results in increased ability to control our levels of anxiety.</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. produces heightened sensitivity to indications of external threats.</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. is activated when there is a need to communicate a sense of danger.</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 31–35</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Complete each sentence with the correct ending, A–G, below.</p>
+                </div>
+
+                <!-- DRAG AND DROP SOURCE -->
+                <div class="mb-8 p-4 border border-zinc-200 rounded bg-zinc-50" id="endings-pool-container">
+                    <div class="grid grid-cols-1 gap-2" id="endings-pool">
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="A" id="card-A">
+                            <span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">A</span><span>made them feel optimistic.</span>
+                        </div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="B" id="card-B">
+                            <span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">B</span><span>took relatively little notice of bad news.</span>
+                        </div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="C" id="card-C">
+                            <span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">C</span><span>responded to negative and positive information in the same way.</span>
+                        </div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="D" id="card-D">
+                            <span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">D</span><span>were feeling under stress.</span>
+                        </div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="E" id="card-E">
+                            <span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">E</span><span>put them in a stressful situation.</span>
+                        </div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="F" id="card-F">
+                            <span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">F</span><span>behaved in a similar manner, regardless of the circumstances.</span>
+                        </div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="G" id="card-G">
+                            <span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">G</span><span>thought it more likely that they would experience something bad.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DRAG TARGETS -->
+                <div class="space-y-6 mb-10">
+                    <!-- Q31 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-31" data-qnum="31">
+                        <div class="text-sm font-bold mb-3 select-text">31. At times when they were relaxed, the firefighters usually:</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q31">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an ending...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q32 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-32" data-qnum="32">
+                        <div class="text-sm font-bold mb-3 select-text">32. The researchers noted that when the firefighters were stressed, they:</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q32">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an ending...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q33 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-33" data-qnum="33">
+                        <div class="text-sm font-bold mb-3 select-text">33. When the firefighters were told good news, they always:</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q33">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an ending...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q34 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-34" data-qnum="34">
+                        <div class="text-sm font-bold mb-3 select-text">34. The students’ cortisol levels and heart rates were affected when the researchers:</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q34">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an ending...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q35 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-35" data-qnum="35">
+                        <div class="text-sm font-bold mb-3 select-text">35. In both experiments, negative information was processed better when the subjects:</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q35">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an ending...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 36–40</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Do the following statements agree with the claims of the writer in Reading Passage 3?</p>
+                </div>
+
+                <div class="space-y-6 mb-10">
+                    <!-- Q36 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-36" data-qnum="36">
+                        <div class="text-sm font-bold mb-3 select-text">36. The tone of the content we post on social media tends to reflect the nature of the posts in our feeds.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q36">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q37 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-37" data-qnum="37">
+                        <div class="text-sm font-bold mb-3 select-text">37. Phones have a greater impact on our stress levels than other electronic media devices.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q37">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q38 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-38" data-qnum="38">
+                        <div class="text-sm font-bold mb-3 select-text">38. The more we read about a stressful public event on social media, the less able we are to take the information in.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q38">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q39 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-39" data-qnum="39">
+                        <div class="text-sm font-bold mb-3 select-text">39. Stress created by social media posts can lead us to take unnecessary precautions.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q39">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+
+                    <!-- Q40 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-40" data-qnum="40">
+                        <div class="text-sm font-bold mb-3 select-text">40. Our tendency to be affected by other people’s moods can be used in a positive way.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q40">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <!-- SUBMIT BUTTON IS NOW ONLY IN PASSAGE 3 -->
+                <div class="mt-12 flex justify-center pb-12">
+                    <button class="bg-black hover:bg-zinc-800 text-white font-bold tracking-wider uppercase text-sm px-10 py-4.5 rounded transition-colors flex items-center gap-2.5 border border-black shadow cursor-pointer" id="btn-submit-exam">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Test
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCORE MODAL (UPDATED WITH BAND SCORE) -->
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 select-none" id="score-modal">
+        <div class="bg-white p-10 rounded-xl border border-zinc-200 w-11/12 max-w-sm text-center shadow-2xl transform scale-95 transition-transform duration-300" id="score-modal-content">
+            
+            <div class="w-32 h-32 rounded-full bg-black text-white flex flex-col items-center justify-center mx-auto mb-6 border-4 border-white shadow-xl relative">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-zinc-300 absolute top-4">Band</div>
+                <div class="text-5xl font-extrabold mt-2 tracking-tighter" id="modal-band-score">0.0</div>
+            </div>
+            
+            <h2 class="text-xl font-extrabold uppercase tracking-widest mb-1 text-black">Test Complete</h2>
+            <div class="text-base font-bold text-zinc-800 mb-4 bg-zinc-100 py-2 rounded">Raw Score: <span id="modal-score" class="text-black">0/40</span></div>
+            
+            <p class="text-[13px] text-zinc-500 mb-8 leading-relaxed font-medium">Your practice test has been graded. Review your answers on the right panel to see detailed explanations.</p>
+            
+            <button class="bg-black hover:bg-zinc-800 text-white font-bold py-3.5 px-8 text-xs uppercase tracking-wider rounded w-full transition-colors cursor-pointer shadow-md" id="modal-close-btn">Review Answers</button>
+        </div>
+    </div>
+
+    <!-- JS LOGIC -->
+    <script>
+        const KEY_ANSWERS = {
+            q1: "FALSE", q2: "FALSE", q3: "FALSE", q4: "NOT GIVEN", q5: "TRUE", q6: "TRUE",
+            q7: "bulbs", q8: "soil", q9: "feathers", q10: "deer", q11: "1980", q12: "funding", q13: "stakeholders",
+            q14: "C", q15: "G", q16: "B", q17: "E", q18: "C",
+            q19: "B", q20: "A", q21: "B", q22: "C", q23: "A",
+            q24: "oak", q25: "flooring", q26: "keel",
+            q27: "C", q28: "A", q29: "D", q30: "C",
+            q31: "B", q32: "G", q33: "F", q34: "E", q35: "D",
+            q36: "YES", q37: "NOT GIVEN", q38: "NO", q39: "YES", q40: "YES"
+        };
+
+        const EXPLANATIONS = {
+            q1: `Paragraph 1 states: "It is the world’s only flightless parrot..." This contradicts the statement that there are "other parrots" sharing this trait.`,
+            q2: `Paragraph 3 notes: "Kākāpō breed in summer and autumn, but only in years when food is plentiful." Therefore, they do not produce chicks every year.`,
+            q3: `Paragraph 3 says: "Males play no part in incubation or chick-rearing – females alone incubate eggs and feed the chicks." Males do not bring food to nesting females.`,
+            q4: `The passage mentions both human settlers and Polynesian rats preying on Kākāpō but does not compare which was a "greater" threat.`,
+            q5: `Paragraph 7 states: "...predation by feral cats on Rakiura Island led to a rapid decline... As a result, during 1980-97, the surviving population was evacuated..."`,
+            q6: `Paragraph 8 lists management steps under the Recovery Plan, including "...rescuing and hand-raising any failing chicks."`,
+            q7: `Paragraph 2: "...their diet including the leaves, roots and bark of trees as well as bulbs, and fern fronds."`,
+            q8: `Paragraph 3: "The 1-4 eggs are laid in soil..."`,
+            q9: `Paragraph 4: "...used its feathers to make soft cloaks (synonym for clothes)."`,
+            q10: `Paragraph 4: "...introduced species such as deer depleted the remaining forests of food."`,
+            q11: `Paragraph 6: "...and in 1980 it was confirmed females were also present."`,
+            q12: `Paragraph 8: "In 1996, a new Recovery Plan was launched... and a higher amount of funding."`,
+            q13: `Paragraph 10: "...and ensure stakeholders continue to be fully engaged in the preservation..."`,
+            q14: `Section C notes: "...opportunities are limited as the number of these mature survivors is relatively small. 'What are the reasons for their survival?'"`,
+            q15: `Section G highlights the environmental disagreement between Karen Russell and Matt Elliot over cloning.`,
+            q16: `Section B states: "...in the '70s a second epidemic was triggered by shipments of elm from Canada."`,
+            q17: `Section E describes Brighton's situation: "Strong winds from the sea make it difficult for the determined elm bark beetle to attack..."`,
+            q18: `Section C notes: "Once the trunk of the elm reaches 10-15 centimetres or so in diameter, it becomes a perfect size for beetles..."`,
+            q19: `Paragraph F (Karen Russell): "You return in four to six weeks and trees that are resistant show no symptoms, whereas those that are susceptible show leaf loss..."`,
+            q20: `Paragraph G (Matt Elliot): "Sometimes the best thing you can do is just give nature time to recover..."`,
+            q21: `Paragraph C (Karen Russell): "Avoidance, tolerance, resistance? We don't know where the balance lies between the three. I don't see how it can be entirely down to luck."`,
+            q22: `Paragraph E (Peter Bourne): "The beetles can just march in if we're not careful, as the threat is right on our doorstep."`,
+            q23: `Paragraph A (Matt Elliot): "You look at old photographs from the 1960s and it's only then that you realise the impact [elms had]..."`,
+            q24: `Paragraph D: "For centuries, elm ran a close second to oak as the hardwood tree of choice in Britain..."`,
+            q25: `Paragraph D: "...and its wood was used for items such as storage crates (boxes) and flooring."`,
+            q26: `Paragraph D: "...and was used to build the keel of the 19th-century sailing ship Cutty Sark..."`,
+            q27: `Paragraph 1 introduces a common challenge: "...we are all sometimes required to weigh up information under stressful conditions. But do we become better or worse...?"`,
+            q28: `Paragraph 2 states: "These ups and downs [hectic vs relaxed days] presented the perfect setting for an experiment..."`,
+            q29: `Paragraph 4 details how they set up the experiment.`,
+            q30: `Paragraph 7: "Brain imaging reveals that this 'switch' is related to a sudden boost in a neural signal... specifically in response to unexpected warning signs..."`,
+            q31: `Paragraph 5: "People are normally quite optimistic – they will ignore bad news and embrace the good. This is what happened when the firefighters were relaxed."`,
+            q32: `Paragraph 5: "...but when they were under stress... they became hyper-vigilant to bad news... and altered their beliefs in response."`,
+            q33: `Paragraph 5: "In contrast, stress didn’t change how they responded to good news."`,
+            q34: `Paragraph 6: "...students who were told they had to give a surprise public speech... Sure enough, their cortisol levels spiked..."`,
+            q35: `Paragraphs 5 and 6 show that under stress, subjects processed negative information better.`,
+            q36: `Paragraph 9: "Studies show that if we observe positive feeds on social media... more likely to post uplifting messages... If we observe negative posts... create more negative posts."`,
+            q37: `The text says checking your phone is related to stress, but does not compare phones to other electronic media devices.`,
+            q38: `Paragraph 11 says stress "temporarily enhances the likelihood that people will take in negative reports", contradicting "less able to take the information in."`,
+            q39: `Paragraph 11: "As a result, trips are cancelled... stocks are sold, even when holding on is the best thing to do."`,
+            q40: `Paragraph 11: "Our tendency to be affected by other people’s moods can be used in a positive way."`
+        };
+
+        let USER_ANSWERS = {};
+        for(let i = 1; i <= 40; i++) USER_ANSWERS[`q${i}`] = "";
+
+        // NAV GRID
+        const navGrid = document.getElementById('nav-grid');
+        for (let i = 1; i <= 40; i++) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'nav-btn h-9 border border-zinc-300 rounded bg-white text-xs font-bold text-zinc-800 flex items-center justify-center hover:bg-zinc-100 transition-colors cursor-pointer select-none';
+            btn.id = `nav-btn-q${i}`;
+            btn.textContent = i;
+            btn.setAttribute('data-q', i);
+            navGrid.appendChild(btn);
+        }
+
+        // TIMER
+        let timeLeft = 60 * 60;
+        let timerInterval = null;
+        let isTimerRunning = true;
+        const timerDisplay = document.getElementById('timer-display');
+        const btnPauseTimer = document.getElementById('btn-pause-timer');
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (!isTimerRunning) return;
+                timeLeft--;
+                timerDisplay.textContent = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
+                if (timeLeft <= 300) document.getElementById('countdown-timer').classList.add('text-red-500', 'border-red-500', 'animate-pulse');
+                if (timeLeft <= 0) { clearInterval(timerInterval); gradeTest(); }
+            }, 1000);
+        }
+
+        btnPauseTimer.addEventListener('click', () => {
+            isTimerRunning = !isTimerRunning;
+            btnPauseTimer.innerHTML = isTimerRunning ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
+        });
+        startTimer();
+
+        // TABS
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const passages = document.querySelectorAll('.passage-content');
+        const questionSections = document.querySelectorAll('.questions-group-section');
+
+        function activateTab(index) {
+            tabButtons.forEach((btn, i) => btn.className = i === index ? "tab-btn active px-6 py-3 text-xs font-bold border-b-2 border-black uppercase tracking-wider text-black bg-white transition-all" : "tab-btn px-6 py-3 text-xs font-bold text-zinc-400 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all");
+            passages.forEach((p, i) => i === index ? p.classList.remove('hidden') : p.classList.add('hidden'));
+            questionSections.forEach((q, i) => i === index ? q.classList.remove('hidden') : q.classList.add('hidden'));
+        }
+
+        tabButtons.forEach((btn, i) => btn.addEventListener('click', () => activateTab(i)));
+
+        // RECORD ANSWERS LOGIC
+        function updateNavBtnState(qKey, val) {
+            const navBtn = document.getElementById(`nav-btn-${qKey}`);
+            if (!navBtn) return;
+            // Only update if not already graded
+            if(navBtn.classList.contains('nav-correct') || navBtn.classList.contains('nav-wrong')) return;
+
+            if (val.trim() !== "") {
+                navBtn.classList.add('bg-zinc-800', 'text-white', 'border-zinc-800');
+                navBtn.classList.remove('bg-white', 'text-zinc-800');
+            } else {
+                navBtn.classList.remove('bg-zinc-800', 'text-white', 'border-zinc-800');
+                navBtn.classList.add('bg-white', 'text-zinc-800');
+            }
+        }
+
+        // Multiple choice & TFNG
+        document.querySelectorAll('.mc-options-grid').forEach(grid => {
+            const qKey = grid.getAttribute('data-question');
+            const buttons = grid.querySelectorAll('.mc-opt-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    buttons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    USER_ANSWERS[qKey] = this.getAttribute('data-val');
+                    updateNavBtnState(qKey, USER_ANSWERS[qKey]);
+                });
+            });
+        });
+
+        // Table Matching
+        document.querySelectorAll('.table-opt-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.disabled) return;
+                const qKey = this.getAttribute('data-question');
+                document.querySelectorAll(`.table-opt-btn[data-question="${qKey}"]`).forEach(sib => {
+                    sib.classList.remove('bg-zinc-900', 'text-white', 'border-zinc-900');
+                    sib.classList.add('border-zinc-300', 'hover:bg-zinc-100');
+                });
+                this.classList.add('bg-zinc-900', 'text-white', 'border-zinc-900');
+                this.classList.remove('border-zinc-300', 'hover:bg-zinc-100');
+                USER_ANSWERS[qKey] = this.getAttribute('data-val');
+                updateNavBtnState(qKey, USER_ANSWERS[qKey]);
+            });
+        });
+
+        // Blanks
+        document.querySelectorAll('.input-blank').forEach(input => {
+            input.addEventListener('input', function() {
+                const qKey = `q${this.getAttribute('data-qnum')}`;
+                USER_ANSWERS[qKey] = this.value;
+                updateNavBtnState(qKey, this.value);
+            });
+        });
+
+        // Drag & Drop
+        let activeSelectedCard = null;
+        document.querySelectorAll('.draggable-card').forEach(card => {
+            card.addEventListener('dragstart', e => { card.classList.add('dragging'); e.dataTransfer.setData('text/plain', card.getAttribute('data-letter')); });
+            card.addEventListener('dragend', () => card.classList.remove('dragging'));
+            card.addEventListener('click', e => {
+                e.stopPropagation();
+                document.querySelectorAll('.draggable-card').forEach(c => c.classList.remove('border-black', 'border-2', 'ring-2', 'ring-black'));
+                if (activeSelectedCard === card) activeSelectedCard = null;
+                else { activeSelectedCard = card; card.classList.add('border-black', 'border-2', 'ring-2', 'ring-black'); }
+            });
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            const qKey = zone.getAttribute('data-question');
+            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+            zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault(); zone.classList.remove('dragover');
+                assignEnding(qKey, e.dataTransfer.getData('text/plain'), zone);
+            });
+            zone.addEventListener('click', () => {
+                if (activeSelectedCard) {
+                    assignEnding(qKey, activeSelectedCard.getAttribute('data-letter'), zone);
+                    activeSelectedCard.classList.remove('border-black', 'border-2', 'ring-2', 'ring-black');
+                    activeSelectedCard = null;
+                }
+            });
+            zone.querySelector('.btn-clear-drop').addEventListener('click', e => {
+                e.stopPropagation(); clearZone(qKey, zone);
+            });
+        });
+
+        function assignEnding(qKey, letter, zone) {
+            if (zone.classList.contains('cursor-not-allowed')) return; 
+            const card = document.getElementById(`card-${letter}`);
+            if (!card) return;
+            zone.querySelector('.drop-placeholder').classList.add('hidden');
+            const content = zone.querySelector('.dropped-content');
+            content.innerHTML = `<span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">${letter}</span> <span>${card.querySelector('span:last-child').textContent}</span>`;
+            content.classList.remove('hidden');
+            zone.querySelector('.btn-clear-drop').classList.remove('hidden');
+            zone.classList.replace('border-dashed', 'border-solid'); zone.classList.add('border-zinc-800', 'bg-zinc-50');
+            USER_ANSWERS[qKey] = letter; updateNavBtnState(qKey, letter);
+        }
+
+        function clearZone(qKey, zone) {
+            zone.querySelector('.drop-placeholder').classList.remove('hidden');
+            const content = zone.querySelector('.dropped-content'); content.classList.add('hidden'); content.innerHTML = '';
+            zone.querySelector('.btn-clear-drop').classList.add('hidden');
+            zone.classList.replace('border-solid', 'border-dashed'); zone.classList.remove('border-zinc-800', 'bg-zinc-50');
+            USER_ANSWERS[qKey] = ""; updateNavBtnState(qKey, "");
+        }
+
+        // NAV MAP SCROLL LINK
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetQNum = parseInt(this.getAttribute('data-q'));
+                let passageIdx = targetQNum <= 13 ? 0 : targetQNum <= 26 ? 1 : 2;
+                activateTab(passageIdx);
+
+                let targetElem = document.getElementById(`q-target-${targetQNum}`);
+                if (!targetElem) targetElem = document.getElementById(`q-target-notes-p1`) || document.getElementById(`q-target-summary-p2`);
+
+                if (targetElem) {
+                    document.getElementById('questions-panel').scrollTo({ top: targetElem.offsetTop - document.getElementById('questions-panel').offsetTop - 16, behavior: 'smooth' });
+                    targetElem.classList.add('highlight-scroll');
+                    setTimeout(() => targetElem.classList.remove('highlight-scroll'), 1200);
+                }
+            });
+        });
+
+        // IELTS ACADEMIC READING BAND SCORE CONVERSION 
+        function calculateBandScore(score) {
+            if (score >= 39) return "9.0";
+            if (score >= 37) return "8.5";
+            if (score >= 35) return "8.0";
+            if (score >= 33) return "7.5";
+            if (score >= 30) return "7.0";
+            if (score >= 27) return "6.5";
+            if (score >= 23) return "6.0";
+            if (score >= 19) return "5.5";
+            if (score >= 15) return "5.0";
+            if (score >= 13) return "4.5";
+            if (score >= 10) return "4.0";
+            if (score >= 8) return "3.5";
+            if (score >= 6) return "3.0";
+            if (score >= 4) return "2.5";
+            if (score >= 2) return "2.0";
+            if (score === 1) return "1.0";
+            return "0.0";
+        }
+
+        // GRADING ENGINE
+        let hasGraded = false;
+        function gradeTest() {
+            if (hasGraded) return;
+            hasGraded = true;
+            isTimerRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('btn-submit-exam').disabled = true;
+            document.getElementById('btn-submit-exam').classList.replace('hover:bg-zinc-800', 'opacity-50');
+            
+            let score = 0;
+
+            for (let i = 1; i <= 40; i++) {
+                const qKey = `q${i}`;
+                const userAns = (USER_ANSWERS[qKey] || "").trim();
+                const correctAns = KEY_ANSWERS[qKey];
+                const isCorrect = userAns.toLowerCase() === correctAns.toLowerCase();
+                
+                if (isCorrect) score++;
+
+                // Nav Map Update
+                const navBtn = document.getElementById(`nav-btn-q${i}`);
+                navBtn.className = `nav-btn h-9 rounded text-xs font-bold flex items-center justify-center cursor-pointer select-none ${isCorrect ? 'nav-correct' : 'nav-wrong'}`;
+
+                // Extract Question Category
+                const isMC = (i >= 1 && i <= 6) || (i >= 19 && i <= 23) || (i >= 27 && i <= 30) || (i >= 36 && i <= 40);
+                const isTable = (i >= 14 && i <= 18);
+                const isDrag = (i >= 31 && i <= 35);
+                const isBlank = (i >= 7 && i <= 13) || (i >= 24 && i <= 26);
+                
+                const targetCard = document.getElementById(`q-target-${i}`);
+                
+                // Explanations Box Enable
+                let explBox = null;
+                if (isTable) { explBox = targetCard.querySelector('.explanation'); }
+                else if (isBlank && i >= 24) { explBox = document.getElementById(`explanation-${qKey}`); }
+                else if (targetCard) { explBox = targetCard.querySelector('.explanation'); }
+                
+                if (explBox) {
+                    explBox.classList.remove('hidden');
+                    explBox.innerHTML = `<strong>Explanation:</strong> ${EXPLANATIONS[qKey]}`;
+                }
+
+                // UI Marking Logic
+                if (isMC) {
+                    const buttons = targetCard.querySelectorAll('.mc-opt-btn');
+                    buttons.forEach(btn => {
+                        const val = btn.getAttribute('data-val');
+                        btn.disabled = true; 
+                        btn.classList.remove('active'); 
+                        if (val === correctAns) {
+                            btn.classList.add('graded-correct');
+                        } else if (val === userAns) {
+                            btn.classList.add('graded-wrong');
+                        }
+                    });
+                } 
+                else if (isTable) {
+                    const buttons = document.querySelectorAll(`.table-opt-btn[data-question="${qKey}"]`);
+                    buttons.forEach(btn => {
+                        const val = btn.getAttribute('data-val');
+                        btn.disabled = true;
+                        btn.classList.remove('bg-zinc-900', 'text-white', 'border-zinc-900');
+                        if (val === correctAns) {
+                            btn.className = "table-opt-btn w-6 h-6 rounded-full border border-green-600 bg-green-500 text-white text-[10px] font-bold";
+                        } else if (val === userAns) {
+                            btn.className = "table-opt-btn w-6 h-6 rounded-full border border-red-500 bg-red-100 text-red-600 line-through text-[10px] font-bold";
+                        } else {
+                            btn.classList.add('opacity-50');
+                        }
+                    });
+                }
+                else if (isDrag) {
+                    const zone = document.querySelector(`.drop-zone[data-question="${qKey}"]`);
+                    if (zone) {
+                        zone.classList.add('cursor-not-allowed');
+                        const clearBtn = zone.querySelector('.btn-clear-drop');
+                        if (clearBtn) clearBtn.classList.add('hidden');
+
+                        if (isCorrect) {
+                            zone.classList.replace('border-zinc-800', 'border-green-500');
+                            zone.classList.replace('bg-zinc-50', 'bg-green-50');
+                            zone.querySelector('.dropped-content').classList.add('text-green-800');
+                        } else {
+                            zone.classList.add('border-red-500', 'bg-red-50', 'border-solid');
+                            zone.classList.remove('border-dashed');
+                            if (userAns) {
+                                zone.querySelector('.dropped-content').classList.add('line-through', 'text-red-500');
+                            }
+                            
+                            const correctCard = document.getElementById(`card-${correctAns}`);
+                            const correctText = correctCard ? correctCard.querySelector('span:last-child').textContent : '';
+                            const corrElem = document.createElement('div');
+                            corrElem.className = "text-green-600 font-bold text-xs mt-2 block w-full text-left";
+                            corrElem.innerHTML = `Correct: <span class="px-1.5 py-0.5 bg-green-600 text-white rounded text-[10px] mx-1">${correctAns}</span> ${correctText}`;
+                            zone.appendChild(corrElem);
+                        }
+                    }
+                }
+                else if (isBlank) {
+                    const input = document.getElementById(`blank-${qKey}`);
+                    if (input) {
+                        input.disabled = true;
+                        input.classList.remove('border-black', 'border-zinc-400', 'bg-transparent');
+                        if (isCorrect) {
+                            input.classList.add('input-correct');
+                        } else {
+                            input.classList.add('input-wrong');
+                            const corrElem = document.createElement('span');
+                            corrElem.className = 'ml-2 text-green-600 font-bold text-sm bg-green-50 px-2 py-0.5 rounded border border-green-200';
+                            corrElem.innerText = correctAns;
+                            input.parentNode.insertBefore(corrElem, input.nextSibling);
+                        }
+                    }
+                }
+            }
+
+            // Assign Scores to Modal
+            document.getElementById('modal-score').textContent = `${score}/40`;
+            document.getElementById('modal-band-score').textContent = calculateBandScore(score);
+            
+            document.getElementById('score-modal').classList.remove('opacity-0', 'pointer-events-none');
+            document.getElementById('score-modal-content').classList.remove('scale-95');
+        }
+
+        document.getElementById('btn-submit-exam').addEventListener('click', gradeTest);
+        document.getElementById('modal-close-btn').addEventListener('click', () => {
+            document.getElementById('score-modal').classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('score-modal-content').classList.add('scale-95');
+        });
+
+        // HIGHLIGHT SYSTEM
+        const passageContainer = document.getElementById('passage-container');
+        const highlightMenu = document.getElementById('highlight-menu');
+        
+        passageContainer.addEventListener('mouseup', () => {
+            const selection = window.getSelection();
+            if (selection.isCollapsed || selection.toString().trim() === "") {
+                highlightMenu.style.display = 'none'; return;
+            }
+            const range = selection.getRangeAt(0);
+            const rect = range.getBoundingClientRect();
+            const containerRect = passageContainer.getBoundingClientRect();
+            highlightMenu.style.left = `${rect.left - containerRect.left + (rect.width / 2) - 65}px`;
+            highlightMenu.style.top = `${rect.top - containerRect.top + passageContainer.scrollTop - 48}px`;
+            highlightMenu.style.display = 'flex';
+        });
+
+        document.querySelectorAll('.hl-color-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const color = this.getAttribute('data-color');
+                const selection = window.getSelection();
+                if (!selection.rangeCount || selection.toString().trim() === "") return;
+                
+                const range = selection.getRangeAt(0);
+                const mark = document.createElement('mark');
+                mark.className = 'ielts-highlight'; mark.style.backgroundColor = color;
+                mark.addEventListener('click', function(e) { e.stopPropagation(); this.replaceWith(...this.childNodes); });
+                
+                try { range.surroundContents(mark); } 
+                catch (err) { const frag = range.extractContents(); mark.appendChild(frag); range.insertNode(mark); }
+                
+                selection.removeAllRanges(); highlightMenu.style.display = 'none';
+            });
+        });
+
+        document.getElementById('btn-clear-selection').addEventListener('click', e => {
+            e.stopPropagation();
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
+            const parent = range.commonAncestorContainer;
+            const marks = (parent.nodeType === 1 ? parent : parent.parentNode).querySelectorAll('mark.ielts-highlight');
+            marks.forEach(mark => { if (selection.containsNode(mark, true)) mark.replaceWith(...mark.childNodes); });
+            selection.removeAllRanges(); highlightMenu.style.display = 'none';
+        });
+
+        document.addEventListener('mousedown', e => { if (!highlightMenu.contains(e.target) && !e.target.classList.contains('passage-content')) highlightMenu.style.display = 'none'; });
+
+        // SPLITTER RESIZE CONTROLS
+        const resizeHandle = document.getElementById('resize-handle');
+        const workspaceContainer = document.getElementById('workspace-container');
+        let isResizing = false;
+
+        function startResize(e) { isResizing = true; resizeHandle.classList.add('bg-black'); document.body.style.cursor = 'col-resize'; document.body.style.userSelect = 'none'; }
+        function onResize(e) {
+            if (!isResizing) return;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const rect = workspaceContainer.getBoundingClientRect();
+            let newWidthPercent = ((clientX - rect.left) / rect.width) * 100;
+            passageContainer.style.width = `${Math.min(Math.max(newWidthPercent, 25), 75)}%`;
+        }
+        function stopResize() { if (isResizing) { isResizing = false; resizeHandle.classList.remove('bg-black'); document.body.style.cursor = ''; document.body.style.userSelect = ''; } }
+
+        resizeHandle.addEventListener('mousedown', startResize); document.addEventListener('mousemove', onResize); document.addEventListener('mouseup', stopResize);
+        resizeHandle.addEventListener('touchstart', startResize); document.addEventListener('touchmove', onResize); document.addEventListener('touchend', stopResize);
+    </script>
+</body>
+</html>

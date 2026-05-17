@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Reading Full Mock Test</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f4f4f5; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+
+        /* Clean Minimalist Highlights */
+        mark.ielts-highlight { border-radius: 2px; cursor: pointer; transition: opacity 0.2s; }
+        mark.ielts-highlight:hover { opacity: 0.8; }
+        
+        .question-target { transition: background-color 0.5s ease; scroll-margin-top: 20px; }
+        .question-target.highlight-scroll { background-color: #e4e4e7; }
+
+        /* Drag and Drop */
+        .draggable-card { touch-action: none; transition: opacity 0.2s, transform 0.2s; }
+        .draggable-card.dragging { opacity: 0.4; }
+        .drop-zone.dragover { border-color: #000 !important; background-color: #f4f4f5 !important; }
+
+        /* Radio Buttons */
+        .mc-opt-btn.active { border-color: #000000 !important; background-color: #f4f4f5 !important; }
+        .mc-opt-btn.active .radio-circle { border-color: #000000 !important; }
+        .mc-opt-btn.active .radio-dot { transform: scale(1) !important; opacity: 1 !important; }
+
+        /* Multi Select Checkboxes */
+        .ms-opt-btn.active { border-color: #000000 !important; background-color: #f4f4f5 !important; }
+        .ms-opt-btn.active .check-box { border-color: #000000 !important; }
+        .ms-opt-btn.active .fa-check { color: #000000 !important; }
+
+        /* GRADING CSS CLASSES (GREEN = CORRECT, RED = WRONG) */
+        .graded-correct { background-color: #f0fdf4 !important; border-color: #22c55e !important; color: #15803d !important; }
+        .graded-correct .radio-circle { border-color: #22c55e !important; }
+        .graded-correct .radio-dot { background-color: #22c55e !important; transform: scale(1) !important; opacity: 1 !important; }
+        .graded-correct .check-box { border-color: #22c55e !important; background-color: #22c55e !important; }
+        .graded-correct .fa-check { color: white !important; }
+
+        .graded-wrong { background-color: #fef2f2 !important; border-color: #ef4444 !important; color: #b91c1c !important; text-decoration: line-through; }
+        .graded-wrong .radio-circle { border-color: #ef4444 !important; }
+        .graded-wrong .radio-dot { background-color: #ef4444 !important; transform: scale(1) !important; opacity: 1 !important; }
+        .graded-wrong .check-box { border-color: #ef4444 !important; background-color: #ef4444 !important; }
+        .graded-wrong .fa-check { color: white !important; }
+
+        .input-correct { border-color: #22c55e !important; background-color: #f0fdf4 !important; color: #15803d !important; font-weight: bold; }
+        .input-wrong { border-color: #ef4444 !important; background-color: #fef2f2 !important; color: #ef4444 !important; text-decoration: line-through; }
+        
+        .nav-correct { background-color: #22c55e !important; color: white !important; border-color: #16a34a !important; }
+        .nav-wrong { background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; text-decoration: line-through; }
+    </style>
+</head>
+<body class="bg-white text-zinc-900 overflow-hidden h-screen flex flex-col font-sans">
+
+    <!-- HEADER -->
+    <header class="bg-black text-white px-6 py-4 flex justify-between items-center border-b-2 border-black z-30 select-none shrink-0">
+        <div class="logo-area">
+            <h1 class="text-lg font-bold tracking-widest uppercase">Reading Test</h1>
+        </div>
+        
+        <div class="flex items-center gap-3 bg-zinc-900 px-4 py-2 rounded border border-zinc-800 font-mono text-base font-bold transition-all" id="countdown-timer">
+            <i class="fa-regular fa-clock text-sm"></i>
+            <span id="timer-display">60:00</span>
+            <button class="text-white hover:opacity-75 transition-opacity ml-2" id="btn-pause-timer" title="Pause / Resume Timer">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- TABS -->
+    <div class="flex bg-zinc-100 border-b border-zinc-200 px-6 gap-1 select-none z-20 shrink-0">
+        <button class="tab-btn active px-6 py-3 text-xs font-bold text-zinc-500 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all" data-target="0">Passage 1</button>
+        <button class="tab-btn px-6 py-3 text-xs font-bold text-zinc-500 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all" data-target="1">Passage 2</button>
+        <button class="tab-btn px-6 py-3 text-xs font-bold text-zinc-500 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all" data-target="2">Passage 3</button>
+    </div>
+
+    <!-- WORKSPACE -->
+    <div class="flex flex-1 overflow-hidden relative" id="workspace-container">
+        
+        <!-- LEFT PANEL: PASSAGES -->
+        <div class="w-1/2 min-w-[25%] max-w-[75%] h-full overflow-y-auto p-10 bg-white border-r border-zinc-200 relative select-text" id="passage-container">
+            
+            <div class="bg-zinc-100 border border-zinc-200 p-3 rounded text-xs text-zinc-700 mb-6 flex items-center gap-2 select-none">
+                <i class="fa-solid fa-circle-info text-black flex-shrink-0"></i>
+                <span><strong>Highlight Tool:</strong> Select any text in the passage or questions to highlight it. Click a highlighted block to remove the highlight. (For drag items, <strong>double-click</strong> to select a word).</span>
+            </div>
+
+            <!-- PASSAGE 1 -->
+            <div id="passage-content-0" class="passage-content block">
+                <div class="text-xs uppercase font-bold text-zinc-500 mb-2 tracking-wider">Reading Passage 1</div>
+                <h1 class="font-serif text-3xl font-bold mb-5 pb-3 border-b-2 border-black">Frozen Food</h1>
+                <div class="italic text-zinc-700 border-l-2 border-black pl-4 mb-6 leading-relaxed">
+                    A US perspective on the development of the frozen food industry
+                </div>
+                <div class="font-serif text-base leading-relaxed text-justify space-y-5 text-black">
+                    <p>At some point in history, humans discovered that ice preserved food. There is evidence that winter ice was stored to preserve food in the summer as far back as 10,000 years ago. Two thousand years ago, the inhabitants of South America’s Andean mountains had a unique means of conserving potatoes for later consumption. They froze them overnight, then trampled them to squeeze out the moisture, then dried them in the sun. This preserved their nutritional value-if not their aesthetic appeal.</p>
+                    <p>Natural ice remained the main form of refrigeration until late in the 19th century. In the early 1800s, ship owners from Boston, USA, had enormous blocks of Arctic ice towed all over the Atlantic for the purpose of food preservation. In 1851, railroads first began putting blocks of ice in insulated rail cars to send butter from Ogdensburg, New York, to Boston.</p>
+                    <p>Finally, in 1870, Australian inventors found a way to make ‘mechanical ice’. They used a compressor to force a gas-ammonia at first and later Freon-through a condenser. The compressed gas gave up some of its heat as it moved through the condenser. Then the gas was released quickly into a low-pressure evaporator coil where it became liquid and cold. Air was blown over the evaporator coil and then this cooled air passed into an insulated compartment, lowering its temperature to freezing point.</p>
+                    <p>Initially, this process was invented to keep Australian beer cool even in hot weather. But Australian cattlemen were quick to realize that, if they could put this new invention on a ship, they could export meat across the oceans. In 1880, a shipment of Australian beef and mutton was sent, frozen, to England. While the food frozen this way was still palatable, there was some deterioration. During the freezing process, crystals formed within the cells of the food, and when the ice expanded and the cells burst, this spoilt the flavor and texture of the food.</p>
+                    <p>The modern frozen food industry began with the indigenous Inuit people of Canada. In 1912, a biology student in Massachusetts, USA, named Clarence Birdseye, ran out of money and went to Labrador in Canada to trap and trade furs. While he was there, he became fascinated with how the Inuit would quickly freeze fish in the Arctic air. The fish looked and tasted fresh even months later.</p>
+                    <p>Birdseye returned to the USA in 1917 and began developing mechanical freezers capable of quick-freezing food. Birdseye methodically kept inventing better freezers and gradually built a business selling frozen fish from Gloucester, Massachusetts. In 1929, his business was sold and became General Foods, but he stayed with the company as director of research, and his division continued to innovate.</p>
+                    <p>Birdseye was responsible for several key innovations that made the frozen food industry possible. He developed quick-freezing techniques that reduced the damage that crystals caused, as well as the technique of freezing the product in the package it was to be sold in. He also introduced the use of cellophane, the first transparent material for food packaging, which allowed consumers to see the quality of the product. Birdseye products also came in convenient size packages that could be prepared with a minimum of effort.</p>
+                    <p>But there were still obstacles. In the 1930s, few grocery stores could afford to buy freezers for a market that wasn’t established yet. So, Birdseye leased inexpensive freezer cases to them. He also leased insulated railroad cars so that he could ship his products nationwide. However, few consumers had freezers large enough or efficient enough to take advantage of the products.</p>
+                    <p>Sales increased in the early 1940s, when World War II gave a boost to the frozen food industry because tin was being used for munitions. Canned foods were rationed to save tin for the war effort, while frozen foods were abundant and cheap. Finally, by the 1950s, refrigerator technology had developed far enough to make these appliances affordable for the average family. By 1953, 33 million US families owned a refrigerator, and manufacturers were gradually increasing the size of the freezer compartments in them.</p>
+                    <p>1950s families were also looking for convenience at mealtimes, so the moment was right for the arrival of the ‘TV Dinner’. Swanson Foods was a large, nationally recognized producer of canned and frozen poultry. In 1954, the company adapted some of Birdseye’s freezing techniques, and with the help of a clever name and a huge advertising budget, it launched the first ‘TV Dinner’. This consisted of frozen turkey, potatoes and vegetables served in the same segmented aluminum tray that was used by airlines. The product was an instant success. Within a year, Swanson had sold 13 million TV dinners. American consumers couldn’t resist the combination of a trusted brand name, a single-serving package and the convenience of a meal that could be ready after only 25 minutes in a hot oven. By 1959, Americans were spending $2.7 billion annually on frozen foods, and half a billion of that was spent on ready-prepared meals such as the TV Dinner.</p>
+                    <p>Today, the US frozen food industry has a turnover of over $67 billion annually, with $26.6 billion of that sold to consumers for home consumption. The remaining $40 billion in frozen food sales come through restaurants, cafeterias, hospitals and schools, and that represents a third of the total food service sales.</p>
+                </div>
+            </div>
+
+            <!-- PASSAGE 2 (WITH INLINE DROP ZONES) -->
+            <div id="passage-content-1" class="passage-content hidden">
+                <div class="text-xs uppercase font-bold text-zinc-500 mb-2 tracking-wider">Reading Passage 2</div>
+                <h1 class="font-serif text-3xl font-bold mb-5 pb-3 border-b-2 border-black">Can the planet’s coral reefs be saved?</h1>
+                
+                <!-- Section A -->
+                <div class="mb-8 question-target" id="q-target-14">
+                    <div class="border-l-4 border-black pl-4 mb-5">
+                        <div class="text-xs font-bold uppercase tracking-widest text-zinc-800 mb-2">Section A</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 bg-zinc-50 rounded p-3 text-center text-sm text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q14" data-group="headings">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop heading here...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text w-full"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2 absolute right-3"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-3 pt-2 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <p class="font-serif text-base leading-relaxed text-justify text-black">Conservationists have put the final touches to a giant artificial reef they have been assembling at the world-renowned Zoological Society of London (London Zoo). Samples of the planet’s most spectacular corals – vivid green branching coral, yellow scroll, blue ridge and many more species – have been added to the giant tank along with fish that thrive in their presence: blue tang, clownfish and many others. The reef is in the zoo’s new gallery, Tiny Giants, which is dedicated to the minuscule invertebrate creatures that sustain life across the planet. The coral reef tank and its seven-metre-wide window form the core of the exhibition.</p>
+                    <p class="font-serif text-base leading-relaxed text-justify text-black mt-3">‘Coral reefs are the most diverse ecosystems on Earth and we want to show people how wonderful they are,’ said Paul Pearce-Kelly, senior curator of invertebrates and fish at the Zoological Society of London. ‘However, we also want to highlight the research and conservation efforts that are now being carried out to try to save them from the threat of global warming.’ They want people to see what is being done to try to save these wonders.</p>
+                </div>
+
+                <!-- Section B -->
+                <div class="mb-8 question-target" id="q-target-15">
+                    <div class="border-l-4 border-black pl-4 mb-5">
+                        <div class="text-xs font-bold uppercase tracking-widest text-zinc-800 mb-2">Section B</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 bg-zinc-50 rounded p-3 text-center text-sm text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q15" data-group="headings">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop heading here...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text w-full"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2 absolute right-3"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-3 pt-2 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <p class="font-serif text-base leading-relaxed text-justify text-black">Corals are composed of tiny animals, known as polyps, with tentacles for capturing small marine creatures in the sea water. These polyps are transparent but get their brilliant tones of pink, orange, blue, green, etc. from algae that live within them, which in turn get protection, while their photosynthesising of the sun’s rays provides nutrients for the polyps. This comfortable symbiotic relationship has led to the growth of coral reefs that cover 0.1% of the planet’s ocean bed while providing homes for more than 25% of marine species, including fish, molluscs, sponges and shellfish.</p>
+                </div>
+
+                <!-- Section C -->
+                <div class="mb-8 question-target" id="q-target-16">
+                    <div class="border-l-4 border-black pl-4 mb-5">
+                        <div class="text-xs font-bold uppercase tracking-widest text-zinc-800 mb-2">Section C</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 bg-zinc-50 rounded p-3 text-center text-sm text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q16" data-group="headings">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop heading here...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text w-full"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2 absolute right-3"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-3 pt-2 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <p class="font-serif text-base leading-relaxed text-justify text-black">As a result, coral reefs are often described as the ‘rainforests of the sea’, though the comparison is dismissed by some naturalists, including David Attenborough. ‘People say you cannot beat the rainforest,’ Attenborough has stated. ‘But that is simply not true. You go there and the first thing you think is: where are the birds? Where are the animals? They are hiding in the trees, of course. No, if you want beauty and wildlife, you want a coral reef. Put on a mask and stick your head under the water. The sight is mind-blowing.’</p>
+                </div>
+
+                <!-- Section D -->
+                <div class="mb-8 question-target" id="q-target-17">
+                    <div class="border-l-4 border-black pl-4 mb-5">
+                        <div class="text-xs font-bold uppercase tracking-widest text-zinc-800 mb-2">Section D</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 bg-zinc-50 rounded p-3 text-center text-sm text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q17" data-group="headings">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop heading here...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text w-full"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2 absolute right-3"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-3 pt-2 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <p class="font-serif text-base leading-relaxed text-justify text-black">Unfortunately, these majestic sights are now under very serious threat, with the most immediate problem coming in the form of thermal stress. Rising ocean temperatures are triggering bleaching events that strip reefs of their colour and eventually kill them. And that is just the start. Other menaces include ocean acidification, sea level increase, pollution by humans, deoxygenation and ocean current changes, while the climate crisis is also increasing habitat destruction. As a result, vast areas – including massive chunks of Australia’s Great Barrier Reef – have already been destroyed, and scientists advise that more than 90% of reefs could be lost by 2050 unless urgent action is taken to tackle global heating and greenhouse gas emissions.</p>
+                    <p class="font-serif text-base leading-relaxed text-justify text-black mt-3">Pearce-Kelly says that coral reefs have to survive really harsh conditions – wave erosion and other factors. And ‘when things start to go wrong in the oceans, then corals will be the first to react. And that is exactly what we are seeing now. Coral reefs are dying and they are telling us that all is not well with our planet.’</p>
+                </div>
+
+                <!-- Section E -->
+                <div class="mb-8 question-target" id="q-target-18">
+                    <div class="border-l-4 border-black pl-4 mb-5">
+                        <div class="text-xs font-bold uppercase tracking-widest text-zinc-800 mb-2">Section E</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 bg-zinc-50 rounded p-3 text-center text-sm text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q18" data-group="headings">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop heading here...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text w-full"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2 absolute right-3"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-3 pt-2 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <p class="font-serif text-base leading-relaxed text-justify text-black">However, scientists are trying to pinpoint hardy types of coral that could survive our overheated oceans, and some of this research will be carried out at London Zoo. ‘Behind our … coral reef tank we have built laboratories where scientists will be studying coral species,’ said Pearce-Kelly. One aim will be to carry out research on species to find those that can survive best in warm, acidic waters. Another will be to try to increase coral breeding rates. ‘Coral spawn just once a year,’ he added. ‘However, aquarium-based research has enabled some corals to spawn artificially, which can assist coral reef restoration efforts. And if this can be extended for all species, we could consider the launching of coral-spawning programmes several times a year. That would be a big help in restoring blighted reefs.’</p>
+                </div>
+
+                <!-- Section F -->
+                <div class="mb-8 question-target" id="q-target-19">
+                    <div class="border-l-4 border-black pl-4 mb-5">
+                        <div class="text-xs font-bold uppercase tracking-widest text-zinc-800 mb-2">Section F</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 bg-zinc-50 rounded p-3 text-center text-sm text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q19" data-group="headings">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop heading here...</span>
+                            <div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text w-full"></div>
+                            <button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2 absolute right-3"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-3 pt-2 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <p class="font-serif text-base leading-relaxed text-justify text-black">Research in these fields is being conducted in laboratories around the world, with the London Zoo centre linked to this global network. Studies carried out in one centre can then be tested in others. The resulting young coral can then be displayed in the tank in Tiny Giants. ‘The crucial point is that the progress we make in making coral better able to survive in a warming world can be shown to the public and encourage them to believe that we can do something to save the planet’s reefs,’ said Pearce-Kelly. ‘Saving our coral reefs is now a critically important ecological goal.’</p>
+                </div>
+            </div>
+
+            <!-- PASSAGE 3 -->
+            <div id="passage-content-2" class="passage-content hidden">
+                <div class="text-xs uppercase font-bold text-zinc-500 mb-2 tracking-wider">Reading Passage 3</div>
+                <h1 class="font-serif text-3xl font-bold mb-5 pb-3 border-b-2 border-black">Robots and us</h1>
+                <div class="italic text-zinc-700 border-l-2 border-black pl-4 mb-6 leading-relaxed">
+                    Three leaders in their fields answer questions about our relationships with robot
+                </div>
+                <div class="font-serif text-base leading-relaxed text-justify space-y-5 text-black">
+                    <p>When asked ‘Should robots be used to colonise other planets?’, cosmology and astrophysics Professor Martin Rees said he believed the solar system would be mapped by robotic craft by the end of the century. ‘The next step would be mining of asteroids, enabling fabrication of large structures in space without having to bring all the raw materials from Earth…. I think this is more realistic and benign than the … “terraforming”* of planets.’ He maintains that colonised planets ‘should be preserved with a status that is analogous to Antarctica here on Earth.’</p>
+                    <p>On the question of using robots to colonise other planets and exploit mineral resources, engineering Professor Daniel Wolpert replied, ‘I don’t see a pressing need to colonise other planets unless we can bring [these] resources back to Earth. The vast majority of Earth is currently inaccessible to us. Using robots to gather resources nearer to home would seem to be a better use of our robotic tools.’</p>
+                    <p>Meanwhile, for anthropology Professor Kathleen Richardson, the idea of ‘colonisation’ of other planets seemed morally dubious: ‘I think whether we do something on Earth or on Mars we should always do it in the spirit of a genuine interest in “the Other”, not to impose a particular model, but to meet “the Other”.’</p>
+                    <p>In response to the second question, ‘How soon will machine intelligence outstrip human intelligence?’, Rees mentions robots that are advanced enough to beat humans at chess, but then goes on to say, ‘Robots are still limited in their ability to sense their environment: they can’t yet recognise and move the pieces on a real chessboard as cleverly as a child can. Later this century, however, their more advanced successors may relate to their surroundings, and to people, as adeptly as we do. Moral questions then arise. … Should we feel guilty about exploiting [sophisticated robots]? Should we fret if they are underemployed, frustrated, or bored?’</p>
+                    <p>Wolpert’s response to the question about machine intelligence outstripping human intelligence was this: ‘In a limited sense it already has. Machines can already navigate, remember and search for items with an ability that far outstrips humans. However, there is no machine that can identify visual objects or speech with the reliability and flexibility of humans…. Expecting a machine close to the creative intelligence of a human within the next 50 years would be highly ambitious.’</p>
+                    <p>Richardson believes that our fear of machines becoming too advanced has more to do with human nature than anything intrinsic to the machines themselves. In her view, it stems from humans’ tendency to personify inanimate objects: we create machines based on representations of ourselves, imagine that machines think and behave as we do, and therefore see them as an autonomous threat. ‘One of the consequences of thinking that the problem lies with machines is that we tend to imagine they are greater and more powerful than they really are and subsequently they become so.’</p>
+                    <p>This led on to the third question, ‘Should we be scared by advances in artificial intelligence?’ To this question, Rees replied, ‘Those who should be worried are the futurologists who believe in the so-called “singularity”.** … And another worry is that we are increasingly dependent on computer networks, and that these could behave like a single “brain” with a mind of its own, and with goals that may be contrary to human welfare. I think we should ensure that robots remain as no more than “idiot savants” lacking the capacity to outwit us, even though they may greatly surpass us in the ability to calculate and process information.’</p>
+                    <p>Wolpert’s response was to say that we have already seen the damaging effects of artificial intelligence in the form of computer viruses. ‘But in this case,’ he says, ‘the real intelligence is the malicious designer. Critically, the benefits of computers outweigh the damage that computer viruses cause. Similarly, while there may be misuses of robotics in the near future, the benefits that they will bring are likely to outweigh these negative aspects.’</p>
+                    <p>Richardson’s response to this question was this: ‘We need to ask why fears of artificial intelligence and robots persist; none have in fact risen up and challenged human supremacy.’ She believes that as robots have never shown themselves to be a threat to humans, it seems unlikely that they ever will. In fact, she went on, ‘Not all fear [robots]; many people welcome machine intelligence.’</p>
+                    <p>In answer to the fourth question, What can science fiction tell us about robotics?’, Rees replied, ‘I sometimes advise students that it’s better to read first-rate science fiction than second-rate science more stimulating, and perhaps no more likely to be wrong.’</p>
+                    <p>As his response, Wolpert commented, ‘Science fiction has often been remarkable at predicting the future. Science fiction has painted a vivid spectrum of possible futures, from cute and helpful robots to dystopian robotic societies. Interestingly, almost no science fiction envisages a future without robots.’</p>
+                    <p>Finally, on the question of science fiction, Richardson pointed out that in modern society, people tend to think there is reality on the one hand, and fiction and fantasy on the other. She then explained that the division did not always exist, and that scientists and technologists made this separation because they wanted to carve out the sphere of their work. ‘But the divide is not so clear cut, and that is why the worlds seem to collide at times,’ she said. ‘In some cases, we need to bring these different understandings together to get a whole perspective. Perhaps then, we won’t be so frightened that something we create as a copy of ourselves will be a [threat] to us.’</p>
+                    <p class="text-xs border-t border-zinc-200 pt-3 text-zinc-500 italic mt-6">
+                        *terraforming: modifying a planet’s atmosphere to suit human needs<br>
+                        ** singularity: the point when robots will be able to start creating ever more sophisticated versions of themselves
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- RESIZABLE DRAGGABLE SPLITTER BAR -->
+        <div class="w-2 bg-zinc-200 cursor-col-resize flex items-center justify-center hover:bg-black active:bg-black transition-colors z-40 relative select-none shrink-0" id="resize-handle" title="Drag to adjust width">
+            <div class="w-[2px] h-6 bg-zinc-400 rounded-full"></div>
+        </div>
+
+        <!-- RIGHT PANEL: QUESTIONS PANEL -->
+        <div class="flex-1 h-full overflow-y-auto px-6 md:px-10 py-8 bg-white select-none" id="questions-panel">
+            
+            <!-- QUESTIONS FOR PASSAGE 1 -->
+            <div id="questions-content-0" class="questions-group-section block">
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 1–7</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Complete the notes below. Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.</p>
+                </div>
+
+                <div class="question-target border border-zinc-200 rounded p-6 mb-10 select-text" id="q-target-notes-p1">
+                    <h4 class="text-sm font-bold uppercase mb-4 tracking-wide pb-1.5 border-b border-zinc-200 text-black">The history of frozen food</h4>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">2,000 years ago, South America</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-1">
+                                    People conserved the nutritional value of 
+                                    <input type="text" id="blank-q1" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[1]" data-qnum="1">
+                                    , using a method of freezing then drying.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">1851, USA</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-2">
+                                    <input type="text" id="blank-q2" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[2]" data-qnum="2"> 
+                                    was kept cool by ice during transportation in specially adapted trains.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">1880, Australia</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-3">
+                                    Two kinds of 
+                                    <input type="text" id="blank-q3" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[3]" data-qnum="3"> 
+                                    were the first frozen food shipped to England.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">1917 onwards, USA</span>
+                            <div class="text-sm mt-2 ml-5">Clarence Birdseye introduced innovations including:</div>
+                            <ul class="list-none pl-10 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded relative before:content-['○'] before:absolute before:-left-4 before:top-2.5" id="q-target-4">
+                                    quick-freezing methods, so that 
+                                    <input type="text" id="blank-q4" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[4]" data-qnum="4">
+                                    did not spoil the food.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                                <li class="p-2 rounded relative before:content-['○'] before:absolute before:-left-4 before:top-2.5" id="q-target-5">
+                                    packaging products with 
+                                    <input type="text" id="blank-q5" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[5]" data-qnum="5">
+                                    so the product was visible.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">Early 1940s, USA</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-6">
+                                    Frozen food became popular because of a shortage of 
+                                    <input type="text" id="blank-q6" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[6]" data-qnum="6">
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">1950s, USA</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-7">
+                                    A large number of homes now had a 
+                                    <input type="text" id="blank-q7" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[7]" data-qnum="7">
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 8–13</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Do the following statements agree with the information given in Reading Passage 1?</p>
+                </div>
+
+                <!-- Q8-13 Block -->
+                <div class="space-y-6 mb-10">
+                    <!-- Q8 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-8" data-qnum="8">
+                        <div class="text-sm font-bold mb-3 select-text">8. The ice transportation business made some Boston ship owners very wealthy in the early 1800s.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q8">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q9 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-9" data-qnum="9">
+                        <div class="text-sm font-bold mb-3 select-text">9. A disadvantage of the freezing process invented in Australia was that it affected the taste of food.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q9">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q10 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-10" data-qnum="10">
+                        <div class="text-sm font-bold mb-3 select-text">10. Clarence Birdseye travelled to Labrador in order to learn how the Inuit people froze fish.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q10">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q11 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-11" data-qnum="11">
+                        <div class="text-sm font-bold mb-3 select-text">11. Swanson Foods invested a great deal of money in the promotion of the TV Dinner.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q11">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q12 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-12" data-qnum="12">
+                        <div class="text-sm font-bold mb-3 select-text">12. Swanson Foods developed a new style of container for the launch of the TV Dinner.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q12">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q13 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-13" data-qnum="13">
+                        <div class="text-sm font-bold mb-3 select-text">13. The US frozen food industry is currently the largest in the world.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q13">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONS FOR PASSAGE 2 -->
+            <div id="questions-content-1" class="questions-group-section hidden">
+                
+                <!-- DRAG AND DROP HEADINGS INSTRUCTIONS -->
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 14–19</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed mb-4">
+                        Reading Passage 2 has six sections, A–F. Choose the correct heading for each section from the list below.<br>
+                        <em>Drag and drop the headings directly into the spaces above Sections A–F in the passage.</em>
+                    </p>
+                    
+                    <!-- POOL OF HEADINGS -->
+                    <!-- Bổ sung select-text để cho phép double-click bôi đen chữ bên trong thẻ -->
+                    <div class="grid grid-cols-1 gap-2" id="endings-pool-headings">
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-medium cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-3 shadow-sm" draggable="true" data-value="i" data-group="headings" id="card-i"><span class="w-8 h-6 bg-black text-white rounded flex items-center justify-center text-[11px] font-bold shrink-0">i</span><span>Tried and tested solutions</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-medium cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-3 shadow-sm" draggable="true" data-value="ii" data-group="headings" id="card-ii"><span class="w-8 h-6 bg-black text-white rounded flex items-center justify-center text-[11px] font-bold shrink-0">ii</span><span>Cooperation beneath the waves</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-medium cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-3 shadow-sm" draggable="true" data-value="iii" data-group="headings" id="card-iii"><span class="w-8 h-6 bg-black text-white rounded flex items-center justify-center text-[11px] font-bold shrink-0">iii</span><span>Working to lessen the problems</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-medium cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-3 shadow-sm" draggable="true" data-value="iv" data-group="headings" id="card-iv"><span class="w-8 h-6 bg-black text-white rounded flex items-center justify-center text-[11px] font-bold shrink-0">iv</span><span>Disagreement about the accuracy of a certain phrase</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-medium cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-3 shadow-sm" draggable="true" data-value="v" data-group="headings" id="card-v"><span class="w-8 h-6 bg-black text-white rounded flex items-center justify-center text-[11px] font-bold shrink-0">v</span><span>Two clear educational goals</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-medium cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-3 shadow-sm" draggable="true" data-value="vi" data-group="headings" id="card-vi"><span class="w-8 h-6 bg-black text-white rounded flex items-center justify-center text-[11px] font-bold shrink-0">vi</span><span>Promoting hope</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-medium cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-3 shadow-sm" draggable="true" data-value="vii" data-group="headings" id="card-vii"><span class="w-8 h-6 bg-black text-white rounded flex items-center justify-center text-[11px] font-bold shrink-0">vii</span><span>A warning of further trouble ahead</span></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 20 and 21</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Choose TWO letters, A–E.<br>Which <strong>TWO</strong> of these causes of damage to coral reefs are mentioned by the writer of the text?</p>
+                </div>
+                <div class="space-y-6 mb-10">
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-20-21">
+                        <div class="text-sm font-bold mb-3 select-text">20 & 21. Which TWO of these causes of damage to coral reefs are mentioned by the writer of the text?</div>
+                        <div class="text-xs text-zinc-500 mb-3 italic">Select up to 2 options.</div>
+                        <div class="flex flex-col gap-2 multi-select-grid" data-questions="q20,q21" data-max="2">
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="A"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>A. a rising number of extreme storms</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="B"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>B. the removal of too many fish from the sea</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="C"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>C. the contamination of the sea from waste</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="D"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>D. increased disease among marine species</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="E"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>E. alterations in the usual flow of water in the seas</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 22 and 23</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Choose TWO letters, A–E.<br>Which <strong>TWO</strong> of the following statements are true of the researchers at London Zoo?</p>
+                </div>
+                <div class="space-y-6 mb-10">
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-22-23">
+                        <div class="text-sm font-bold mb-3 select-text">22 & 23. Which TWO of the following statements are true of the researchers at London Zoo?</div>
+                        <div class="text-xs text-zinc-500 mb-3 italic">Select up to 2 options.</div>
+                        <div class="flex flex-col gap-2 multi-select-grid" data-questions="q22,q23" data-max="2">
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="A"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>A. They are hoping to expand the numbers of different corals being bred in laboratories.</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="B"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>B. They want to identify corals that can cope well with the changed sea conditions.</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="C"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>C. They are looking at ways of creating artificial reefs that corals could grow on.</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="D"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>D. They are trying out methods that would speed up reproduction in some corals.</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="E"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>E. They are investigating materials that might protect reefs from higher temperatures.</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 24–26</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Complete the sentences below. Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.</p>
+                </div>
+
+                <div class="space-y-6 mb-10 text-sm leading-relaxed text-black">
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-24">
+                        24. Corals have a number of <input type="text" id="blank-q24" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-32 text-zinc-900 transition-colors" placeholder="[24]" data-qnum="24"> which they use to collect their food.
+                        <div class="explanation hidden mt-3 pt-2 border-t border-zinc-200 text-xs text-zinc-500"></div>
+                    </div>
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-25">
+                        25. Algae gain <input type="text" id="blank-q25" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-32 text-zinc-900 transition-colors" placeholder="[25]" data-qnum="25"> from being inside the coral.
+                        <div class="explanation hidden mt-3 pt-2 border-t border-zinc-200 text-xs text-zinc-500"></div>
+                    </div>
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-26">
+                        26. Increases in the warmth of the sea water can remove the <input type="text" id="blank-q26" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-32 text-zinc-900 transition-colors" placeholder="[26]" data-qnum="26"> from coral.
+                        <div class="explanation hidden mt-3 pt-2 border-t border-zinc-200 text-xs text-zinc-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASSAGE 3 -->
+            <div id="questions-content-2" class="questions-group-section hidden">
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 27–33</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Look at the following statements (27-33) and the list of experts below.<br>Match each statement with the correct expert, A, B or C.</p>
+                </div>
+
+                <!-- TABLE/GRID STYLE FOR MATCHING INFORMATION -->
+                <div class="overflow-x-auto border border-zinc-200 rounded mb-10">
+                    <table class="w-full text-left border-collapse text-xs select-none">
+                        <thead>
+                            <tr class="bg-zinc-50 border-b border-zinc-200">
+                                <th class="p-4 font-bold text-zinc-700 w-3/5 min-w-[200px]">Statement</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-16">A<br><span class="text-[9px] font-normal text-zinc-500">Martin Rees</span></th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-16">B<br><span class="text-[9px] font-normal text-zinc-500">Daniel Wolpert</span></th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-16">C<br><span class="text-[9px] font-normal text-zinc-500">Kathleen Richardson</span></th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-200">
+                            <!-- Q27 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-27" data-qnum="27">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>27.</strong> For our own safety, humans will need to restrict the abilities of robots.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q27" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q27" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q27" data-val="C">C</button></td>
+                            </tr>
+                            <!-- Q28 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-28" data-qnum="28">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>28.</strong> The risk of robots harming us is less serious than humans believe it to be.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q28" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q28" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q28" data-val="C">C</button></td>
+                            </tr>
+                            <!-- Q29 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-29" data-qnum="29">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>29.</strong> It will take many decades for robot intelligence to be as imaginative as human intelligence.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q29" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q29" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q29" data-val="C">C</button></td>
+                            </tr>
+                            <!-- Q30 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-30" data-qnum="30">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>30.</strong> We may have to start considering whether we are treating robots fairly.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q30" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q30" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q30" data-val="C">C</button></td>
+                            </tr>
+                            <!-- Q31 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-31" data-qnum="31">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>31.</strong> Robots are probably of more help to us on Earth than in space.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q31" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q31" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q31" data-val="C">C</button></td>
+                            </tr>
+                            <!-- Q32 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-32" data-qnum="32">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>32.</strong> The ideas in high-quality science fiction may prove to be just as accurate as those found in the work of mediocre scientists.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q32" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q32" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q32" data-val="C">C</button></td>
+                            </tr>
+                            <!-- Q33 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-33" data-qnum="33">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>33.</strong> There are those who look forward to robots developing greater intelligence.
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q33" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q33" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q33" data-val="C">C</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 34–36</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Complete each sentence with the correct ending, A–D, below.</p>
+                </div>
+
+                <!-- DRAG AND DROP SOURCE -->
+                <!-- Bổ sung select-text để cho phép double-click bôi đen chữ bên trong thẻ -->
+                <div class="mb-8 p-4 border border-zinc-200 rounded bg-zinc-50">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2" id="endings-pool">
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-2.5" draggable="true" data-value="A" data-group="endings" id="card-A"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold shrink-0">A</span><span>robots to explore outer space.</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-2.5" draggable="true" data-value="B" data-group="endings" id="card-B"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold shrink-0">B</span><span>advances made in machine intelligence so far.</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-2.5" draggable="true" data-value="C" data-group="endings" id="card-C"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold shrink-0">C</span><span>changes made to other planets for our own benefit.</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-text flex items-center gap-2.5" draggable="true" data-value="D" data-group="endings" id="card-D"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold shrink-0">D</span><span>the harm already done by artificial intelligence.</span></div>
+                    </div>
+                </div>
+
+                <!-- DRAG TARGETS -->
+                <div class="space-y-6 mb-10">
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors flex flex-col xl:flex-row xl:items-center justify-between gap-4" id="q-target-34" data-qnum="34">
+                        <div class="text-sm font-bold select-text flex-1">34. Richardson and Rees express similar views regarding the ethical aspect of...</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-3 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] w-full xl:w-1/2 cursor-pointer relative" data-question="q34" data-group="endings">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop an ending here...</span><div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text text-left w-full"></div><button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2 absolute right-3"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-2 text-xs text-zinc-500 w-full"></div>
+                    </div>
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors flex flex-col xl:flex-row xl:items-center justify-between gap-4" id="q-target-35" data-qnum="35">
+                        <div class="text-sm font-bold select-text flex-1">35. Rees and Wolpert share an opinion about the extent of...</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-3 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] w-full xl:w-1/2 cursor-pointer relative" data-question="q35" data-group="endings">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop an ending here...</span><div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text text-left w-full"></div><button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2 absolute right-3"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-2 text-xs text-zinc-500 w-full"></div>
+                    </div>
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors flex flex-col xl:flex-row xl:items-center justify-between gap-4" id="q-target-36" data-qnum="36">
+                        <div class="text-sm font-bold select-text flex-1">36. Wolpert disagrees with Richardson on the question of...</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-3 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] w-full xl:w-1/2 cursor-pointer relative" data-question="q36" data-group="endings">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop an ending here...</span><div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text text-left w-full"></div><button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2 absolute right-3"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-2 text-xs text-zinc-500 w-full"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 37–40</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Choose the correct letter, A, B, C or D.</p>
+                </div>
+
+                <div class="space-y-6 mb-10">
+                    <!-- Q37 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-37" data-qnum="37">
+                        <div class="text-sm font-bold mb-3 select-text">37. What point does Richardson make about fear of machines?</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q37">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. lt has grown alongside the development of ever more advanced robots.</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. It is the result of our inclination to attribute human characteristics to non-human entities.</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. It has its origins in basic misunderstandings about how inanimate objects function.</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. It demonstrates a key difference between human intelligence and machine intelligence.</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q38 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-38" data-qnum="38">
+                        <div class="text-sm font-bold mb-3 select-text">38. What potential advance does Rees see as a cause for concern?</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q38">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. robots outnumbering people</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. robots having abilities which humans do not</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. artificial intelligence developing independent thought</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. artificial intelligence taking over every aspect of our lives</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q39 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-39" data-qnum="39">
+                        <div class="text-sm font-bold mb-3 select-text">39. What does Wolpert emphasise in his response to the question about science fiction?</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q39">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. how science fiction influences our attitudes to robots</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. how fundamental robots are to the science fiction genre</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. how the image of robots in science fiction has changed over time</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. how reactions to similar portrayals of robots in science fiction may vary</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q40 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-40" data-qnum="40">
+                        <div class="text-sm font-bold mb-3 select-text">40. What is Richardson doing in her comment about reality and fantasy?</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q40">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. warning people not to confuse one with the other</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. outlining ways in which one has impacted on the other</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. recommending a change of approach in how people view them</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. explaining why scientists have a different perspective on them from other people</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <!-- SUBMIT BUTTON IS ONLY IN PASSAGE 3 -->
+                <div class="mt-12 flex justify-center pb-12">
+                    <button class="bg-black hover:bg-zinc-800 text-white font-bold tracking-wider uppercase text-sm px-10 py-4.5 rounded transition-colors flex items-center gap-2.5 border border-black shadow cursor-pointer" id="btn-submit-exam">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Test
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER NAV -->
+    <footer class="bg-zinc-100 border-t border-zinc-300 p-2 z-30 select-none shrink-0 flex items-center justify-center">
+        <div class="flex w-full gap-[1px] md:gap-1" id="nav-grid">
+            <!-- Javascript generates buttons 1 to 40 -->
+        </div>
+    </footer>
+
+    <!-- SCORE MODAL -->
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 select-none" id="score-modal">
+        <div class="bg-white p-10 rounded-xl border border-zinc-200 w-11/12 max-w-sm text-center shadow-2xl transform scale-95 transition-transform duration-300" id="score-modal-content">
+            
+            <div class="w-32 h-32 rounded-full bg-black text-white flex flex-col items-center justify-center mx-auto mb-6 border-4 border-white shadow-xl relative">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-zinc-300 absolute top-4">Band</div>
+                <div class="text-5xl font-extrabold mt-2 tracking-tighter" id="modal-band-score">0.0</div>
+            </div>
+            
+            <h2 class="text-xl font-extrabold uppercase tracking-widest mb-1 text-black">Test Complete</h2>
+            <div class="text-base font-bold text-zinc-800 mb-4 bg-zinc-100 py-2 rounded">Raw Score: <span id="modal-score" class="text-black">0/40</span></div>
+            
+            <p class="text-[13px] text-zinc-500 mb-8 leading-relaxed font-medium">Your practice test has been graded. Review your answers on the right panel to see detailed explanations.</p>
+            
+            <button class="bg-black hover:bg-zinc-800 text-white font-bold py-3.5 px-8 text-xs uppercase tracking-wider rounded w-full transition-colors cursor-pointer shadow-md" id="modal-close-btn">Review Answers</button>
+        </div>
+    </div>
+
+    <!-- FLOATING HIGHLIGHT SELECTION TOOL (COLORS) -->
+    <div id="highlight-menu" class="fixed hidden bg-black rounded py-1.5 px-3 shadow-lg z-[100] items-center gap-2.5 border border-zinc-800 select-none">
+        <button class="hl-color-btn w-6 h-6 rounded-full border-2 border-[#86efac] bg-[#bbf7d0] cursor-pointer hover:scale-110 transition-transform" data-color="#bbf7d0" title="Highlight Green"></button>
+        <button class="hl-color-btn w-6 h-6 rounded-full border-2 border-[#f9a8d4] bg-[#fbcfe8] cursor-pointer hover:scale-110 transition-transform" data-color="#fbcfe8" title="Highlight Pink"></button>
+        <button class="hl-color-btn w-6 h-6 rounded-full border-2 border-[#fde047] bg-[#fef08a] cursor-pointer hover:scale-110 transition-transform" data-color="#fef08a" title="Highlight Yellow"></button>
+        <div class="w-[1px] h-5 bg-zinc-600"></div>
+        <button class="text-white text-[11px] font-bold tracking-wider uppercase flex items-center gap-1.5 hover:opacity-80 transition-opacity" id="btn-clear-selection">
+            <i class="fa-solid fa-eraser"></i> Clear
+        </button>
+    </div>
+
+    <!-- JS LOGIC -->
+    <script>
+        const KEY_ANSWERS = {
+            q1: "potatoes", q2: "butter", q3: "meat", q4: "crystals", q5: "cellophane", q6: "tin", q7: "refrigerator",
+            q8: "NOT GIVEN", q9: "TRUE", q10: "FALSE", q11: "TRUE", q12: "FALSE", q13: "NOT GIVEN",
+            q14: "v", q15: "ii", q16: "iv", q17: "vii", q18: "iii", q19: "vi",
+            q20: "C", q21: "E", q22: "B", q23: "D",
+            q24: "tentacles", q25: "protection", q26: "colour",
+            q27: "A", q28: "C", q29: "B", q30: "A", q31: "B", q32: "A", q33: "C",
+            q34: "C", q35: "B", q36: "D",
+            q37: "B", q38: "C", q39: "B", q40: "C"
+        };
+
+        const EXPLANATIONS = {
+            q1: `Paragraph 1: "conserving potatoes... This preserved their nutritional value"`,
+            q2: `Paragraph 2: "In 1851, railroads first began putting blocks of ice... to send butter"`,
+            q3: `Paragraph 4: "In 1880, a shipment of Australian beef and mutton was sent... export meat" -> Two kinds of meat (beef & mutton).`,
+            q4: `Paragraph 7: "quick-freezing techniques that reduced the damage that crystals caused"`,
+            q5: `Paragraph 7: "use of cellophane... which allowed consumers to see the quality"`,
+            q6: `Paragraph 9: "tin was being used for munitions. Canned foods were rationed... while frozen foods were abundant"`,
+            q7: `Paragraph 9: "By 1953, 33 million US families owned a refrigerator"`,
+            q8: `Paragraph 2 mentions Boston ship owners towed ice, but there is no information about them becoming wealthy.`,
+            q9: `Paragraph 4: "crystals formed... and the cells burst, this spoilt the flavor and texture of the food"`,
+            q10: `Paragraph 5: He went to Labrador "to trap and trade furs", not to learn about fish freezing (he learned it *while* he was there).`,
+            q11: `Paragraph 10: "with the help of a clever name and a huge advertising budget"`,
+            q12: `Paragraph 10: "served in the same segmented aluminum tray that was used by airlines" (They did not develop a new style, they adapted an airline tray).`,
+            q13: `Paragraph 11 provides US sales figures, but does not state it is the largest in the world.`,
+            q14: `Section A discusses the exhibition to "show people how wonderful they are" and "highlight the research... to save them" -> Two clear educational goals (v).`,
+            q15: `Section B details the "comfortable symbiotic relationship" between polyps and algae -> Cooperation beneath the waves (ii).`,
+            q16: `Section C highlights David Attenborough dismissing the comparison to rainforests ("that is simply not true") -> Disagreement about the accuracy of a certain phrase (iv).`,
+            q17: `Section D lists many serious threats and scientists advise 90% could be lost, concluding "all is not well with our planet" -> A warning of further trouble ahead (vii).`,
+            q18: `Section E describes research to find hardy corals and increase breeding rates to assist restoration -> Working to lessen the problems (iii).`,
+            q19: `Section F concludes that showing progress will "encourage them to believe that we can do something" -> Promoting hope (vi).`,
+            q20: `Section D mentions: "thermal stress... ocean acidification, sea level increase, pollution by humans, deoxygenation and ocean current changes". (Pollution = contamination from waste -> C).`,
+            q21: `Section D mentions: "ocean current changes" = alterations in the usual flow of water -> E. (Order independent with 20).`,
+            q22: `Section E: "find those that can survive best in warm, acidic waters" -> identify corals that cope well -> B.`,
+            q23: `Section E: "try to increase coral breeding rates" -> speed up reproduction -> D. (Order independent with 22).`,
+            q24: `Section B: "with tentacles for capturing small marine creatures"`,
+            q25: `Section B: "get their brilliant tones... from algae... which in turn get protection"`,
+            q26: `Section D: "Rising ocean temperatures are triggering bleaching events that strip reefs of their colour"`,
+            q27: `Rees: "we should ensure that robots remain as no more than 'idiot savants' lacking the capacity to outwit us" -> A.`,
+            q28: `Richardson: "we tend to imagine they are greater and more powerful than they really are... none have in fact risen up" -> C.`,
+            q29: `Wolpert: "Expecting a machine close to the creative intelligence of a human within the next 50 years would be highly ambitious" -> B.`,
+            q30: `Rees: "Moral questions then arise... Should we feel guilty about exploiting them?" -> A.`,
+            q31: `Wolpert: "Using robots to gather resources nearer to home would seem to be a better use of our robotic tools." -> B.`,
+            q32: `Rees: "better to read first-rate science fiction than second-rate science... perhaps no more likely to be wrong" -> A.`,
+            q33: `Richardson: "Not all fear [robots]; many people welcome machine intelligence" -> C.`,
+            q34: `Both Rees and Richardson discuss the moral/ethical implications of colonising other planets (Rees: "benign than terraforming... preserved", Richardson: "morally dubious... genuine interest in 'the Other'") -> C.`,
+            q35: `Rees says robots "can't yet recognise... pieces" and Wolpert says "no machine that can identify visual objects...". Both highlight limits of current intelligence -> B.`,
+            q36: `Wolpert highlights "damaging effects of AI in the form of computer viruses", while Richardson says robots have "never shown themselves to be a threat" -> D.`,
+            q37: `Richardson states: "stems from humans' tendency to personify inanimate objects" -> B.`,
+            q38: `Rees is concerned about computer networks that "could behave like a single 'brain' with a mind of its own" -> C.`,
+            q39: `Wolpert says: "almost no science fiction envisages a future without robots" -> B.`,
+            q40: `Richardson explains the divide was created by scientists but "we need to bring these different understandings together to get a whole perspective" (recommending a change of approach) -> C.`
+        };
+
+        let USER_ANSWERS = {};
+        for(let i = 1; i <= 40; i++) USER_ANSWERS[`q${i}`] = "";
+
+        // NAV GRID
+        const navGrid = document.getElementById('nav-grid');
+        for (let i = 1; i <= 40; i++) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'nav-btn flex-1 h-7 sm:h-8 border border-zinc-300 rounded bg-white text-[9px] sm:text-[10px] font-bold text-zinc-800 flex items-center justify-center hover:bg-zinc-200 transition-colors cursor-pointer select-none min-w-[20px]';
+            btn.id = `nav-btn-q${i}`;
+            btn.textContent = i;
+            btn.setAttribute('data-q', i);
+            navGrid.appendChild(btn);
+        }
+
+        // TIMER
+        let timeLeft = 60 * 60;
+        let timerInterval = null;
+        let isTimerRunning = true;
+        const timerDisplay = document.getElementById('timer-display');
+        const btnPauseTimer = document.getElementById('btn-pause-timer');
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (!isTimerRunning) return;
+                timeLeft--;
+                timerDisplay.textContent = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
+                if (timeLeft <= 300) document.getElementById('countdown-timer').classList.add('bg-white', 'text-black', 'border-black', 'animate-pulse');
+                if (timeLeft <= 0) { clearInterval(timerInterval); gradeTest(); }
+            }, 1000);
+        }
+
+        btnPauseTimer.addEventListener('click', () => {
+            isTimerRunning = !isTimerRunning;
+            btnPauseTimer.innerHTML = isTimerRunning ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
+        });
+        startTimer();
+
+        // TABS
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const passages = document.querySelectorAll('.passage-content');
+        const questionSections = document.querySelectorAll('.questions-group-section');
+
+        function activateTab(index) {
+            tabButtons.forEach((btn, i) => btn.className = i === index ? "tab-btn active px-6 py-3 text-xs font-bold border-b-2 border-black uppercase tracking-wider text-black bg-white transition-all" : "tab-btn px-6 py-3 text-xs font-bold text-zinc-400 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all");
+            passages.forEach((p, i) => i === index ? p.classList.remove('hidden') : p.classList.add('hidden'));
+            questionSections.forEach((q, i) => i === index ? q.classList.remove('hidden') : q.classList.add('hidden'));
+        }
+
+        tabButtons.forEach((btn, i) => btn.addEventListener('click', () => activateTab(i)));
+
+        // RECORD ANSWERS LOGIC
+        function updateNavBtnState(qKey, val) {
+            const navBtn = document.getElementById(`nav-btn-${qKey}`);
+            if (!navBtn) return;
+            if(navBtn.classList.contains('nav-correct') || navBtn.classList.contains('nav-wrong')) return;
+
+            if (val.trim() !== "") {
+                navBtn.classList.add('bg-zinc-800', 'text-white', 'border-zinc-800');
+                navBtn.classList.remove('bg-white', 'text-zinc-800', 'border-zinc-300');
+            } else {
+                navBtn.classList.remove('bg-zinc-800', 'text-white', 'border-zinc-800');
+                navBtn.classList.add('bg-white', 'text-zinc-800', 'border-zinc-300');
+            }
+        }
+
+        // Multiple choice & TFNG
+        document.querySelectorAll('.mc-options-grid').forEach(grid => {
+            const qKey = grid.getAttribute('data-question');
+            const buttons = grid.querySelectorAll('.mc-opt-btn');
+            buttons.forEach(btn => {
+                btn.classList.add('select-text');
+                btn.addEventListener('click', function() {
+                    if (window.getSelection().toString().trim() !== "") return;
+                    if (this.disabled) return;
+                    buttons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    USER_ANSWERS[qKey] = this.getAttribute('data-val');
+                    updateNavBtnState(qKey, USER_ANSWERS[qKey]);
+                });
+            });
+        });
+
+        // Table Matching
+        document.querySelectorAll('.table-opt-btn').forEach(btn => {
+            btn.classList.add('select-text');
+            btn.addEventListener('click', function() {
+                if (window.getSelection().toString().trim() !== "") return;
+                if (this.disabled) return;
+                const qKey = this.getAttribute('data-question');
+                document.querySelectorAll(`.table-opt-btn[data-question="${qKey}"]`).forEach(sib => {
+                    sib.classList.remove('bg-zinc-900', 'text-white', 'border-zinc-900');
+                    sib.classList.add('border-zinc-300', 'hover:bg-zinc-100');
+                });
+                this.classList.add('bg-zinc-900', 'text-white', 'border-zinc-900');
+                this.classList.remove('border-zinc-300', 'hover:bg-zinc-100');
+                USER_ANSWERS[qKey] = this.getAttribute('data-val');
+                updateNavBtnState(qKey, USER_ANSWERS[qKey]);
+            });
+        });
+
+        // Multi-Select Checkboxes
+        document.querySelectorAll('.multi-select-grid').forEach(grid => {
+            const qKeys = grid.getAttribute('data-questions').split(',');
+            const max = parseInt(grid.getAttribute('data-max'));
+            const buttons = grid.querySelectorAll('.ms-opt-btn');
+            
+            buttons.forEach(btn => {
+                btn.classList.add('select-text');
+                btn.addEventListener('click', function() {
+                    if (window.getSelection().toString().trim() !== "") return;
+                    if (this.disabled) return;
+                    
+                    const isActive = this.classList.contains('active');
+                    if (isActive) {
+                        this.classList.remove('active');
+                    } else {
+                        const currentActive = grid.querySelectorAll('.ms-opt-btn.active').length;
+                        if (currentActive < max) {
+                            this.classList.add('active');
+                        } else {
+                            return; // Max reached, prevent selection
+                        }
+                    }
+                    
+                    const selectedVals = Array.from(grid.querySelectorAll('.ms-opt-btn.active')).map(b => b.getAttribute('data-val'));
+                    
+                    qKeys.forEach((key, index) => {
+                        USER_ANSWERS[key] = selectedVals[index] || "";
+                        updateNavBtnState(key, USER_ANSWERS[key]);
+                    });
+                });
+            });
+        });
+
+        // Blanks
+        document.querySelectorAll('.input-blank').forEach(input => {
+            input.addEventListener('input', function() {
+                const qKey = `q${this.getAttribute('data-qnum')}`;
+                USER_ANSWERS[qKey] = this.value;
+                updateNavBtnState(qKey, this.value);
+            });
+        });
+
+        // Drag & Drop
+        let activeSelectedCard = null;
+        document.querySelectorAll('.draggable-card').forEach(card => {
+            card.addEventListener('dragstart', e => { 
+                card.classList.add('dragging'); 
+                e.dataTransfer.setData('text/plain', card.getAttribute('data-value')); 
+                e.dataTransfer.setData('group', card.getAttribute('data-group')); 
+            });
+            card.addEventListener('dragend', () => card.classList.remove('dragging'));
+            card.addEventListener('click', e => {
+                // Ignore clicks if the user is highlighting text
+                if (window.getSelection().toString().trim() !== "") return;
+                
+                e.stopPropagation();
+                document.querySelectorAll('.draggable-card').forEach(c => c.classList.remove('border-black', 'border-2', 'ring-2', 'ring-black'));
+                if (activeSelectedCard === card) activeSelectedCard = null;
+                else { 
+                    activeSelectedCard = card; 
+                    card.classList.add('border-black', 'border-2', 'ring-2', 'ring-black'); 
+                }
+            });
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            const qKey = zone.getAttribute('data-question');
+            const zoneGroup = zone.getAttribute('data-group');
+            
+            zone.addEventListener('dragover', e => { 
+                e.preventDefault(); 
+                zone.classList.add('dragover'); 
+            });
+            zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault(); zone.classList.remove('dragover');
+                const draggedGroup = e.dataTransfer.getData('group');
+                if (draggedGroup === zoneGroup) {
+                    assignEnding(qKey, e.dataTransfer.getData('text/plain'), zone, zoneGroup);
+                }
+            });
+            zone.addEventListener('click', () => {
+                if (activeSelectedCard && activeSelectedCard.getAttribute('data-group') === zoneGroup) {
+                    assignEnding(qKey, activeSelectedCard.getAttribute('data-value'), zone, zoneGroup);
+                }
+            });
+            zone.querySelector('.btn-clear-drop').addEventListener('click', e => {
+                e.stopPropagation(); clearZone(qKey, zone, zoneGroup);
+            });
+        });
+
+        function updatePoolVisibility() {
+            // Group: Headings (Q14-19)
+            const usedHeadings = ['q14', 'q15', 'q16', 'q17', 'q18', 'q19'].map(k => USER_ANSWERS[k]).filter(Boolean);
+            document.querySelectorAll('.draggable-card[data-group="headings"]').forEach(card => {
+                const val = card.getAttribute('data-value');
+                card.classList.toggle('hidden', usedHeadings.includes(val));
+            });
+
+            // Group: Endings (Q34-36)
+            const usedEndings = ['q34', 'q35', 'q36'].map(k => USER_ANSWERS[k]).filter(Boolean);
+            document.querySelectorAll('.draggable-card[data-group="endings"]').forEach(card => {
+                const val = card.getAttribute('data-value');
+                card.classList.toggle('hidden', usedEndings.includes(val));
+            });
+        }
+
+        function assignEnding(qKey, value, zone, group) {
+            if (zone.classList.contains('cursor-not-allowed')) return; 
+
+            // If value is used elsewhere in the SAME GROUP, clear it
+            const dragKeys = group === 'headings' ? ['q14', 'q15', 'q16', 'q17', 'q18', 'q19'] : ['q34', 'q35', 'q36'];
+            dragKeys.forEach(k => {
+                if (k !== qKey && USER_ANSWERS[k] === value) {
+                    const otherZone = document.querySelector(`.drop-zone[data-question="${k}"]`);
+                    if (otherZone) clearZone(k, otherZone, group);
+                }
+            });
+
+            // Find the correct card using both group and value
+            const card = document.querySelector(`.draggable-card[data-group="${group}"][data-value="${value}"]`);
+            if (!card) return;
+            
+            zone.querySelector('.drop-placeholder').classList.add('hidden');
+            const content = zone.querySelector('.dropped-content');
+            
+            content.innerHTML = `<span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold shrink-0">${value}</span> <span class="truncate" title="${card.querySelector('span:last-child').textContent}">${card.querySelector('span:last-child').textContent}</span>`;
+            content.classList.remove('hidden');
+            zone.querySelector('.btn-clear-drop').classList.remove('hidden');
+            zone.classList.replace('border-dashed', 'border-solid'); 
+            zone.classList.add('border-black', 'bg-zinc-100');
+            
+            USER_ANSWERS[qKey] = value; 
+            updateNavBtnState(qKey, value);
+            updatePoolVisibility();
+
+            if (activeSelectedCard) {
+                activeSelectedCard.classList.remove('border-black', 'border-2', 'ring-2', 'ring-black');
+                activeSelectedCard = null;
+            }
+        }
+
+        function clearZone(qKey, zone, group) {
+            zone.querySelector('.drop-placeholder').classList.remove('hidden');
+            const content = zone.querySelector('.dropped-content'); 
+            content.classList.add('hidden'); 
+            content.innerHTML = '';
+            zone.querySelector('.btn-clear-drop').classList.add('hidden');
+            zone.classList.replace('border-solid', 'border-dashed'); 
+            zone.classList.remove('border-black', 'bg-zinc-100');
+            
+            USER_ANSWERS[qKey] = ""; 
+            updateNavBtnState(qKey, "");
+            updatePoolVisibility();
+        }
+
+        // NAV MAP SCROLL LINK
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetQNum = parseInt(this.getAttribute('data-q'));
+                let passageIdx = targetQNum <= 13 ? 0 : targetQNum <= 26 ? 1 : 2;
+                activateTab(passageIdx);
+
+                let targetElem = document.getElementById(`q-target-${targetQNum}`);
+                if (targetQNum === 20 || targetQNum === 21) targetElem = document.getElementById('q-target-20-21');
+                else if (targetQNum === 22 || targetQNum === 23) targetElem = document.getElementById('q-target-22-23');
+                else if (!targetElem) targetElem = document.getElementById(`q-target-notes-p1`) || document.getElementById(`q-target-summary-p2`);
+
+                if (targetElem) {
+                    const scrollContainer = targetQNum >= 14 && targetQNum <= 19 ? document.getElementById('passage-container') : document.getElementById('questions-panel');
+                    scrollContainer.scrollTo({ top: targetElem.offsetTop - 40, behavior: 'smooth' });
+                    targetElem.classList.add('highlight-scroll');
+                    setTimeout(() => targetElem.classList.remove('highlight-scroll'), 1200);
+                }
+            });
+        });
+
+        function calculateBandScore(score) {
+            if (score >= 39) return "9.0";
+            if (score >= 37) return "8.5";
+            if (score >= 35) return "8.0";
+            if (score >= 33) return "7.5";
+            if (score >= 30) return "7.0";
+            if (score >= 27) return "6.5";
+            if (score >= 23) return "6.0";
+            if (score >= 19) return "5.5";
+            if (score >= 15) return "5.0";
+            if (score >= 13) return "4.5";
+            if (score >= 10) return "4.0";
+            if (score >= 8) return "3.5";
+            if (score >= 6) return "3.0";
+            if (score >= 4) return "2.5";
+            if (score >= 2) return "2.0";
+            if (score === 1) return "1.0";
+            return "0.0";
+        }
+
+        // GRADING ENGINE
+        let hasGraded = false;
+        function gradeTest() {
+            if (hasGraded) return;
+            hasGraded = true;
+            isTimerRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('btn-submit-exam').disabled = true;
+            document.getElementById('btn-submit-exam').classList.replace('hover:bg-zinc-800', 'opacity-50');
+            
+            let score = 0;
+
+            for (let i = 1; i <= 40; i++) {
+                const qKey = `q${i}`;
+                const userAns = (USER_ANSWERS[qKey] || "").trim();
+                const correctAns = KEY_ANSWERS[qKey];
+                
+                // Allow order independence for Q20-21 and Q22-23
+                let isCorrect = false;
+                if (i === 20 || i === 21) {
+                    isCorrect = ["C", "E"].includes(userAns) && (USER_ANSWERS['q20'] !== USER_ANSWERS['q21'] || userAns === "");
+                } else if (i === 22 || i === 23) {
+                    isCorrect = ["B", "D"].includes(userAns) && (USER_ANSWERS['q22'] !== USER_ANSWERS['q23'] || userAns === "");
+                } else {
+                    isCorrect = userAns.toLowerCase() === correctAns.toLowerCase();
+                }
+                
+                if (isCorrect) score++;
+
+                const navBtn = document.getElementById(`nav-btn-q${i}`);
+                navBtn.className = `nav-btn flex-1 min-w-0 h-7 sm:h-8 rounded text-[9px] sm:text-[10px] font-bold flex items-center justify-center cursor-pointer select-none transition-colors ${isCorrect ? 'nav-correct' : 'nav-wrong'}`;
+
+                const isMC = (i >= 8 && i <= 13) || (i >= 37 && i <= 40);
+                const isMultiSelect = (i >= 20 && i <= 23);
+                const isTable = (i >= 27 && i <= 33);
+                const isDrag = (i >= 14 && i <= 19) || (i >= 34 && i <= 36);
+                const isBlank = (i >= 1 && i <= 7) || (i >= 24 && i <= 26);
+                
+                let targetCard = document.getElementById(`q-target-${i}`);
+                if (i === 20 || i === 21) targetCard = document.getElementById('q-target-20-21');
+                else if (i === 22 || i === 23) targetCard = document.getElementById('q-target-22-23');
+                
+                let explBox = null;
+                if (targetCard) explBox = targetCard.querySelector('.explanation');
+                
+                if (explBox && EXPLANATIONS[qKey] && i !== 21 && i !== 23) {
+                    explBox.classList.remove('hidden');
+                    explBox.innerHTML = `<strong>Explanation:</strong> ${EXPLANATIONS[qKey]}`;
+                }
+
+                if (isMC) {
+                    const buttons = targetCard.querySelectorAll('.mc-opt-btn');
+                    buttons.forEach(btn => {
+                        const val = btn.getAttribute('data-val');
+                        btn.disabled = true; btn.classList.remove('active'); 
+                        
+                        let isThisBtnCorrect = (val === correctAns);
+
+                        if (isThisBtnCorrect) btn.classList.add('graded-correct');
+                        else if (val === userAns) btn.classList.add('graded-wrong');
+                    });
+                } 
+                else if (isMultiSelect) {
+                    if (i === 20 || i === 22) {
+                        const correctKeys = i === 20 ? ["C", "E"] : ["B", "D"];
+                        const userSel = [USER_ANSWERS[`q${i}`], USER_ANSWERS[`q${i+1}`]];
+                        const buttons = targetCard.querySelectorAll('.ms-opt-btn');
+                        buttons.forEach(btn => {
+                            const val = btn.getAttribute('data-val');
+                            btn.disabled = true;
+                            btn.classList.remove('active');
+                            const isKey = correctKeys.includes(val);
+                            const isSelected = userSel.includes(val);
+
+                            if (isKey && isSelected) {
+                                btn.classList.add('graded-correct');
+                            } else if (!isKey && isSelected) {
+                                btn.classList.add('graded-wrong');
+                            } else if (isKey && !isSelected) {
+                                btn.classList.add('graded-correct', 'opacity-50');
+                            }
+                        });
+                    }
+                }
+                else if (isTable) {
+                    const buttons = document.querySelectorAll(`.table-opt-btn[data-question="${qKey}"]`);
+                    buttons.forEach(btn => {
+                        const val = btn.getAttribute('data-val');
+                        btn.disabled = true;
+                        btn.classList.remove('bg-zinc-900', 'text-white', 'border-zinc-900');
+                        if (val === correctAns) {
+                            btn.className = "table-opt-btn w-6 h-6 rounded-full border border-green-600 bg-green-500 text-white text-[10px] font-bold";
+                        } else if (val === userAns) {
+                            btn.className = "table-opt-btn w-6 h-6 rounded-full border border-red-500 bg-red-100 text-red-600 line-through text-[10px] font-bold";
+                        } else {
+                            btn.classList.add('opacity-50');
+                        }
+                    });
+                }
+                else if (isDrag) {
+                    const zone = document.querySelector(`.drop-zone[data-question="${qKey}"]`);
+                    const group = zone.getAttribute('data-group');
+                    if (zone) {
+                        zone.classList.add('cursor-not-allowed');
+                        const clearBtn = zone.querySelector('.btn-clear-drop');
+                        if (clearBtn) clearBtn.classList.add('hidden');
+
+                        if (isCorrect) {
+                            zone.classList.remove('border-black', 'border-zinc-800', 'border-zinc-300', 'bg-zinc-50', 'bg-zinc-100');
+                            zone.classList.add('border-green-500', 'bg-green-50');
+                            zone.querySelector('.dropped-content').classList.remove('text-black');
+                            zone.querySelector('.dropped-content').classList.add('text-green-800');
+                        } else {
+                            zone.classList.remove('border-black', 'border-zinc-800', 'bg-zinc-100');
+                            zone.classList.add('border-red-500', 'bg-red-50', 'border-solid');
+                            zone.classList.remove('border-dashed');
+                            if (userAns) {
+                                zone.querySelector('.dropped-content').classList.remove('text-black');
+                                zone.querySelector('.dropped-content').classList.add('line-through', 'text-red-500');
+                            }
+                            
+                            const correctCard = document.querySelector(`.draggable-card[data-group="${group}"][data-value="${correctAns}"]`);
+                            const correctText = correctCard ? correctCard.querySelector('span:last-child').textContent : '';
+                            const corrElem = document.createElement('div');
+                            corrElem.className = "text-green-600 font-bold text-xs mt-2 block w-full text-left border-t border-red-200 pt-2";
+                            corrElem.innerHTML = `Correct: <span class="px-1.5 py-0.5 bg-green-600 text-white rounded text-[10px] mx-1">${correctAns}</span> ${correctText}`;
+                            zone.appendChild(corrElem);
+                        }
+                    }
+                }
+                else if (isBlank) {
+                    const input = document.getElementById(`blank-${qKey}`);
+                    if (input) {
+                        input.disabled = true;
+                        input.classList.remove('border-black', 'border-zinc-400', 'bg-transparent');
+                        if (isCorrect) {
+                            input.classList.add('input-correct');
+                        } else {
+                            input.classList.add('input-wrong');
+                            const corrElem = document.createElement('span');
+                            corrElem.className = 'ml-2 text-green-600 font-bold text-sm bg-green-50 px-2 py-0.5 rounded border border-green-200';
+                            corrElem.innerText = correctAns;
+                            input.parentNode.insertBefore(corrElem, input.nextSibling);
+                        }
+                    }
+                }
+            }
+
+            document.getElementById('modal-score').textContent = `${score}/40`;
+            document.getElementById('modal-band-score').textContent = calculateBandScore(score);
+            document.getElementById('score-modal').classList.remove('opacity-0', 'pointer-events-none');
+            document.getElementById('score-modal-content').classList.remove('scale-95');
+        }
+
+        document.getElementById('btn-submit-exam').addEventListener('click', gradeTest);
+        document.getElementById('modal-close-btn').addEventListener('click', () => {
+            document.getElementById('score-modal').classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('score-modal-content').classList.add('scale-95');
+        });
+
+        // HIGHLIGHT SYSTEM (APPLIED TO BOTH PANELS + DRAG CARDS)
+        const passageContainer = document.getElementById('passage-container');
+        const questionsPanel = document.getElementById('questions-panel');
+        const highlightMenu = document.getElementById('highlight-menu');
+        
+        document.addEventListener('mouseup', (e) => {
+            // Only allow highlighting in passage or questions areas
+            if (!passageContainer.contains(e.target) && !questionsPanel.contains(e.target)) {
+                return;
+            }
+
+            setTimeout(() => {
+                const selection = window.getSelection();
+                if (selection.isCollapsed || selection.toString().trim() === "") {
+                    highlightMenu.style.display = 'none'; 
+                    return;
+                }
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+                
+                // Position fixed works relative to viewport
+                highlightMenu.style.left = `${Math.max(10, rect.left + (rect.width / 2) - 65)}px`;
+                highlightMenu.style.top = `${Math.max(10, rect.top - 48)}px`;
+                highlightMenu.style.display = 'flex';
+            }, 10);
+        });
+
+        // Hide menu on scroll
+        passageContainer.addEventListener('scroll', () => highlightMenu.style.display = 'none');
+        questionsPanel.addEventListener('scroll', () => highlightMenu.style.display = 'none');
+
+        document.querySelectorAll('.hl-color-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const color = this.getAttribute('data-color');
+                const selection = window.getSelection();
+                if (!selection.rangeCount || selection.toString().trim() === "") return;
+                
+                const range = selection.getRangeAt(0);
+                const mark = document.createElement('mark');
+                mark.className = 'ielts-highlight'; 
+                mark.style.backgroundColor = color;
+                
+                // Allow removing highlight on click
+                mark.addEventListener('click', function(e) { 
+                    e.stopPropagation(); 
+                    this.replaceWith(...this.childNodes); 
+                });
+                
+                try { 
+                    range.surroundContents(mark); 
+                } catch (err) { 
+                    const frag = range.extractContents(); 
+                    mark.appendChild(frag); 
+                    range.insertNode(mark); 
+                }
+                
+                selection.removeAllRanges(); 
+                highlightMenu.style.display = 'none';
+            });
+        });
+
+        document.getElementById('btn-clear-selection').addEventListener('click', e => {
+            e.stopPropagation();
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
+            const parent = range.commonAncestorContainer;
+            const marks = (parent.nodeType === 1 ? parent : parent.parentNode).querySelectorAll('mark.ielts-highlight');
+            marks.forEach(mark => { if (selection.containsNode(mark, true)) mark.replaceWith(...mark.childNodes); });
+            selection.removeAllRanges(); 
+            highlightMenu.style.display = 'none';
+        });
+
+        document.addEventListener('mousedown', e => { 
+            if (!highlightMenu.contains(e.target) && e.target.nodeName !== 'MARK') {
+                highlightMenu.style.display = 'none'; 
+            }
+        });
+
+        // SPLITTER RESIZE CONTROLS
+        const resizeHandle = document.getElementById('resize-handle');
+        const workspaceContainer = document.getElementById('workspace-container');
+        let isResizing = false;
+
+        function startResize(e) { isResizing = true; resizeHandle.classList.add('bg-black'); document.body.style.cursor = 'col-resize'; document.body.style.userSelect = 'none'; }
+        function onResize(e) {
+            if (!isResizing) return;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const rect = workspaceContainer.getBoundingClientRect();
+            let newWidthPercent = ((clientX - rect.left) / rect.width) * 100;
+            passageContainer.style.width = `${Math.min(Math.max(newWidthPercent, 25), 75)}%`;
+        }
+        function stopResize() { if (isResizing) { isResizing = false; resizeHandle.classList.remove('bg-black'); document.body.style.cursor = ''; document.body.style.userSelect = ''; } }
+
+        resizeHandle.addEventListener('mousedown', startResize); document.addEventListener('mousemove', onResize); document.addEventListener('mouseup', stopResize);
+        resizeHandle.addEventListener('touchstart', startResize); document.addEventListener('touchmove', onResize); document.addEventListener('touchend', stopResize);
+    </script>
+</body>
+</html>

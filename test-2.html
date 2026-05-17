@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Reading Full Mock Test</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f4f4f5; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+
+        /* Clean Minimalist Highlights */
+        mark.ielts-highlight { border-radius: 2px; cursor: pointer; transition: opacity 0.2s; }
+        mark.ielts-highlight:hover { opacity: 0.8; }
+        
+        .question-target { transition: background-color 0.5s ease; scroll-margin-top: 20px; }
+        .question-target.highlight-scroll { background-color: #e4e4e7; }
+
+        /* Drag and Drop */
+        .draggable-card { touch-action: none; transition: opacity 0.2s, transform 0.2s; }
+        .draggable-card.dragging { opacity: 0.4; }
+        .drop-zone.dragover { border-color: #000 !important; background-color: #f4f4f5; }
+
+        /* Radio Buttons */
+        .mc-opt-btn.active { border-color: #000000 !important; background-color: #f4f4f5 !important; }
+        .mc-opt-btn.active .radio-circle { border-color: #000000 !important; }
+        .mc-opt-btn.active .radio-dot { transform: scale(1) !important; opacity: 1 !important; }
+
+        /* Multi Select Checkboxes */
+        .ms-opt-btn.active { border-color: #000000 !important; background-color: #f4f4f5 !important; }
+        .ms-opt-btn.active .check-box { border-color: #000000 !important; }
+        .ms-opt-btn.active .fa-check { color: #000000 !important; }
+
+        /* GRADING CSS CLASSES */
+        .graded-correct { background-color: #f0fdf4 !important; border-color: #22c55e !important; color: #15803d !important; }
+        .graded-correct .radio-circle { border-color: #22c55e !important; }
+        .graded-correct .radio-dot { background-color: #22c55e !important; transform: scale(1) !important; opacity: 1 !important; }
+        .graded-correct .check-box { border-color: #22c55e !important; background-color: #22c55e !important; }
+        .graded-correct .fa-check { color: white !important; }
+
+        .graded-wrong { background-color: #fef2f2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
+        .graded-wrong .radio-circle { border-color: #ef4444 !important; }
+        .graded-wrong .radio-dot { background-color: #ef4444 !important; transform: scale(1) !important; opacity: 1 !important; }
+        .graded-wrong .check-box { border-color: #ef4444 !important; background-color: #ef4444 !important; }
+        .graded-wrong .fa-check { color: white !important; }
+
+        .input-correct { border-color: #22c55e !important; background-color: #f0fdf4 !important; color: #15803d !important; }
+        .input-wrong { border-color: #ef4444 !important; background-color: #fef2f2 !important; color: #ef4444 !important; text-decoration: line-through; }
+        
+        .nav-correct { background-color: #22c55e !important; color: white !important; border-color: #16a34a !important; }
+        .nav-wrong { background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
+    </style>
+</head>
+<body class="bg-white text-zinc-900 overflow-hidden h-screen flex flex-col font-sans">
+
+    <!-- HEADER -->
+    <header class="bg-black text-white px-6 py-4 flex justify-between items-center border-b-2 border-black z-30 select-none shrink-0">
+        <div class="logo-area">
+            <h1 class="text-lg font-bold tracking-widest uppercase">Reading Test</h1>
+        </div>
+        
+        <div class="flex items-center gap-3 bg-zinc-900 px-4 py-2 rounded border border-zinc-800 font-mono text-base font-bold" id="countdown-timer">
+            <i class="fa-regular fa-clock text-sm"></i>
+            <span id="timer-display">60:00</span>
+            <button class="text-white hover:opacity-75 transition-opacity ml-2" id="btn-pause-timer" title="Pause / Resume Timer">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- TABS -->
+    <div class="flex bg-zinc-100 border-b border-zinc-200 px-6 gap-1 select-none z-20 shrink-0">
+        <button class="tab-btn active px-6 py-3 text-xs font-bold text-zinc-500 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all" data-target="0">Passage 1</button>
+        <button class="tab-btn px-6 py-3 text-xs font-bold text-zinc-500 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all" data-target="1">Passage 2</button>
+        <button class="tab-btn px-6 py-3 text-xs font-bold text-zinc-500 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all" data-target="2">Passage 3</button>
+    </div>
+
+    <!-- WORKSPACE -->
+    <div class="flex flex-1 overflow-hidden relative" id="workspace-container">
+        
+        <!-- LEFT PANEL: PASSAGES -->
+        <div class="w-1/2 min-w-[25%] max-w-[75%] h-full overflow-y-auto p-10 bg-white border-r border-zinc-200 relative select-text" id="passage-container">
+            
+            <div class="bg-zinc-100 border border-zinc-200 p-3 rounded text-xs text-zinc-700 mb-6 flex items-center gap-2 select-none">
+                <i class="fa-solid fa-circle-info text-black"></i>
+                <span><strong>Highlight Tool:</strong> Select any text to highlight it. Click a highlighted block to remove the highlight.</span>
+            </div>
+
+            <!-- PASSAGE 1 -->
+            <div id="passage-content-0" class="passage-content block">
+                <div class="text-xs uppercase font-bold text-zinc-500 mb-2 tracking-wider">Reading Passage 1</div>
+                <h1 class="font-serif text-3xl font-bold mb-5 pb-3 border-b-2 border-black">Manatees</h1>
+                <div class="italic text-zinc-700 border-l-2 border-black pl-4 mb-6 leading-relaxed">
+                    You should spend about 20 minutes on Questions 1-13.
+                </div>
+                <div class="font-serif text-base leading-relaxed text-justify space-y-5 text-black">
+                    <p>Manatees, also known as sea cows, are aquatic mammals that belong to a group of animals called Sirenia. This group also contains dugongs. Dugongs and manatees look quite alike – they are similar in size, colour and shape, and both have flexible flippers for forelimbs. However, the manatee has a broad, rounded tail, whereas the dugong’s is fluked, like that of a whale. There are three species of manatees: the West Indian manatee (Trichechus manatus), the African manatee (Trichechus senegalensis) and the Amazonian manatee (Trichechus inunguis).</p>
+                    <p>Unlike most mammals, manatees have only six bones in their neck – most others, including humans and giraffes, have seven. This short neck allows a manatee to move its head up and down, but not side to side. To see something on its left or its right, a manatee must turn its entire body, steering with its flippers. Manatees have pectoral flippers but no back limbs, only a tail for propulsion. They do have pelvic bones, however – a leftover from their evolution from a four-legged to a fully aquatic animal. Manatees share some visual similarities to elephants. Like elephants, manatees have thick, wrinkled skin. They also have some hairs covering their bodies which help them sense vibrations in the water around them.</p>
+                    <p>Seagrasses and other marine plants make up most of a manatee’s diet. Manatees spend about eight hours each day grazing and uprooting plants. They eat up to 15% of their weight in food each day. African manatees are omnivorous – studies have shown that molluscs and fish make up a small part of their diets. West Indian and Amazonian manatees are both herbivores.</p>
+                    <p>Manatees’ teeth are all molars – flat, rounded teeth for grinding food. Due to manatees’ abrasive aquatic plant diet, these teeth get worn down and they eventually fall out, so they continually grow new teeth that get pushed forward to replace the ones they lose. Instead of having incisors to grasp their food, manatees have lips which function like a pair of hands to help tear food away from the seafloor.</p>
+                    <p>Manatees are fully aquatic, but as mammals, they need to come up to the surface to breathe. When awake, they typically surface every two to four minutes, but they can hold their breath for much longer. Adult manatees sleep underwater for 10-12 hours a day, but they come up for air every 15-20 minutes. Active manatees need to breathe more frequently. It’s thought that manatees use their muscular diaphragm and breathing to adjust their buoyancy. They may use diaphragm contractions to compress and store gas in folds in their large intestine to help them float.</p>
+                    <p>The West Indian manatee reaches about 3.5 metres long and weighs on average around 500 kilogrammes. It moves between fresh water and salt water, taking advantage of coastal mangroves and coral reefs, rivers, lakes and inland lagoons. There are two subspecies of West Indian manatee: the Antillean manatee is found in waters from the Bahamas to Brazil, whereas the Florida manatee is found in US waters, although some individuals have been recorded in the Bahamas. In winter, the Florida manatee is typically restricted to Florida. When the ambient water temperature drops below 20°C, it takes refuge in naturally and artificially warmed water, such as at the warm-water outfalls from powerplants.</p>
+                    <p>The African manatee is also about 3.5 metres long and found in the sea along the west coast of Africa, from Mauritania down to Angola. The species also makes use of rivers, with the mammals seen in landlocked countries such as Mali and Niger. The Amazonian manatee is the smallest species, though it is still a big animal. It grows to about 2.5 metres long and 350 kilogrammes. Amazonian manatees favour calm, shallow waters that are above 23°C. This species is found in fresh water in the Amazon Basin in Brazil, as well as in Colombia, Ecuador and Peru.</p>
+                    <p>All three manatee species are endangered or at a heightened risk of extinction. The African manatee and Amazonian manatee are both listed as Vulnerable by the International Union for Conservation of Nature (IUCN). It is estimated that 140,000 Amazonian manatees were killed between 1935 and 1954 for their meat, fat and skin with the latter used to make leather. In more recent years, African manatee decline has been tied to incidental capture in fishing nets and hunting. Manatee hunting is now illegal in every country the African species is found in.</p>
+                    <p>The two subspecies of West Indian manatee are listed as Endangered by the IUCN. Both are also expected to undergo a decline of 20% over the next 40 years. A review of almost 1,800 cases of entanglement in fishing nets and of plastic consumption among marine mammals in US waters from 2009 to 2020 found that at least 700 cases involved manatees. The chief cause of death in Florida manatees is boat strikes. However, laws in certain parts of Florida now limit boat speeds during winter, allowing slow-moving manatees more time to respond.</p>
+                </div>
+            </div>
+
+            <!-- PASSAGE 2 -->
+            <div id="passage-content-1" class="passage-content hidden">
+                <div class="text-xs uppercase font-bold text-zinc-500 mb-2 tracking-wider">Reading Passage 2</div>
+                <h1 class="font-serif text-3xl font-bold mb-5 pb-3 border-b-2 border-black">Procrastination</h1>
+                <div class="italic text-zinc-700 border-l-2 border-black pl-4 mb-6 leading-relaxed">
+                    You should spend about 20 minutes on Questions 14–26.<br>
+                    <strong>A psychologist explains why we put off important tasks and how we can break this habit.</strong>
+                </div>
+                <div class="font-serif text-base leading-relaxed text-justify space-y-6 text-black">
+                    <p><strong>A</strong> Procrastination is the habit of delaying a necessary task, usually by focusing on less urgent, more enjoyable, and easier activities instead. We all do it from time to time. We might be composing a message to a friend who we have to let down, or putting together an important report for college or work; we’re doing our best to avoid doing the job at hand, but deep down we know that we should just be getting on with it. Unfortunately, berating ourselves won’t stop us procrastinating again. In fact, it’s one of the worst things we can do. This matters because, as my research shows, procrastination doesn’t just waste time, but is actually linked to other problems, too.</p>
+                    <p><strong>B</strong> Contrary to popular belief, procrastination is not due to laziness or poor time management. Scientific studies suggest procrastination is, in fact, caused by poor mood management. This makes sense if we consider that people are more likely to put off starting or completing tasks that they are really not keen to do. If just thinking about the task threatens our sense of self-worth or makes us anxious, we will be more likely to put it off. Research involving brain imaging has found that areas of the brain linked to detection of threats and emotion regulation are actually different in people who chronically procrastinate compared to those who don’t procrastinate frequently.</p>
+                    <p><strong>C</strong> Tasks that are emotionally loaded or difficult, such as preparing for exams, are prime candidates for procrastination. People with low self-esteem are more likely to procrastinate. Another group of people who tend to procrastinate are perfectionists, who worry their work will be judged harshly by others. We know that if we don’t finish that report or complete those home repairs, then what we did can’t be evaluated. When we avoid such tasks, we also avoid the negative emotions associated with them. This is rewarding, and it conditions us to use procrastination to repair our mood. If we engage in more enjoyable tasks instead, we get another mood boost. In the long run, however, procrastination isn’t an effective way of managing emotions. The ‘mood repair’ we experience is temporary. Afterwards, people tend to be left with a sense of guilt that not only increases their negative mood, but also reinforces their tendency to procrastinate.</p>
+                    <p><strong>D</strong> So why is this such a problem? When most people think of the costs of procrastination, they think of the toll on productivity. For example, studies have shown that procrastination negatively impacts on student performance. But putting off reading textbooks and writing essays may affect other areas of students’ lives. In one study of over 3,000 German students over a six-month period, those who reported procrastinating over their university work were also more likely to engage in study-related misconduct, such as cheating and plagiarism. But the behaviour that procrastination was most closely linked with was using fraudulent excuses to get deadline extensions. Other research shows that employees on average spend almost a quarter of their workday procrastinating, and again this is linked with negative outcomes. In fact, in one US survey of over 22,000 employees, participants who said they regularly procrastinated had less annual income and less employment stability. For every one-point increase on a measure of chronic procrastination, annual income decreased by US$15,000.</p>
+                    <p><strong>E</strong> Procrastination also correlates with serious health and well-being problems. A tendency to procrastinate is linked to poor mental health, including higher levels of depression and anxiety. Across numerous studies, I’ve found people who regularly procrastinate report a greater number of health issues, such as headaches, flu and colds, and digestive issues. They also experience higher levels of stress and poor sleep quality. They are less likely to practise healthy behaviours, such as eating a healthy diet and regularly exercising, and use destructive coping strategies to manage their stress. In one study of over 700 people, I found people prone to procrastination had a 63% greater risk of poor heart health after accounting for other personality traits and demographics.</p>
+                    <p><strong>F</strong> Finding better ways of managing our emotions is one route out of the vicious cycle of procrastination. An important first step is to manage our environment and how we view the task. There are a number of evidence-based strategies that can help us fend off distractions that can occupy our minds when we should be focusing on the thing we should be getting on with. For example, reminding ourselves about why the task is important and valuable can increase positive feelings towards it. Forgiving ourselves and feeling compassion when we procrastinate can help break the procrastination cycle. We should admit that we feel bad, but not be overly critical of ourselves. We should remind ourselves that we’re not the first person to procrastinate, nor the last. Doing this can take the edge off the negative feelings we have about ourselves when we procrastinate. This can all make it easier to get back on track.</p>
+                </div>
+            </div>
+
+            <!-- PASSAGE 3 -->
+            <div id="passage-content-2" class="passage-content hidden">
+                <div class="text-xs uppercase font-bold text-zinc-500 mb-2 tracking-wider">Reading Passage 3</div>
+                <h1 class="font-serif text-3xl font-bold mb-5 pb-3 border-b-2 border-black">Invasion of the Robot Umpires</h1>
+                <div class="italic text-zinc-700 border-l-2 border-black pl-4 mb-6 leading-relaxed">
+                    You should spend about 20 minutes on Questions 27–40.
+                </div>
+                <div class="font-serif text-base leading-relaxed text-justify space-y-5 text-black">
+                    <p>A few years ago, Fred DeJesus from Brooklyn, New York became the first umpire in a minor league baseball game to use something called the Automated Ball-Strike System (ABS), often referred to as the ‘robo-umpire’. Instead of making any judgments himself about a strike*, DeJesus had decisions fed to him through an earpiece, connected to a modified missile-tracking system. The contraption looked like a large black pizza box with one glowing green eye; it was mounted above the press stand.</p>
+                    <p>Major League Baseball (MLB), who had commissioned the system, wanted human umpires to announce the calls, just as they would have done in the past. When the first pitch came in, a recorded voice told DeJesus it was a strike. Previously, calling a strike was a judgment call on the part of the umpire. Even if the batter does not hit the ball, a pitch that passes through the ‘strike zone’ (an imaginary zone about seventeen inches wide, stretching from the batter’s knees to the middle of his chest) is considered a strike. During that first game, when DeJesus announced calls, there was no heckling and no shouted disagreement. Nobody said a word.</p>
+                    <p>For a hundred and fifty years or so, the strike zone has been the game’s animating force-countless arguments between a team’s manager and the umpire have taken place over its boundaries and whether a ball had crossed through it. The rules of play have evolved in various stages. Today, everyone knows that you may scream your disagreement in an umpire’s face, but you must never shout personal abuse at them or touch them. That’s a no-no. When the robo-umpires came, however, the arguments stopped.</p>
+                    <p>During the first robo-umpire season, players complained about some strange calls. In response, MLB decided to tweak the dimensions of the zone, and the following year the consensus was that ABS is profoundly consistent. MLB says the device is near-perfect, precise to within fractions of an inch. “It’ll reduce controversy in the game, and be good for the game,” says Rob Manfred, who is Commissioner for MLB. But the question is whether controversy is worth reducing, or whether it is the sign of a human hand.</p>
+                    <p>A human, at least, yells back. When I spoke with Frank Viola, a coach for a North Carolina team, he said that ABS works as designed, but that it was also unforgiving and pedantic, almost legalistic. “Manfred is a lawyer,” Viola noted. Some pitchers have complained that, compared with a human’s, the robot’s strike zone seems too precise. Viola was once a major-league player himself. When he was pitching, he explained, umpires rewarded skill. “Throw it where you aimed, and it would be a strike, even if it was an inch or two outside. There was a dialogue between pitcher and umpire.”</p>
+                    <p>The executive tasked with running the experiment for MLB is Morgan Sword, who’s in charge of baseball operations. According to Sword, ABS was part of a larger project to make baseball more exciting since executives are terrified of losing younger fans, as has been the case with horse racing and boxing. He explains how they began the process by asking fans what version of baseball they found most exciting. The results showed that everyone wanted more action: more hits, more defense, more baserunning. This type of baseball essentially hasn’t existed since the 1960s, when the hundred-mile-an-hour fastball, which is difficult to hit and control, entered the game. It flattened the game into strikeouts, walks, and home runs a type of play lacking much action.</p>
+                    <p>Sword’s team brainstormed potential fixes. Any rule that existed, they talked about changing-from changing the bats to changing the geometry of the field. But while all of these were ruled out as potential fixes, ABS was seen as a perfect vehicle for change. According to Sword, once you get the technology right, you can load any strike zone you want into the system. “It might be a triangle, or a blob, or something shaped like Texas. Over time, as baseball evolves, ABS can allow the zone to change with it.”</p>
+                    <p>“In the past twenty years, sports have moved away from judgment calls. Soccer has Video Assistant Referees (for offside decisions, for example). Tennis has Hawk-Eye (for line calls, for example). For almost a decade, baseball has used instant replay on the base paths. This is widely liked, even if the precision can sometimes cause problems. But these applications deal with something physical: bases, lines, goals. The boundaries of action are precise, delineated like the keys of a piano. This is not the case with ABS and the strike zone. Historically, a certain discretion has been appreciated.”</p>
+                    <p>I decided to email Alva Noë, a professor at Berkeley University and a baseball fan, for his opinion. “Hardly a day goes by that I don’t wake up and run through the reasons that this [robo-umpires] is such a terrible idea,” he replied. He later told me, “This is part of a movement to use algorithms to take the hard choices of living out of life.” Perhaps he’s right. We watch baseball to kill time, not to maximize it. Some players I have met take a dissenting stance toward the robots too, believing that accuracy is not the answer. According to Joe Russo, who plays for a New Jersey team, “With technology, people just want everything to be perfect. That’s not reality. I think perfect would be weird. Your teams are always winning, work is always just great, there’s always money in your pocket, your car never breaks down. What is there to talk about?”</p>
+                    <p class="text-xs border-t border-zinc-200 pt-3 text-zinc-500 italic">* strike: a strike is when the batter swings at a ball and misses or when the batter does not swing at a ball that passes through the strike zone.</p>
+                </div>
+            </div>
+            
+            <!-- FLOATING HIGHLIGHT SELECTION TOOL -->
+            <div id="highlight-menu" class="absolute hidden bg-black rounded py-1.5 px-3 shadow-lg z-50 items-center gap-2.5 border border-zinc-800 select-none">
+                <button class="hl-color-btn w-6 h-6 rounded-full border border-zinc-400 bg-yellow-200 cursor-pointer hover:scale-110 transition-transform" data-color="#fef08a" title="Highlight Yellow"></button>
+                <button class="hl-color-btn w-6 h-6 rounded-full border border-zinc-400 bg-green-200 cursor-pointer hover:scale-110 transition-transform" data-color="#bbf7d0" title="Highlight Mint"></button>
+                <button class="hl-color-btn w-6 h-6 rounded-full border border-zinc-400 bg-pink-200 cursor-pointer hover:scale-110 transition-transform" data-color="#fbcfe8" title="Highlight Pink"></button>
+                <div class="w-[1px] h-5 bg-zinc-600"></div>
+                <button class="text-white text-[11px] font-bold tracking-wider uppercase flex items-center gap-1.5 hover:opacity-80 transition-opacity" id="btn-clear-selection">
+                    <i class="fa-solid fa-eraser"></i> Clear
+                </button>
+            </div>
+
+        </div>
+
+        <!-- RESIZABLE DRAGGABLE SPLITTER BAR -->
+        <div class="w-2 bg-zinc-200 cursor-col-resize flex items-center justify-center hover:bg-black active:bg-black transition-colors z-40 relative select-none shrink-0" id="resize-handle" title="Drag to adjust width">
+            <div class="w-[2px] h-6 bg-zinc-400 rounded-full"></div>
+        </div>
+
+        <!-- RIGHT PANEL: QUESTIONS PANEL -->
+        <div class="flex-1 h-full overflow-y-auto px-6 md:px-10 py-8 bg-white select-none" id="questions-panel">
+            
+            <!-- QUESTIONS FOR PASSAGE 1 -->
+            <div id="questions-content-0" class="questions-group-section block">
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 1–6</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Complete the notes below. Choose <strong>ONE WORD AND/OR A NUMBER</strong> from the passage for each answer.</p>
+                </div>
+
+                <div class="question-target border border-zinc-200 rounded p-6 mb-10 select-text" id="q-target-notes-p1">
+                    <h4 class="text-sm font-bold uppercase mb-4 tracking-wide pb-1.5 border-b border-zinc-200 text-black">Manatees</h4>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">Appearance</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-1">
+                                    look similar to dugongs, but with a differently shaped 
+                                    <input type="text" id="blank-q1" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[1]" data-qnum="1">
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">Movement</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li>have fewer neck bones than most mammals</li>
+                                <li class="p-2 rounded" id="q-target-2">
+                                    need to use their 
+                                    <input type="text" id="blank-q2" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[2]" data-qnum="2"> 
+                                    to help to turn their bodies around in order to look sideways
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                                <li class="p-2 rounded" id="q-target-3">
+                                    sense vibrations in the water by means of 
+                                    <input type="text" id="blank-q3" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[3]" data-qnum="3"> 
+                                    on their skin
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">Feeding</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li class="p-2 rounded" id="q-target-4">
+                                    eat mainly aquatic vegetation, such as 
+                                    <input type="text" id="blank-q4" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[4]" data-qnum="4">
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                                <li class="p-2 rounded" id="q-target-5">
+                                    grasp and pull up plants with their 
+                                    <input type="text" id="blank-q5" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[5]" data-qnum="5">
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-wide">Breathing</span>
+                            <ul class="list-disc pl-5 mt-2 space-y-4 text-sm leading-relaxed text-black select-text">
+                                <li>come to the surface for air every 2-4 minutes when awake and every 15-20 while sleeping</li>
+                                <li class="p-2 rounded" id="q-target-6">
+                                    may regulate the 
+                                    <input type="text" id="blank-q6" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[6]" data-qnum="6"> 
+                                    of their bodies by using muscles of diaphragm to store air internally
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 7–13</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Do the following statements agree with the information given in Reading Passage 1?</p>
+                </div>
+
+                <!-- Q7-13 Block -->
+                <div class="space-y-6 mb-10">
+                    <!-- Q7 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-7" data-qnum="7">
+                        <div class="text-sm font-bold mb-3 select-text">7. West Indian manatees can be found in a variety of different aquatic habitats.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q7">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q8 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-8" data-qnum="8">
+                        <div class="text-sm font-bold mb-3 select-text">8. The Florida manatee lives in warmer waters than the Antillean manatee.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q8">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q9 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-9" data-qnum="9">
+                        <div class="text-sm font-bold mb-3 select-text">9. The African manatee’s range is limited to coastal waters between the West African countries of Mauritania and Angola.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q9">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q10 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-10" data-qnum="10">
+                        <div class="text-sm font-bold mb-3 select-text">10. The extent of the loss of Amazonian manatees in the mid-twentieth century was only revealed many years later.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q10">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q11 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-11" data-qnum="11">
+                        <div class="text-sm font-bold mb-3 select-text">11. It is predicted that West Indian manatee populations will fall in the coming decades.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q11">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q12 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-12" data-qnum="12">
+                        <div class="text-sm font-bold mb-3 select-text">12. The risk to manatees from entanglement and plastic consumption increased significantly in the period 2009-2020.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q12">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q13 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-13" data-qnum="13">
+                        <div class="text-sm font-bold mb-3 select-text">13. There is some legislation in place which aims to reduce the likelihood of boat strikes on manatees in Florida.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q13">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="TRUE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>TRUE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="FALSE">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>FALSE</span>
+                            </button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN">
+                                <span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span>
+                            </button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONS FOR PASSAGE 2 -->
+            <div id="questions-content-1" class="questions-group-section hidden">
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 14–16</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Reading Passage 2 has six paragraphs, A–F. Which paragraph contains the following information?</p>
+                </div>
+
+                <!-- TABLE/GRID STYLE FOR MATCHING INFORMATION -->
+                <div class="overflow-x-auto border border-zinc-200 rounded mb-10">
+                    <table class="w-full text-left border-collapse text-xs select-none">
+                        <thead>
+                            <tr class="bg-zinc-50 border-b border-zinc-200">
+                                <th class="p-4 font-bold text-zinc-700 w-3/5 min-w-[200px]">Statement</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">A</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">B</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">C</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">D</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">E</th>
+                                <th class="p-4 font-bold text-center text-zinc-700 w-10">F</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-200">
+                            <!-- Q14 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-14" data-qnum="14">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>14.</strong> mention of false assumptions about why people procrastinate
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="C">C</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="D">D</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="E">E</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q14" data-val="F">F</button></td>
+                            </tr>
+                            <!-- Q15 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-15" data-qnum="15">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>15.</strong> reference to the realisation that others also procrastinate
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="C">C</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="D">D</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="E">E</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q15" data-val="F">F</button></td>
+                            </tr>
+                            <!-- Q16 -->
+                            <tr class="question-target hover:bg-zinc-50 transition-colors" id="q-target-16" data-qnum="16">
+                                <td class="p-4 font-medium text-zinc-900 select-text">
+                                    <strong>16.</strong> neurological evidence of a link between procrastination and emotion
+                                    <div class="explanation hidden mt-2 text-[11px] text-zinc-500"></div>
+                                </td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="A">A</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="B">B</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="C">C</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="D">D</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="E">E</button></td>
+                                <td class="p-4 text-center"><button class="table-opt-btn w-6 h-6 rounded-full border border-zinc-300 text-[10px] font-bold hover:bg-zinc-100 transition-colors" data-question="q16" data-val="F">F</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 17–22</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Complete the summary below. Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.</p>
+                </div>
+
+                <div class="question-target border border-zinc-200 rounded p-6 mb-10 select-text" id="q-target-summary-p2">
+                    <h4 class="text-sm font-bold uppercase mb-4 tracking-wide pb-1.5 border-b border-zinc-200 text-black">What makes us procrastinate?</h4>
+                    <div class="text-sm leading-relaxed text-black space-y-4">
+                        <p>Many people think that procrastination is the result of <span class="p-1 rounded inline-block" id="q-target-17"><input type="text" id="blank-q17" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[17]" data-qnum="17"></span>. Others believe it to be the result of an inability to organise time efficiently.</p>
+                        
+                        <p>But scientific studies suggest that procrastination is actually due to poor mood management. The tasks we are most likely to put off are those that could damage our self-esteem or cause us to feel <span class="p-1 rounded inline-block" id="q-target-18"><input type="text" id="blank-q18" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[18]" data-qnum="18"></span> when we think about them. Research comparing chronic procrastinators with other people even found differences in the brain regions associated with regulating emotions and identifying <span class="p-1 rounded inline-block" id="q-target-19"><input type="text" id="blank-q19" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[19]" data-qnum="19"></span>.</p>
+                        
+                        <p>Emotionally loaded and difficult tasks often cause us to procrastinate. Getting ready to take <span class="p-1 rounded inline-block" id="q-target-20"><input type="text" id="blank-q20" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[20]" data-qnum="20"></span> might be a typical example of one such task. People who are likely to procrastinate tend to be either <span class="p-1 rounded inline-block" id="q-target-21"><input type="text" id="blank-q21" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[21]" data-qnum="21"></span> those with low self-esteem.</p>
+                        
+                        <p>Procrastination is only a short-term measure for managing emotions. It’s often followed by a feeling of <span class="p-1 rounded inline-block" id="q-target-22"><input type="text" id="blank-q22" class="input-blank inline-block border-b-2 border-black font-bold text-center px-2 py-0.5 outline-none bg-transparent w-36 text-zinc-900 transition-colors" placeholder="[22]" data-qnum="22"></span>, which worsens our mood and leads to more procrastination.</p>
+                    </div>
+                    <div class="feedback-container space-y-2 mt-4 text-xs">
+                        <div id="explanation-q17" class="explanation hidden p-3 bg-zinc-50 border border-zinc-200 rounded text-zinc-600"></div>
+                        <div id="explanation-q18" class="explanation hidden p-3 bg-zinc-50 border border-zinc-200 rounded text-zinc-600"></div>
+                        <div id="explanation-q19" class="explanation hidden p-3 bg-zinc-50 border border-zinc-200 rounded text-zinc-600"></div>
+                        <div id="explanation-q20" class="explanation hidden p-3 bg-zinc-50 border border-zinc-200 rounded text-zinc-600"></div>
+                        <div id="explanation-q21" class="explanation hidden p-3 bg-zinc-50 border border-zinc-200 rounded text-zinc-600"></div>
+                        <div id="explanation-q22" class="explanation hidden p-3 bg-zinc-50 border border-zinc-200 rounded text-zinc-600"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 23 and 24</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Choose TWO letters, A–E.<br>Which <strong>TWO</strong> comparisons between employees who often procrastinate and those who do not are mentioned in the text?</p>
+                </div>
+                <div class="space-y-6 mb-10">
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-23-24">
+                        <div class="text-sm font-bold mb-3 select-text">23 & 24. Which TWO comparisons between employees who often procrastinate and those who do not are mentioned in the text?</div>
+                        <div class="text-xs text-zinc-500 mb-3 italic">Select up to 2 options.</div>
+                        <div class="flex flex-col gap-2 multi-select-grid" data-questions="q23,q24" data-max="2">
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="A"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>A. Their salaries are lower.</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="B"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>B. The quality of their work is inferior.</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="C"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>C. They don’t keep their jobs for as long.</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="D"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>D. They don’t enjoy their working lives as much.</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="E"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>E. They have poorer relationships with colleagues.</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 25 and 26</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Choose TWO letters, A–E.<br>Which <strong>TWO</strong> recommendations for getting out of a cycle of procrastination does the writer give?</p>
+                </div>
+                <div class="space-y-6 mb-10">
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-25-26">
+                        <div class="text-sm font-bold mb-3 select-text">25 & 26. Which TWO recommendations for getting out of a cycle of procrastination does the writer give?</div>
+                        <div class="text-xs text-zinc-500 mb-3 italic">Select up to 2 options.</div>
+                        <div class="flex flex-col gap-2 multi-select-grid" data-questions="q25,q26" data-max="2">
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="A"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>A. not judging ourselves harshly</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="B"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>B. setting ourselves manageable aims</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="C"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>C. rewarding ourselves for tasks achieved</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="D"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>D. prioritising tasks according to their importance</span></button>
+                            <button type="button" class="ms-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex items-center gap-2.5 text-left" data-val="E"><span class="check-box w-4 h-4 rounded-sm border-2 border-zinc-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[10px] text-transparent transition-colors duration-150"></i></span><span>E. avoiding things that stop us concentrating on our tasks</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASSAGE 3 -->
+            <div id="questions-content-2" class="questions-group-section hidden">
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 27–32</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Do the following statements agree with the claims of the writer in Reading Passage 3?</p>
+                </div>
+
+                <div class="space-y-6 mb-10">
+                    <!-- Q27 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-27" data-qnum="27">
+                        <div class="text-sm font-bold mb-3 select-text">27. When DeJesus first used ABS, he shared decision-making about strikes with it.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q27">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q28 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-28" data-qnum="28">
+                        <div class="text-sm font-bold mb-3 select-text">28. MLB considered it necessary to amend the size of the strike zone when criticisms were received from players.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q28">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q29 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-29" data-qnum="29">
+                        <div class="text-sm font-bold mb-3 select-text">29. MLB is keen to justify the money spent on improving the accuracy of ABS’s calculations.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q29">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q30 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-30" data-qnum="30">
+                        <div class="text-sm font-bold mb-3 select-text">30. The hundred-mile-an-hour fastball led to a more exciting style of play.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q30">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q31 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-31" data-qnum="31">
+                        <div class="text-sm font-bold mb-3 select-text">31. The differing proposals for alterations to the baseball bat led to fierce debate on Sword’s team.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q31">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q32 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-32" data-qnum="32">
+                        <div class="text-sm font-bold mb-3 select-text">32. ABS makes changes to the shape of the strike zone feasible.</div>
+                        <div class="flex flex-col sm:flex-row gap-2 mc-options-grid" data-question="q32">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="YES"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>YES</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NO"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NO</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-2.5 text-xs font-semibold hover:bg-zinc-100 transition-colors flex-1 flex items-center gap-2.5" data-val="NOT GIVEN"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>NOT GIVEN</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 33–37</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Complete the summary using the list of phrases, A–H, below.</p>
+                </div>
+
+                <!-- DRAG AND DROP SOURCE -->
+                <div class="mb-8 p-4 border border-zinc-200 rounded bg-zinc-50" id="endings-pool-container">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2" id="endings-pool">
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="A" id="card-A"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">A</span><span>pitch boundary</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="B" id="card-B"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">B</span><span>numerous disputes</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="C" id="card-C"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">C</span><span>team tactics</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="D" id="card-D"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">D</span><span>subjective assessment</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="E" id="card-E"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">E</span><span>widespread approval</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="F" id="card-F"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">F</span><span>former roles</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="G" id="card-G"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">G</span><span>total silence</span></div>
+                        <div class="draggable-card border border-zinc-300 rounded p-3 bg-white text-xs font-semibold cursor-grab active:cursor-grabbing hover:bg-zinc-100 transition-colors select-none flex items-center gap-2.5" draggable="true" data-letter="H" id="card-H"><span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold">H</span><span>perceived area</span></div>
+                    </div>
+                </div>
+
+                <!-- DRAG TARGETS -->
+                <div class="space-y-6 mb-10">
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-33" data-qnum="33">
+                        <div class="text-sm font-bold mb-3 select-text">33. Even after ABS was developed, MLB still wanted human umpires to shout out decisions as they had in their:</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q33">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an option...</span><div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div><button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-34" data-qnum="34">
+                        <div class="text-sm font-bold mb-3 select-text">34. The umpire’s job had, at one time, required a:</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q34">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an option...</span><div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div><button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-35" data-qnum="35">
+                        <div class="text-sm font-bold mb-3 select-text">35. A ball is considered a strike when the batter does not hit it and it crosses through a:</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q35">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an option...</span><div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div><button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-36" data-qnum="36">
+                        <div class="text-sm font-bold mb-3 select-text">36. In the past, _______ over strike calls were not uncommon...</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q36">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an option...</span><div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div><button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-37" data-qnum="37">
+                        <div class="text-sm font-bold mb-3 select-text">37. One difference, however, is that during the first game DeJesus used ABS, strike calls were met with:</div>
+                        <div class="drop-zone border-2 border-dashed border-zinc-300 rounded p-4 text-center text-xs text-zinc-500 font-medium hover:border-black transition-all flex items-center justify-between min-h-[50px] cursor-pointer relative" data-question="q37">
+                            <span class="drop-placeholder italic text-zinc-400">Drag & drop or click an option...</span><div class="dropped-content hidden items-center gap-2 font-semibold text-zinc-900 select-text"></div><button type="button" class="btn-clear-drop hidden text-zinc-400 hover:text-black ml-2"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-100 border border-zinc-200 p-4 rounded mb-8 select-text">
+                    <h3 class="text-sm font-bold uppercase mb-1">Questions 38–40</h3>
+                    <p class="text-xs text-zinc-700 leading-relaxed">Choose the correct letter, A, B, C or D.</p>
+                </div>
+
+                <div class="space-y-6 mb-10">
+                    <!-- Q38 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-38" data-qnum="38">
+                        <div class="text-sm font-bold mb-3 select-text">38. What does the writer suggest about ABS in the fifth paragraph?</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q38">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. It is bound to make key decisions that are wrong.</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. It may reduce some of the appeal of the game.</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. It will lead to the disappearance of human umpires.</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. It may increase calls for the rules of baseball to be changed.</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q39 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-39" data-qnum="39">
+                        <div class="text-sm font-bold mb-3 select-text">39. Morgan Sword says that the introduction of ABS</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q39">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. was regarded as an experiment without a guaranteed outcome.</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. was intended to keep up with developments in other sports.</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. was a response to changing attitudes about the role of sport.</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. was an attempt to ensure baseball retained a young audience.</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                    <!-- Q40 -->
+                    <div class="question-target border border-zinc-200 rounded p-5 hover:border-zinc-400 transition-colors" id="q-target-40" data-qnum="40">
+                        <div class="text-sm font-bold mb-3 select-text">40. Why does the writer include the views of Noe and Russo?</div>
+                        <div class="flex flex-col gap-2.5 mc-options-grid" data-question="q40">
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="A"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>A. to show that attitudes to technology vary widely</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="B"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>B. to argue that people have unrealistic expectations of sport</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="C"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>C. to indicate that accuracy is not the same thing as enjoyment</span></button>
+                            <button type="button" class="mc-opt-btn border border-zinc-300 rounded px-4 py-3 text-xs font-semibold hover:bg-zinc-100 text-left transition-colors flex items-start gap-3" data-val="D"><span class="radio-circle w-4 h-4 rounded-full border-2 border-zinc-400 flex items-center justify-center shrink-0 mt-0.5"><span class="radio-dot w-2 h-2 rounded-full bg-black scale-0 transition-transform duration-150"></span></span><span>D. to suggest that the number of baseball fans needs to increase</span></button>
+                        </div>
+                        <div class="explanation hidden mt-4 pt-3 border-t border-zinc-200 text-xs leading-relaxed select-text"></div>
+                    </div>
+                </div>
+
+                <!-- SUBMIT BUTTON IS ONLY IN PASSAGE 3 -->
+                <div class="mt-12 flex justify-center pb-12">
+                    <button class="bg-black hover:bg-zinc-800 text-white font-bold tracking-wider uppercase text-sm px-10 py-4.5 rounded transition-colors flex items-center gap-2.5 border border-black shadow cursor-pointer" id="btn-submit-exam">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Test
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER NAV -->
+    <footer class="bg-zinc-100 border-t border-zinc-300 p-2 z-30 select-none shrink-0 flex items-center justify-center">
+        <div class="flex w-full gap-[1px] md:gap-1" id="nav-grid">
+            <!-- Javascript generates buttons 1 to 40 -->
+        </div>
+    </footer>
+
+    <!-- SCORE MODAL -->
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 select-none" id="score-modal">
+        <div class="bg-white p-10 rounded-xl border border-zinc-200 w-11/12 max-w-sm text-center shadow-2xl transform scale-95 transition-transform duration-300" id="score-modal-content">
+            
+            <div class="w-32 h-32 rounded-full bg-black text-white flex flex-col items-center justify-center mx-auto mb-6 border-4 border-white shadow-xl relative">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-zinc-300 absolute top-4">Band</div>
+                <div class="text-5xl font-extrabold mt-2 tracking-tighter" id="modal-band-score">0.0</div>
+            </div>
+            
+            <h2 class="text-xl font-extrabold uppercase tracking-widest mb-1 text-black">Test Complete</h2>
+            <div class="text-base font-bold text-zinc-800 mb-4 bg-zinc-100 py-2 rounded">Raw Score: <span id="modal-score" class="text-black">0/40</span></div>
+            
+            <p class="text-[13px] text-zinc-500 mb-8 leading-relaxed font-medium">Your practice test has been graded. Review your answers on the right panel to see detailed explanations.</p>
+            
+            <button class="bg-black hover:bg-zinc-800 text-white font-bold py-3.5 px-8 text-xs uppercase tracking-wider rounded w-full transition-colors cursor-pointer shadow-md" id="modal-close-btn">Review Answers</button>
+        </div>
+    </div>
+
+    <!-- JS LOGIC -->
+    <script>
+        const KEY_ANSWERS = {
+            q1: "tail", q2: "flippers", q3: "hairs", q4: "Seagrasses", q5: "lips", q6: "buoyancy",
+            q7: "TRUE", q8: "NOT GIVEN", q9: "FALSE", q10: "NOT GIVEN", q11: "TRUE", q12: "NOT GIVEN", q13: "TRUE",
+            q14: "B", q15: "F", q16: "B",
+            q17: "laziness", q18: "anxious", q19: "threats", q20: "exams", q21: "perfectionists", q22: "guilt",
+            q23: "A", q24: "C", q25: "A", q26: "E",
+            q27: "NO", q28: "YES", q29: "NOT GIVEN", q30: "NO", q31: "NOT GIVEN", q32: "YES",
+            q33: "F", q34: "D", q35: "H", q36: "B", q37: "G",
+            q38: "B", q39: "D", q40: "C"
+        };
+
+        const EXPLANATIONS = {
+            q1: `Paragraph 1 states: "the manatee has a broad, rounded tail, whereas the dugong’s is fluked..."`,
+            q2: `Paragraph 2 states: "To see something on its left or its right, a manatee must turn its entire body, steering with its flippers."`,
+            q3: `Paragraph 2 states: "They also have some hairs covering their bodies which help them sense vibrations..."`,
+            q4: `Paragraph 3 states: "Seagrasses and other marine plants make up most of a manatee’s diet."`,
+            q5: `Paragraph 4 states: "manatees have lips which function like a pair of hands to help tear food..."`,
+            q6: `Paragraph 5 states: "They may use diaphragm contractions to compress and store gas... to help them float (regulate buoyancy)."`,
+            q7: `Paragraph 6 lists "coastal mangroves and coral reefs, rivers, lakes and inland lagoons" - which are various habitats.`,
+            q8: `Paragraph 6 mentions both live in warm water but makes no comparison of which is warmer.`,
+            q9: `Paragraph 7 says they are also found in landlocked countries like Mali and Niger, so it's not limited strictly to coastal waters.`,
+            q10: `Paragraph 8 says 140,000 were killed between 1935 and 1954, but doesn't mention when this fact was revealed to the public.`,
+            q11: `Paragraph 9 states: "Both are also expected to undergo a decline of 20% over the next 40 years."`,
+            q12: `Paragraph 9 notes a review from 2009 to 2020 found 700 cases, but there is no information to say it "increased significantly".`,
+            q13: `Paragraph 9 states: "laws in certain parts of Florida now limit boat speeds during winter".`,
+            q14: `Paragraph B opens with: "Contrary to popular belief, procrastination is not due to laziness..."`,
+            q15: `Paragraph F says: "We should remind ourselves that we’re not the first person to procrastinate, nor the last."`,
+            q16: `Paragraph B mentions: "Research involving brain imaging has found that areas of the brain linked to... emotion regulation are actually different..."`,
+            q17: `Paragraph B: "procrastination is not due to laziness..."`,
+            q18: `Paragraph B: "makes us anxious, we will be more likely to put it off."`,
+            q19: `Paragraph B: "linked to detection of threats"`,
+            q20: `Paragraph C: "such as preparing for exams"`,
+            q21: `Paragraph C: "Another group of people who tend to procrastinate are perfectionists"`,
+            q22: `Paragraph C: "people tend to be left with a sense of guilt"`,
+            q23: `Paragraph D notes participants "had less annual income" (Their salaries are lower) AND participants had "less employment stability" (They don't keep their jobs for as long).`,
+            q24: `(See Explanation 23)`,
+            q25: `Paragraph F: "Forgiving ourselves and feeling compassion... not be overly critical of ourselves" matches not judging ourselves harshly AND "strategies that can help us fend off distractions" matches avoiding things that stop us concentrating.`,
+            q26: `(See Explanation 25)`,
+            q27: `Paragraph 1 says: "Instead of making any judgments himself about a strike, DeJesus had decisions fed to him..." He did not share the decision-making.`,
+            q28: `Paragraph 4 says: "players complained about some strange calls. In response, MLB decided to tweak the dimensions of the zone..."`,
+            q29: `There is no mention of justifying the money spent in the passage.`,
+            q30: `Paragraph 6 says the hundred-mile-an-hour fastball "flattened the game into strikeouts... a type of play lacking much action." (Not more exciting).`,
+            q31: `Paragraph 7 says "they talked about changing... from changing the bats to..." but does not mention "fierce debate".`,
+            q32: `Paragraph 7 says: "ABS can allow the zone to change with it" and "you can load any strike zone you want".`,
+            q33: `Paragraph 2: MLB wanted umpires to announce calls "just as they would have done in the past" (former roles).`,
+            q34: `Paragraph 2: "calling a strike was a judgment call" (subjective assessment).`,
+            q35: `Paragraph 2: "an imaginary zone... stretching from the batter’s knees to the middle of his chest" (perceived area).`,
+            q36: `Paragraph 3: "countless arguments between a team’s manager and the umpire" (numerous disputes).`,
+            q37: `Paragraph 2: "Nobody said a word." (total silence).`,
+            q38: `Paragraph 5 explains that ABS is legalistic and unforgiving, removing the human dialogue and reward for skill. (It may reduce some of the appeal).`,
+            q39: `Paragraph 6: "executives are terrified of losing younger fans... ABS was part of a larger project to make baseball more exciting".`,
+            q40: `Paragraph 9: Noe says algorithms take hard choices out of life; Russo says "perfect would be weird". Accuracy kills the enjoyment. (accuracy is not enjoyment).`
+        };
+
+        let USER_ANSWERS = {};
+        for(let i = 1; i <= 40; i++) USER_ANSWERS[`q${i}`] = "";
+
+        // NAV GRID
+        const navGrid = document.getElementById('nav-grid');
+        for (let i = 1; i <= 40; i++) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'nav-btn flex-1 h-7 sm:h-8 border border-zinc-300 rounded bg-white text-[9px] sm:text-[10px] font-bold text-zinc-800 flex items-center justify-center hover:bg-zinc-200 transition-colors cursor-pointer select-none min-w-[20px]';
+            btn.id = `nav-btn-q${i}`;
+            btn.textContent = i;
+            btn.setAttribute('data-q', i);
+            navGrid.appendChild(btn);
+        }
+
+        // TIMER
+        let timeLeft = 60 * 60;
+        let timerInterval = null;
+        let isTimerRunning = true;
+        const timerDisplay = document.getElementById('timer-display');
+        const btnPauseTimer = document.getElementById('btn-pause-timer');
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (!isTimerRunning) return;
+                timeLeft--;
+                timerDisplay.textContent = `${Math.floor(timeLeft / 60).toString().padStart(2, '0')}:${(timeLeft % 60).toString().padStart(2, '0')}`;
+                if (timeLeft <= 300) document.getElementById('countdown-timer').classList.add('text-red-500', 'border-red-500', 'animate-pulse');
+                if (timeLeft <= 0) { clearInterval(timerInterval); gradeTest(); }
+            }, 1000);
+        }
+
+        btnPauseTimer.addEventListener('click', () => {
+            isTimerRunning = !isTimerRunning;
+            btnPauseTimer.innerHTML = isTimerRunning ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
+        });
+        startTimer();
+
+        // TABS
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const passages = document.querySelectorAll('.passage-content');
+        const questionSections = document.querySelectorAll('.questions-group-section');
+
+        function activateTab(index) {
+            tabButtons.forEach((btn, i) => btn.className = i === index ? "tab-btn active px-6 py-3 text-xs font-bold border-b-2 border-black uppercase tracking-wider text-black bg-white transition-all" : "tab-btn px-6 py-3 text-xs font-bold text-zinc-400 border-b-2 border-transparent uppercase tracking-wider hover:text-black hover:bg-zinc-200 transition-all");
+            passages.forEach((p, i) => i === index ? p.classList.remove('hidden') : p.classList.add('hidden'));
+            questionSections.forEach((q, i) => i === index ? q.classList.remove('hidden') : q.classList.add('hidden'));
+        }
+
+        tabButtons.forEach((btn, i) => btn.addEventListener('click', () => activateTab(i)));
+
+        // RECORD ANSWERS LOGIC
+        function updateNavBtnState(qKey, val) {
+            const navBtn = document.getElementById(`nav-btn-${qKey}`);
+            if (!navBtn) return;
+            if(navBtn.classList.contains('nav-correct') || navBtn.classList.contains('nav-wrong')) return;
+
+            if (val.trim() !== "") {
+                navBtn.classList.add('bg-zinc-800', 'text-white', 'border-zinc-800');
+                navBtn.classList.remove('bg-white', 'text-zinc-800', 'border-zinc-300');
+            } else {
+                navBtn.classList.remove('bg-zinc-800', 'text-white', 'border-zinc-800');
+                navBtn.classList.add('bg-white', 'text-zinc-800', 'border-zinc-300');
+            }
+        }
+
+        // Multiple choice & TFNG
+        document.querySelectorAll('.mc-options-grid').forEach(grid => {
+            const qKey = grid.getAttribute('data-question');
+            const buttons = grid.querySelectorAll('.mc-opt-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    buttons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    USER_ANSWERS[qKey] = this.getAttribute('data-val');
+                    updateNavBtnState(qKey, USER_ANSWERS[qKey]);
+                });
+            });
+        });
+
+        // Table Matching
+        document.querySelectorAll('.table-opt-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.disabled) return;
+                const qKey = this.getAttribute('data-question');
+                document.querySelectorAll(`.table-opt-btn[data-question="${qKey}"]`).forEach(sib => {
+                    sib.classList.remove('bg-zinc-900', 'text-white', 'border-zinc-900');
+                    sib.classList.add('border-zinc-300', 'hover:bg-zinc-100');
+                });
+                this.classList.add('bg-zinc-900', 'text-white', 'border-zinc-900');
+                this.classList.remove('border-zinc-300', 'hover:bg-zinc-100');
+                USER_ANSWERS[qKey] = this.getAttribute('data-val');
+                updateNavBtnState(qKey, USER_ANSWERS[qKey]);
+            });
+        });
+
+        // Multi-Select Checkboxes
+        document.querySelectorAll('.multi-select-grid').forEach(grid => {
+            const qKeys = grid.getAttribute('data-questions').split(',');
+            const max = parseInt(grid.getAttribute('data-max'));
+            const buttons = grid.querySelectorAll('.ms-opt-btn');
+            
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    
+                    const isActive = this.classList.contains('active');
+                    if (isActive) {
+                        this.classList.remove('active');
+                    } else {
+                        const currentActive = grid.querySelectorAll('.ms-opt-btn.active').length;
+                        if (currentActive < max) {
+                            this.classList.add('active');
+                        } else {
+                            return; // Max reached, prevent selection
+                        }
+                    }
+                    
+                    const selectedVals = Array.from(grid.querySelectorAll('.ms-opt-btn.active')).map(b => b.getAttribute('data-val'));
+                    
+                    qKeys.forEach((key, index) => {
+                        USER_ANSWERS[key] = selectedVals[index] || "";
+                        updateNavBtnState(key, USER_ANSWERS[key]);
+                    });
+                });
+            });
+        });
+
+        // Blanks
+        document.querySelectorAll('.input-blank').forEach(input => {
+            input.addEventListener('input', function() {
+                const qKey = `q${this.getAttribute('data-qnum')}`;
+                USER_ANSWERS[qKey] = this.value;
+                updateNavBtnState(qKey, this.value);
+            });
+        });
+
+        // Drag & Drop
+        let activeSelectedCard = null;
+        document.querySelectorAll('.draggable-card').forEach(card => {
+            card.addEventListener('dragstart', e => { 
+                card.classList.add('dragging'); 
+                e.dataTransfer.setData('text/plain', card.getAttribute('data-letter')); 
+            });
+            card.addEventListener('dragend', () => card.classList.remove('dragging'));
+            card.addEventListener('click', e => {
+                e.stopPropagation();
+                document.querySelectorAll('.draggable-card').forEach(c => c.classList.remove('border-black', 'border-2', 'ring-2', 'ring-black'));
+                if (activeSelectedCard === card) activeSelectedCard = null;
+                else { activeSelectedCard = card; card.classList.add('border-black', 'border-2', 'ring-2', 'ring-black'); }
+            });
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            const qKey = zone.getAttribute('data-question');
+            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+            zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault(); zone.classList.remove('dragover');
+                assignEnding(qKey, e.dataTransfer.getData('text/plain'), zone);
+            });
+            zone.addEventListener('click', () => {
+                if (activeSelectedCard) {
+                    assignEnding(qKey, activeSelectedCard.getAttribute('data-letter'), zone);
+                }
+            });
+            zone.querySelector('.btn-clear-drop').addEventListener('click', e => {
+                e.stopPropagation(); clearZone(qKey, zone);
+            });
+        });
+
+        function updatePoolVisibility() {
+            const usedLetters = ['q33', 'q34', 'q35', 'q36', 'q37'].map(k => USER_ANSWERS[k]).filter(Boolean);
+            document.querySelectorAll('.draggable-card').forEach(card => {
+                const l = card.getAttribute('data-letter');
+                if (usedLetters.includes(l)) {
+                    card.classList.add('hidden');
+                } else {
+                    card.classList.remove('hidden');
+                }
+            });
+        }
+
+        function assignEnding(qKey, letter, zone) {
+            if (zone.classList.contains('cursor-not-allowed')) return; 
+
+            // If letter is used elsewhere, clear it from that zone first
+            const dragKeys = ['q33', 'q34', 'q35', 'q36', 'q37'];
+            dragKeys.forEach(k => {
+                if (k !== qKey && USER_ANSWERS[k] === letter) {
+                    const otherZone = document.querySelector(`.drop-zone[data-question="${k}"]`);
+                    if (otherZone) clearZone(k, otherZone);
+                }
+            });
+
+            const card = document.getElementById(`card-${letter}`);
+            if (!card) return;
+            
+            zone.querySelector('.drop-placeholder').classList.add('hidden');
+            const content = zone.querySelector('.dropped-content');
+            
+            // Apply truncation if the text is long so it fits nicely
+            content.innerHTML = `<span class="px-1.5 py-0.5 bg-black text-white rounded text-[10px] font-bold shrink-0">${letter}</span> <span class="truncate" title="${card.querySelector('span:last-child').textContent}">${card.querySelector('span:last-child').textContent}</span>`;
+            content.classList.remove('hidden');
+            zone.querySelector('.btn-clear-drop').classList.remove('hidden');
+            zone.classList.replace('border-dashed', 'border-solid'); 
+            zone.classList.add('border-zinc-800', 'bg-zinc-50');
+            
+            USER_ANSWERS[qKey] = letter; 
+            updateNavBtnState(qKey, letter);
+            updatePoolVisibility();
+
+            if (activeSelectedCard) {
+                activeSelectedCard.classList.remove('border-black', 'border-2', 'ring-2', 'ring-black');
+                activeSelectedCard = null;
+            }
+        }
+
+        function clearZone(qKey, zone) {
+            zone.querySelector('.drop-placeholder').classList.remove('hidden');
+            const content = zone.querySelector('.dropped-content'); 
+            content.classList.add('hidden'); 
+            content.innerHTML = '';
+            zone.querySelector('.btn-clear-drop').classList.add('hidden');
+            zone.classList.replace('border-solid', 'border-dashed'); 
+            zone.classList.remove('border-zinc-800', 'bg-zinc-50');
+            
+            USER_ANSWERS[qKey] = ""; 
+            updateNavBtnState(qKey, "");
+            updatePoolVisibility();
+        }
+
+        // NAV MAP SCROLL LINK
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetQNum = parseInt(this.getAttribute('data-q'));
+                let passageIdx = targetQNum <= 13 ? 0 : targetQNum <= 26 ? 1 : 2;
+                activateTab(passageIdx);
+
+                let targetElem = document.getElementById(`q-target-${targetQNum}`);
+                if (targetQNum === 23 || targetQNum === 24) targetElem = document.getElementById('q-target-23-24');
+                else if (targetQNum === 25 || targetQNum === 26) targetElem = document.getElementById('q-target-25-26');
+                else if (!targetElem) targetElem = document.getElementById(`q-target-notes-p1`) || document.getElementById(`q-target-summary-p2`);
+
+                if (targetElem) {
+                    document.getElementById('questions-panel').scrollTo({ top: targetElem.offsetTop - 40, behavior: 'smooth' });
+                    targetElem.classList.add('highlight-scroll');
+                    setTimeout(() => targetElem.classList.remove('highlight-scroll'), 1200);
+                }
+            });
+        });
+
+        function calculateBandScore(score) {
+            if (score >= 39) return "9.0";
+            if (score >= 37) return "8.5";
+            if (score >= 35) return "8.0";
+            if (score >= 33) return "7.5";
+            if (score >= 30) return "7.0";
+            if (score >= 27) return "6.5";
+            if (score >= 23) return "6.0";
+            if (score >= 19) return "5.5";
+            if (score >= 15) return "5.0";
+            if (score >= 13) return "4.5";
+            if (score >= 10) return "4.0";
+            if (score >= 8) return "3.5";
+            if (score >= 6) return "3.0";
+            if (score >= 4) return "2.5";
+            if (score >= 2) return "2.0";
+            if (score === 1) return "1.0";
+            return "0.0";
+        }
+
+        // GRADING ENGINE
+        let hasGraded = false;
+        function gradeTest() {
+            if (hasGraded) return;
+            hasGraded = true;
+            isTimerRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('btn-submit-exam').disabled = true;
+            document.getElementById('btn-submit-exam').classList.replace('hover:bg-zinc-800', 'opacity-50');
+            
+            let score = 0;
+
+            for (let i = 1; i <= 40; i++) {
+                const qKey = `q${i}`;
+                const userAns = (USER_ANSWERS[qKey] || "").trim();
+                const correctAns = KEY_ANSWERS[qKey];
+                
+                // Allow order independence for Q23-24 and Q25-26 (Standard IELTS format)
+                let isCorrect = false;
+                if (i === 23 || i === 24) {
+                    isCorrect = ["A", "C"].includes(userAns) && (USER_ANSWERS['q23'] !== USER_ANSWERS['q24'] || userAns === "");
+                } else if (i === 25 || i === 26) {
+                    isCorrect = ["A", "E"].includes(userAns) && (USER_ANSWERS['q25'] !== USER_ANSWERS['q26'] || userAns === "");
+                } else {
+                    isCorrect = userAns.toLowerCase() === correctAns.toLowerCase();
+                }
+                
+                if (isCorrect) score++;
+
+                const navBtn = document.getElementById(`nav-btn-q${i}`);
+                navBtn.className = `nav-btn flex-1 min-w-0 h-7 sm:h-8 rounded text-[9px] sm:text-[10px] font-bold flex items-center justify-center cursor-pointer select-none transition-colors ${isCorrect ? 'nav-correct' : 'nav-wrong'}`;
+
+                const isMC = (i >= 7 && i <= 13) || (i >= 27 && i <= 32) || (i >= 38 && i <= 40);
+                const isMultiSelect = (i >= 23 && i <= 26);
+                const isTable = (i >= 14 && i <= 16);
+                const isDrag = (i >= 33 && i <= 37);
+                const isBlank = (i >= 1 && i <= 6) || (i >= 17 && i <= 22);
+                
+                let targetCard = document.getElementById(`q-target-${i}`);
+                if (i === 23 || i === 24) targetCard = document.getElementById('q-target-23-24');
+                else if (i === 25 || i === 26) targetCard = document.getElementById('q-target-25-26');
+                
+                let explBox = null;
+                if (isTable) { explBox = targetCard.querySelector('.explanation'); }
+                else if (isBlank && i >= 17) { explBox = document.getElementById(`explanation-${qKey}`); }
+                else if (targetCard) { explBox = targetCard.querySelector('.explanation'); }
+                
+                if (explBox && EXPLANATIONS[qKey] && i !== 24 && i !== 26) {
+                    explBox.classList.remove('hidden');
+                    explBox.innerHTML = `<strong>Explanation:</strong> ${EXPLANATIONS[qKey]}`;
+                }
+
+                if (isMC) {
+                    const buttons = targetCard.querySelectorAll('.mc-opt-btn');
+                    buttons.forEach(btn => {
+                        const val = btn.getAttribute('data-val');
+                        btn.disabled = true; btn.classList.remove('active'); 
+                        
+                        let isThisBtnCorrect = (val === correctAns);
+
+                        if (isThisBtnCorrect) btn.classList.add('graded-correct');
+                        else if (val === userAns) btn.classList.add('graded-wrong');
+                    });
+                } 
+                else if (isMultiSelect) {
+                    if (i === 23 || i === 25) {
+                        const correctKeys = i === 23 ? ["A", "C"] : ["A", "E"];
+                        const userSel = [USER_ANSWERS[`q${i}`], USER_ANSWERS[`q${i+1}`]];
+                        const buttons = targetCard.querySelectorAll('.ms-opt-btn');
+                        buttons.forEach(btn => {
+                            const val = btn.getAttribute('data-val');
+                            btn.disabled = true;
+                            btn.classList.remove('active');
+                            const isKey = correctKeys.includes(val);
+                            const isSelected = userSel.includes(val);
+
+                            if (isKey && isSelected) {
+                                btn.classList.add('graded-correct');
+                            } else if (!isKey && isSelected) {
+                                btn.classList.add('graded-wrong');
+                            } else if (isKey && !isSelected) {
+                                btn.classList.add('graded-correct', 'opacity-50');
+                            }
+                        });
+                    }
+                }
+                else if (isTable) {
+                    const buttons = document.querySelectorAll(`.table-opt-btn[data-question="${qKey}"]`);
+                    buttons.forEach(btn => {
+                        const val = btn.getAttribute('data-val');
+                        btn.disabled = true;
+                        btn.classList.remove('bg-zinc-900', 'text-white', 'border-zinc-900');
+                        if (val === correctAns) {
+                            btn.className = "table-opt-btn w-6 h-6 rounded-full border border-green-600 bg-green-500 text-white text-[10px] font-bold";
+                        } else if (val === userAns) {
+                            btn.className = "table-opt-btn w-6 h-6 rounded-full border border-red-500 bg-red-100 text-red-600 line-through text-[10px] font-bold";
+                        } else {
+                            btn.classList.add('opacity-50');
+                        }
+                    });
+                }
+                else if (isDrag) {
+                    const zone = document.querySelector(`.drop-zone[data-question="${qKey}"]`);
+                    if (zone) {
+                        zone.classList.add('cursor-not-allowed');
+                        const clearBtn = zone.querySelector('.btn-clear-drop');
+                        if (clearBtn) clearBtn.classList.add('hidden');
+
+                        if (isCorrect) {
+                            zone.classList.replace('border-zinc-800', 'border-green-500');
+                            zone.classList.replace('bg-zinc-50', 'bg-green-50');
+                            zone.querySelector('.dropped-content').classList.add('text-green-800');
+                        } else {
+                            zone.classList.add('border-red-500', 'bg-red-50', 'border-solid');
+                            zone.classList.remove('border-dashed');
+                            if (userAns) {
+                                zone.querySelector('.dropped-content').classList.add('line-through', 'text-red-500');
+                            }
+                            
+                            const correctCard = document.getElementById(`card-${correctAns}`);
+                            const correctText = correctCard ? correctCard.querySelector('span:last-child').textContent : '';
+                            const corrElem = document.createElement('div');
+                            corrElem.className = "text-green-600 font-bold text-xs mt-2 block w-full text-left";
+                            corrElem.innerHTML = `Correct: <span class="px-1.5 py-0.5 bg-green-600 text-white rounded text-[10px] mx-1">${correctAns}</span> ${correctText}`;
+                            zone.appendChild(corrElem);
+                        }
+                    }
+                }
+                else if (isBlank) {
+                    const input = document.getElementById(`blank-${qKey}`);
+                    if (input) {
+                        input.disabled = true;
+                        input.classList.remove('border-black', 'border-zinc-400', 'bg-transparent');
+                        if (isCorrect) {
+                            input.classList.add('input-correct');
+                        } else {
+                            input.classList.add('input-wrong');
+                            const corrElem = document.createElement('span');
+                            corrElem.className = 'ml-2 text-green-600 font-bold text-sm bg-green-50 px-2 py-0.5 rounded border border-green-200';
+                            corrElem.innerText = correctAns;
+                            input.parentNode.insertBefore(corrElem, input.nextSibling);
+                        }
+                    }
+                }
+            }
+
+            document.getElementById('modal-score').textContent = `${score}/40`;
+            document.getElementById('modal-band-score').textContent = calculateBandScore(score);
+            document.getElementById('score-modal').classList.remove('opacity-0', 'pointer-events-none');
+            document.getElementById('score-modal-content').classList.remove('scale-95');
+        }
+
+        document.getElementById('btn-submit-exam').addEventListener('click', gradeTest);
+        document.getElementById('modal-close-btn').addEventListener('click', () => {
+            document.getElementById('score-modal').classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('score-modal-content').classList.add('scale-95');
+        });
+
+        // HIGHLIGHT SYSTEM
+        const passageContainer = document.getElementById('passage-container');
+        const highlightMenu = document.getElementById('highlight-menu');
+        
+        passageContainer.addEventListener('mouseup', () => {
+            const selection = window.getSelection();
+            if (selection.isCollapsed || selection.toString().trim() === "") {
+                highlightMenu.style.display = 'none'; return;
+            }
+            const range = selection.getRangeAt(0);
+            const rect = range.getBoundingClientRect();
+            const containerRect = passageContainer.getBoundingClientRect();
+            highlightMenu.style.left = `${rect.left - containerRect.left + (rect.width / 2) - 65}px`;
+            highlightMenu.style.top = `${rect.top - containerRect.top + passageContainer.scrollTop - 48}px`;
+            highlightMenu.style.display = 'flex';
+        });
+
+        document.querySelectorAll('.hl-color-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const color = this.getAttribute('data-color');
+                const selection = window.getSelection();
+                if (!selection.rangeCount || selection.toString().trim() === "") return;
+                
+                const range = selection.getRangeAt(0);
+                const mark = document.createElement('mark');
+                mark.className = 'ielts-highlight'; mark.style.backgroundColor = color;
+                mark.addEventListener('click', function(e) { e.stopPropagation(); this.replaceWith(...this.childNodes); });
+                
+                try { range.surroundContents(mark); } 
+                catch (err) { const frag = range.extractContents(); mark.appendChild(frag); range.insertNode(mark); }
+                
+                selection.removeAllRanges(); highlightMenu.style.display = 'none';
+            });
+        });
+
+        document.getElementById('btn-clear-selection').addEventListener('click', e => {
+            e.stopPropagation();
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            const range = selection.getRangeAt(0);
+            const parent = range.commonAncestorContainer;
+            const marks = (parent.nodeType === 1 ? parent : parent.parentNode).querySelectorAll('mark.ielts-highlight');
+            marks.forEach(mark => { if (selection.containsNode(mark, true)) mark.replaceWith(...mark.childNodes); });
+            selection.removeAllRanges(); highlightMenu.style.display = 'none';
+        });
+
+        document.addEventListener('mousedown', e => { if (!highlightMenu.contains(e.target) && !e.target.classList.contains('passage-content')) highlightMenu.style.display = 'none'; });
+
+        // SPLITTER RESIZE CONTROLS
+        const resizeHandle = document.getElementById('resize-handle');
+        const workspaceContainer = document.getElementById('workspace-container');
+        let isResizing = false;
+
+        function startResize(e) { isResizing = true; resizeHandle.classList.add('bg-black'); document.body.style.cursor = 'col-resize'; document.body.style.userSelect = 'none'; }
+        function onResize(e) {
+            if (!isResizing) return;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const rect = workspaceContainer.getBoundingClientRect();
+            let newWidthPercent = ((clientX - rect.left) / rect.width) * 100;
+            passageContainer.style.width = `${Math.min(Math.max(newWidthPercent, 25), 75)}%`;
+        }
+        function stopResize() { if (isResizing) { isResizing = false; resizeHandle.classList.remove('bg-black'); document.body.style.cursor = ''; document.body.style.userSelect = ''; } }
+
+        resizeHandle.addEventListener('mousedown', startResize); document.addEventListener('mousemove', onResize); document.addEventListener('mouseup', stopResize);
+        resizeHandle.addEventListener('touchstart', startResize); document.addEventListener('touchmove', onResize); document.addEventListener('touchend', stopResize);
+    </script>
+</body>
+</html>
